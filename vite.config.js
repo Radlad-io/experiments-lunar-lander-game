@@ -6,8 +6,7 @@ module.exports = defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "index.html"),
-        map: resolve(__dirname, "tests/map/index.html"),
+        main: resolve(__dirname, "src/index.html"),
       },
     },
   },
