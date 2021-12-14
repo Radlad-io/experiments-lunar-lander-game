@@ -1,6 +1,8 @@
 // performance.now() polyfill from https://gist.github.com/paulirish/5438650
 "use strict";
 
+import "@lib/rStats/rStats.css";
+
 (function () {
   // prepare base perf object
   if (typeof window.performance === "undefined") {

@@ -11,9 +11,11 @@ module.exports = defineConfig({
       },
     },
   },
+  root: "src",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@lib": path.resolve(__dirname, "./src/lib"),
       "@util": path.resolve(__dirname, "./src/util"),
       "@components": path.resolve(__dirname, "./src/components"),
     },
