@@ -11,5 +11,6 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xdddddd);
 
 scene.add(Cube.mesh);
+Cube.mesh.position.set(0, 0, 0);
 
 export { scene };
