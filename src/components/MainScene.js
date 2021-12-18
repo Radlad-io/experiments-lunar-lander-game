@@ -6,6 +6,7 @@
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { mesh } from "@components/models/Cube.js";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xdddddd);
@@ -16,7 +17,6 @@ gltfLoader.load(
   map,
   (gltf) => {
     console.log("Success");
-    console.log(gltf);
     gltf.scene.children[0].position.set(0, 0, 0);
     // var object = gltf.scene;
     // object.traverse((node) => {
@@ -32,5 +32,7 @@ gltfLoader.load(
     console.log("Error");
   }
 );
+mesh.position.set(15, 5, 30);
+scene.add(mesh);
 
 export { scene };

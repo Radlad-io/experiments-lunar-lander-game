@@ -14,15 +14,14 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight
 );
-camera.position.set(0, 35, 80);
+camera.position.set(0, 15, 50);
 camera.lookAt(0, 0, 0);
 scene.add(camera);
 
-const cameraMoveSpeed = 0.25;
-
+const cameraMoveSpeed = 0.5;
+let isCameraFront = true;
+let isCameraMoving = false;
 const cameraMove = () => {
-  let isCameraFront = true;
-  let isCameraMoving = false;
   window.addEventListener("keydown", (e) => {
     if (
       e.isComposing ||
@@ -32,10 +31,10 @@ const cameraMove = () => {
       gsap
         .to(camera.position, {
           duration: cameraMoveSpeed,
-          ease: "circ.none",
-          x: -80,
+          ease: "circ.easeIn",
+          x: -50,
           z: 0,
-          y: 35,
+          y: 15,
         })
         .then(() => {
           isCameraMoving = false;
@@ -53,10 +52,10 @@ const cameraMove = () => {
       gsap
         .to(camera.position, {
           duration: cameraMoveSpeed,
-          ease: "circ.none",
+          ease: "circ.easeIn",
           x: 0,
-          z: 80,
-          y: 35,
+          z: 50,
+          y: 15,
         })
         .then(() => {
           isCameraMoving = false;
