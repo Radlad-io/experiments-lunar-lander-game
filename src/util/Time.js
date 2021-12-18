@@ -6,7 +6,7 @@
 
 import * as Stats from "@util/Stats.js";
 import { controls } from "@util/Controls.js";
-import { renderer } from "@util/Renderer.js";
+import { renderer, composer } from "@util/Renderer.js";
 import { scene } from "@components/MainScene.js";
 import { camera } from "@components/Camera.js";
 
@@ -17,7 +17,7 @@ const tick = () => {
 
   // Renderer
   controls.update();
-  renderer.render(scene, camera);
+  composer.render(scene, camera);
   Stats.end();
   window.requestAnimationFrame(tick);
 };

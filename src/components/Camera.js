@@ -14,9 +14,11 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight
 );
-camera.position.set(0, 1, 2);
+camera.position.set(0, 35, 80);
 camera.lookAt(0, 0, 0);
 scene.add(camera);
+
+const cameraMoveSpeed = 0.25;
 
 const cameraMove = () => {
   let isCameraFront = true;
@@ -29,10 +31,11 @@ const cameraMove = () => {
       isCameraMoving = true;
       gsap
         .to(camera.position, {
-          duration: 0.5,
+          duration: cameraMoveSpeed,
           ease: "circ.none",
-          x: -2,
+          x: -80,
           z: 0,
+          y: 35,
         })
         .then(() => {
           isCameraMoving = false;
@@ -48,7 +51,13 @@ const cameraMove = () => {
     ) {
       isCameraMoving = true;
       gsap
-        .to(camera.position, { duration: 0.5, ease: "circ.none", x: 0, z: 2 })
+        .to(camera.position, {
+          duration: cameraMoveSpeed,
+          ease: "circ.none",
+          x: 0,
+          z: 80,
+          y: 35,
+        })
         .then(() => {
           isCameraMoving = false;
           if (debug) {

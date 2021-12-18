@@ -1,17 +1,18 @@
-const { resolve } = require("path");
-const { defineConfig } = require("vite");
-import path from "path";
+import path, { resolve } from "path";
+import { defineConfig } from "vite";
 
 module.exports = defineConfig({
   build: {
-    outDir: path.join(__dirname, "dist"),
+    outDir: path.join(__dirname, "./dist"),
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "src/index.html"),
+        main: resolve(__dirname, "./src/index.html"),
       },
     },
   },
-  root: "src",
+  root: "./src",
+  publicDir: "./public",
+  assetsInclude: ["**/*.gltf"],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
