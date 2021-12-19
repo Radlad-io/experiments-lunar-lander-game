@@ -16,6 +16,9 @@ import { GlitchPass } from "three/examples/jsm/postprocessing/GlitchPass.js";
 import { LuminosityShader } from "three/examples/jsm/shaders/LuminosityShader.js";
 import { SobelOperatorShader } from "three/examples/jsm/shaders/SobelOperatorShader.js";
 
+import { CopyShader } from "three/examples/jsm/shaders/CopyShader.js";
+import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
+
 let composer;
 let effectSobel;
 
@@ -27,7 +30,6 @@ const params = {
 const canvas = document.querySelector("canvas.webgl");
 
 const renderer = new THREE.WebGLRenderer({
-  antialias: true,
   canvas: canvas,
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -37,14 +39,32 @@ composer = new EffectComposer(renderer);
 const renderPass = new RenderPass(scene, camera);
 composer.addPass(renderPass);
 
-// color to grayscale conversion
-
 effectSobel = new ShaderPass(SobelOperatorShader);
 effectSobel.uniforms["resolution"].value.x =
   window.innerWidth * window.devicePixelRatio;
 effectSobel.uniforms["resolution"].value.y =
   window.innerHeight * window.devicePixelRatio;
 composer.addPass(effectSobel);
+
+let composer1, composer2, fxaaPass, container;
+container = document.querySelector("canvas.webgl");
+fxaaPass = new ShaderPass(FXAAShader);
+const copyPass = new ShaderPass(CopyShader);
+
+composer1 = new EffectComposer(renderer);
+composer1.addPass(renderPass);
+composer1.addPass(copyPass);
+
+const pixelRatio = renderer.getPixelRatio();
+
+fxaaPass.material.uniforms["resolution"].value.x =
+  1 / (container.offsetWidth * pixelRatio);
+fxaaPass.material.uniforms["resolution"].value.y =
+  1 / (container.offsetHeight * pixelRatio);
+
+composer2 = new EffectComposer(renderer);
+composer2.addPass(renderPass);
+composer2.addPass(fxaaPass);
 
 // const effectGrayScale = new ShaderPass(LuminosityShader);
 // window.addEventListener("click", () => {

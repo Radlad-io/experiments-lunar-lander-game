@@ -5,25 +5,34 @@
 /////////////////////////////////////
 
 import * as THREE from "three";
+import { initialCameraFlyIn } from "@components/Camera.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { mesh } from "@components/models/Cube.js";
+import gsap from "gsap";
+import {
+  lighting,
+  landerLight,
+  landerLightHelper,
+} from "@components/Lighting.js";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xdddddd);
+scene.add(lighting, landerLight.target);
 
-import map from "@components/models/lander-game.gltf";
+gsap.to(landerLight.target.position, {
+  duration: 12,
+  ease: "bounce.out",
+  x: 50,
+});
+
+import map from "@components/models/lander-game-map2.gltf";
 const gltfLoader = new GLTFLoader();
 gltfLoader.load(
   map,
   (gltf) => {
     console.log("Success");
     gltf.scene.children[0].position.set(0, 0, 0);
-    // var object = gltf.scene;
-    // object.traverse((node) => {
-    //   if (!node.isMesh) return;
-    //   node.material.wireframe = true;
-    // });
     scene.add(gltf.scene.children[0]);
+    initialCameraFlyIn();
   },
   () => {
     console.log("Progress");
@@ -32,7 +41,5 @@ gltfLoader.load(
     console.log("Error");
   }
 );
-mesh.position.set(15, 5, 30);
-scene.add(mesh);
 
 export { scene };

@@ -14,13 +14,31 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight
 );
-camera.position.set(0, 15, 50);
+camera.position.set(0, 200, 200);
 camera.lookAt(0, 0, 0);
 scene.add(camera);
 
 const cameraMoveSpeed = 0.5;
 let isCameraFront = true;
-let isCameraMoving = false;
+let isCameraMoving = true;
+
+const initialCameraFlyIn = () => {
+  gsap
+    .to(camera.position, {
+      duration: 2,
+      ease: "circ.easeIn",
+      x: 0,
+      z: 80,
+      y: 50,
+    })
+    .then(() => {
+      isCameraMoving = false;
+      if (debug) {
+        console.log("Debug output: Camera Position", camera.position);
+      }
+    });
+};
+
 const cameraMove = () => {
   window.addEventListener("keydown", (e) => {
     if (
@@ -32,9 +50,9 @@ const cameraMove = () => {
         .to(camera.position, {
           duration: cameraMoveSpeed,
           ease: "circ.easeIn",
-          x: -50,
+          x: -80,
           z: 0,
-          y: 15,
+          y: 50,
         })
         .then(() => {
           isCameraMoving = false;
@@ -54,8 +72,8 @@ const cameraMove = () => {
           duration: cameraMoveSpeed,
           ease: "circ.easeIn",
           x: 0,
-          z: 50,
-          y: 15,
+          z: 80,
+          y: 50,
         })
         .then(() => {
           isCameraMoving = false;
@@ -68,4 +86,4 @@ const cameraMove = () => {
   });
 };
 
-export { camera, cameraMove };
+export { camera, cameraMove, initialCameraFlyIn };
