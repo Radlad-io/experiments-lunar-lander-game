@@ -1,6 +1,8 @@
 // Global variables
-let isDev = import.meta.env.DEV;
-let debug = isDev;
+const isDev = import.meta.env.DEV;
+var debug = isDev;
+var isOriginalGraphics;
+isOriginalGraphics = true;
 
 // Imports
 import "./style.css";
@@ -21,4 +23,4 @@ Sizes.handleResize();
 
 cameraMove();
 
-export { debug };
+export { debug, isOriginalGraphics };

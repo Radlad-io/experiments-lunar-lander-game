@@ -29,7 +29,7 @@ const initialCameraFlyIn = () => {
       ease: "circ.easeIn",
       x: 0,
       z: 80,
-      y: 50,
+      y: 15,
     })
     .then(() => {
       isCameraMoving = false;
@@ -52,7 +52,7 @@ const cameraMove = () => {
           ease: "circ.easeIn",
           x: -80,
           z: 0,
-          y: 50,
+          y: 15,
         })
         .then(() => {
           isCameraMoving = false;
@@ -73,7 +73,7 @@ const cameraMove = () => {
           ease: "circ.easeIn",
           x: 0,
           z: 80,
-          y: 50,
+          y: 15,
         })
         .then(() => {
           isCameraMoving = false;

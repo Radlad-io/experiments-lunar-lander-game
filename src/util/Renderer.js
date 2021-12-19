@@ -5,6 +5,7 @@
 ///////////////////////////////////////////
 
 import * as THREE from "three";
+
 import { scene } from "@components/MainScene.js";
 import { camera } from "@components/Camera.js";
 
