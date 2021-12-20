@@ -6,7 +6,7 @@
 
 import { GUI } from "dat.gui";
 import "@lib/rStats/rStats";
-import { debug } from "@/main.js";
+import { dev } from "@util/State.js";
 import * as Cube from "@components/models/Cube.js";
 
 var gui;
@@ -27,7 +27,7 @@ const rS = new rStats({
 });
 
 function stats() {
-  if (debug) {
+  if (dev.get()) {
     gui = new GUI();
     const cubeFolder = gui.addFolder("Cube");
     cubeFolder.add(Cube.rotation, "x", 0, Math.PI * 2);
@@ -38,7 +38,7 @@ function stats() {
 }
 
 function start() {
-  if (debug) {
+  if (dev.get()) {
     rS("frame").start();
     rS("rAF").tick();
     rS("FPS").frame();
@@ -46,7 +46,7 @@ function start() {
 }
 
 function end() {
-  if (debug) {
+  if (dev.get()) {
     rS("frame").end();
     rS().update();
   }

@@ -4,9 +4,16 @@ import gsap from "gsap";
 
 const lighting = new THREE.Group();
 
-const sunLight = new THREE.PointLight(0xffffff, 0.75, 200);
-sunLight.position.set(0, 100, 100);
+const sunLight = new THREE.PointLight(0xffffff, 0, 300);
+sunLight.position.set(-100, 50, -100);
 lighting.add(sunLight);
+
+gsap.to(sunLight, {
+  delay: 2,
+  duration: 1.75,
+  ease: "circ.easeIn",
+  intensity: 0.75,
+});
 
 // const ambLight = new THREE.AmbientLight(0xffffff);
 // ambLight.intensity = 50; // soft white light

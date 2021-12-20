@@ -6,6 +6,7 @@
 
 import * as THREE from "three";
 
+import { dev, graphics } from "@util/State.js";
 import { scene } from "@components/MainScene.js";
 import { camera } from "@components/Camera.js";
 
@@ -45,7 +46,18 @@ effectSobel.uniforms["resolution"].value.x =
   window.innerWidth * window.devicePixelRatio;
 effectSobel.uniforms["resolution"].value.y =
   window.innerHeight * window.devicePixelRatio;
-composer.addPass(effectSobel);
+
+if (graphics.get()) {
+  composer.addPass(effectSobel);
+}
+
+const setSobel = (isOn) => {
+  if (isOn) {
+    composer.addPass(effectSobel);
+  } else {
+    composer.removePass(effectSobel);
+  }
+};
 
 let composer1, composer2, fxaaPass, container;
 container = document.querySelector("canvas.webgl");
@@ -73,4 +85,4 @@ composer2.addPass(fxaaPass);
 //   composer.addPass(effectGrayScale);
 // });
 
-export { renderer, composer };
+export { renderer, composer, setSobel };

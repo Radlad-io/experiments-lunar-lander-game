@@ -1,12 +1,11 @@
+import * as THREE from "three";
 // Global variables
-const isDev = import.meta.env.DEV;
-var debug = isDev;
-var isOriginalGraphics;
-isOriginalGraphics = true;
+import { dev, graphics } from "@util/State.js";
 
 // Imports
 import "./style.css";
 import { cameraMove } from "@components/Camera.js";
+import { scene } from "@components/MainScene.js";
 
 // Utilities
 import * as Sizes from "@util/Sizes.js";
@@ -21,6 +20,14 @@ tick();
 // Event handelers
 Sizes.handleResize();
 
-cameraMove();
+import { setSobel } from "@util/Renderer.js";
+const graphicsToggle = document.querySelector(".graphics-toggle");
+graphicsToggle.addEventListener("click", () => {
+  graphics.toggle();
+  let current = graphics.get();
+  scene.background =
+    current === false ? new THREE.Color(0x000000) : new THREE.Color(0xffffff);
+  setSobel(current);
+});
 
-export { debug, isOriginalGraphics };
+cameraMove();

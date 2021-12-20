@@ -15,7 +15,7 @@ import {
 } from "@components/Lighting.js";
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xdddddd);
+scene.background = new THREE.Color(0xffffff);
 scene.add(lighting, landerLight.target);
 
 gsap.to(landerLight.target.position, {
@@ -29,7 +29,7 @@ const gltfLoader = new GLTFLoader();
 gltfLoader.load(
   map,
   (gltf) => {
-    console.log("Success");
+    console.log("Successfully loaded: Map GTLF");
     gltf.scene.children[0].position.set(0, 0, 0);
     scene.add(gltf.scene.children[0]);
   },
@@ -37,16 +37,17 @@ gltfLoader.load(
     console.log("Progress");
   },
   () => {
-    console.log("Error");
+    console.log("Error loading: Map GTLF");
   }
 );
 
+let Lander;
 import lander from "@components/models/Lander.gltf";
 gltfLoader.load(
   lander,
   (gltf) => {
-    console.log("Success");
-    console.log(gltf);
+    console.log("Successfully loaded: Lander GTLF");
+    Lander = gltf;
     gltf.scene.position.set(0, 45, 0);
     scene.add(gltf.scene);
     initialCameraFlyIn();
@@ -55,13 +56,14 @@ gltfLoader.load(
       ease: "bounce.out",
       x: 50,
     });
+    return Lander;
   },
   () => {
     console.log("Progress");
   },
   () => {
-    console.log("Error");
+    console.log("Error loading: Lander GTLF");
   }
 );
 
-export { scene };
+export { scene, Lander };

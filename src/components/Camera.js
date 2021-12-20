@@ -5,7 +5,7 @@
 ///////////////////////////////////////
 
 import * as THREE from "three";
-import { debug } from "@/main.js";
+import { dev } from "@util/State.js";
 import { scene } from "@components/MainScene.js";
 import gsap from "gsap";
 gsap.registerPlugin(CustomEase);
@@ -33,7 +33,7 @@ const initialCameraFlyIn = () => {
     })
     .then(() => {
       isCameraMoving = false;
-      if (debug) {
+      if (dev.get()) {
         console.log("Debug output: Camera Position", camera.position);
       }
     });
@@ -56,7 +56,7 @@ const cameraMove = () => {
         })
         .then(() => {
           isCameraMoving = false;
-          if (debug) {
+          if (dev.get()) {
             console.log("Debug output: Camera position", camera.position);
           }
         });
@@ -77,7 +77,7 @@ const cameraMove = () => {
         })
         .then(() => {
           isCameraMoving = false;
-          if (debug) {
+          if (dev.get()) {
             console.log("Debug output: Camera Position", camera.position);
           }
         });
