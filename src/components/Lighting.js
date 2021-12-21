@@ -15,13 +15,9 @@ gsap.to(sunLight, {
   intensity: 0.75,
 });
 
-// const ambLight = new THREE.AmbientLight(0xffffff);
-// ambLight.intensity = 50; // soft white light
-// lighting.add(ambLight);
-
 let color, intensity, distance, angle, penumbra, decay;
 color = 0xffffff;
-intensity = 2;
+intensity = 1;
 distance = 125;
 angle = 0.075;
 penumbra = 0.005;
@@ -41,13 +37,7 @@ landerLight.target.position.set(
   landerLight.position.y - 75,
   landerLight.position.z
 );
-lighting.add(landerLight);
-
-// gsap.to(landerLight.position, {
-//   duration: 5,
-//   ease: "circ.easeIn",
-//   x: 50,
-// });
+// lighting.add(landerLight);
 
 const landerLightHelper = new THREE.SpotLightHelper(landerLight);
 

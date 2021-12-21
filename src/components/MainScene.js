@@ -7,7 +7,6 @@
 import * as THREE from "three";
 import { initialCameraFlyIn } from "@components/Camera.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import gsap from "gsap";
 import {
   lighting,
   landerLight,
@@ -18,11 +17,13 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xffffff);
 scene.add(lighting, landerLight.target);
 
-gsap.to(landerLight.target.position, {
-  duration: 12,
-  ease: "bounce.out",
-  x: 50,
+const geometry = new THREE.CylinderGeometry(12, 12, 12, 12);
+const material = new THREE.MeshBasicMaterial({
+  color: 0xffffff,
 });
+const mesh = new THREE.Mesh(geometry, material);
+mesh.position.set(-35, -50, 20);
+scene.add(mesh);
 
 import map from "@components/models/Map.gltf";
 const gltfLoader = new GLTFLoader();
@@ -49,7 +50,6 @@ gltfLoader.load(
     console.log("Successfully loaded: Lander GTLF");
     Lander = gltf;
     Lander.scene.position.set(0, 15, 0);
-    Lander.scene.scale.set(0.5, 0.5, 0.5);
     scene.add(Lander.scene);
     initialCameraFlyIn();
 
