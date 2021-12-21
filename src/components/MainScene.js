@@ -7,11 +7,8 @@
 import * as THREE from "three";
 import { initialCameraFlyIn } from "@components/Camera.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import {
-  lighting,
-  landerLight,
-  landerLightHelper,
-} from "@components/Lighting.js";
+import { lighting, landerLight } from "@components/Lighting.js";
+import { galaxy } from "@components/Galaxy.js";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xffffff);
@@ -62,5 +59,7 @@ gltfLoader.load(
     console.log("Error loading: Lander GTLF");
   }
 );
+
+scene.add(galaxy);
 
 export { scene, Lander };
