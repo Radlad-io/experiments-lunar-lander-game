@@ -30,7 +30,7 @@ gltfLoader.load(
   map,
   (gltf) => {
     console.log("Successfully loaded: Map GTLF");
-    gltf.scene.children[0].position.set(0, 0, 0);
+    gltf.scene.children[0].position.set(0, -50, 0);
     scene.add(gltf.scene.children[0]);
   },
   () => {
@@ -48,14 +48,11 @@ gltfLoader.load(
   (gltf) => {
     console.log("Successfully loaded: Lander GTLF");
     Lander = gltf;
-    gltf.scene.position.set(0, 45, 0);
-    scene.add(gltf.scene);
+    Lander.scene.position.set(0, 15, 0);
+    Lander.scene.scale.set(0.5, 0.5, 0.5);
+    scene.add(Lander.scene);
     initialCameraFlyIn();
-    gsap.to(gltf.scene.position, {
-      duration: 12,
-      ease: "bounce.out",
-      x: 50,
-    });
+
     return Lander;
   },
   () => {

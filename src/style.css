@@ -9,6 +9,27 @@ body {
   background-color: black;
 }
 
+.hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+.hud div {
+  margin: 50px 300px;
+}
+
+.hud p {
+  white-space: nowrap;
+  color: white;
+  font-weight: 100;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
 .bottom-bar {
   width: 100vw;
   position: fixed;

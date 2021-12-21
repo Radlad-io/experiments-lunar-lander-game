@@ -11,25 +11,30 @@ import gsap from "gsap";
 gsap.registerPlugin(CustomEase);
 
 const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight
+  35,
+  window.innerWidth / window.innerHeight,
+  10,
+  1000
 );
-camera.position.set(0, 200, 200);
-camera.lookAt(0, 0, 0);
+camera.position.set(0, 400, 0);
 scene.add(camera);
 
-const cameraMoveSpeed = 0.5;
+const cameraMoveSpeed = 0.65;
 let isCameraFront = true;
 let isCameraMoving = true;
 
 const initialCameraFlyIn = () => {
+  gsap.to(camera.position, {
+    duration: 2,
+    ease: "back.out(1.7)",
+    x: 0,
+    z: 80,
+  });
   gsap
     .to(camera.position, {
       duration: 2,
-      ease: "circ.easeIn",
-      x: 0,
-      z: 80,
-      y: 15,
+      ease: "power1.out",
+      y: 25,
     })
     .then(() => {
       isCameraMoving = false;
@@ -46,13 +51,17 @@ const cameraMove = () => {
       (e.key === "Shift" && isCameraFront && !isCameraMoving)
     ) {
       isCameraMoving = true;
+      gsap.to(camera.position, {
+        duration: cameraMoveSpeed,
+        ease: "circ.out",
+        x: -80,
+      });
       gsap
         .to(camera.position, {
           duration: cameraMoveSpeed,
-          ease: "circ.easeIn",
-          x: -80,
+          ease: "none",
           z: 0,
-          y: 15,
+          y: 25,
         })
         .then(() => {
           isCameraMoving = false;
@@ -67,13 +76,17 @@ const cameraMove = () => {
       (e.key === "Shift" && !isCameraFront && !isCameraMoving)
     ) {
       isCameraMoving = true;
+      gsap.to(camera.position, {
+        duration: cameraMoveSpeed,
+        ease: "none",
+        x: 0,
+      });
       gsap
         .to(camera.position, {
           duration: cameraMoveSpeed,
-          ease: "circ.easeIn",
-          x: 0,
+          ease: "circ.out",
           z: 80,
-          y: 15,
+          y: 25,
         })
         .then(() => {
           isCameraMoving = false;
