@@ -9,19 +9,25 @@ body {
   background-color: black;
 }
 
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
 .hud {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
+  position: absolute;
+  max-width: 1200px;
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .hud div {
-  margin: 30px 270px;
+  margin: 30px;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.35);
 }
 
 .hud p {
@@ -33,29 +39,106 @@ body {
 }
 
 .bottom-bar {
-  width: 100vw;
+  width: 100%;
+  max-width: 1200px;
   position: fixed;
   bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  opacity: 0;
+  user-select: none;
+}
+
+.bottom-bar .right-side {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.ui-button {
+  color: #bbbbbb;
+  font-size: 2rem;
+  font-weight: 100;
+}
+
+.bottom-bar button:hover .ui-button {
+  color: white;
 }
 
 .bottom-bar button {
-  display: block;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0);
   color: white;
-  padding: 10px;
-  margin: 10px;
+  padding: 8px 5px 3px 5px;
+  margin: 15px;
   border: none;
-}
-
-.bottom-bar p {
-  color: white;
-  padding: 10px;
-  margin: 10px;
+  border-radius: 5px;
 }
 
 .bottom-bar button:active {
   background-color: #777777;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  font-size: 0.75rem;
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  margin-left: 10px;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+
+#tooltipLeft {
+  top: 30%;
+  right: 100%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.intro-modal {
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  user-select: none;
+}
+.intro-modal p {
+  font-size: 1rem;
+  text-align: center;
+}
+.intro-modal h1 {
+  text-align: center;
+}
+
+h1 {
+  font-size: 4rem;
+  color: white;
+  font-weight: 100;
+}
+
+p {
+  color: white;
+  font-weight: 100;
 }

@@ -8,6 +8,7 @@ import * as THREE from "three";
 import { initialCameraFlyIn } from "@components/Camera.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { lighting, landerLight } from "@components/Lighting.js";
+import { Lander } from "@components/Lander.js";
 import { galaxy } from "@components/Galaxy.js";
 
 const scene = new THREE.Scene();
@@ -18,6 +19,7 @@ const geometry = new THREE.CylinderGeometry(12, 12, 12, 12);
 const material = new THREE.MeshBasicMaterial({
   color: 0xffffff,
 });
+
 const mesh = new THREE.Mesh(geometry, material);
 mesh.position.set(-35, -50, 20);
 scene.add(mesh);
@@ -31,35 +33,14 @@ gltfLoader.load(
     gltf.scene.children[0].position.set(0, -50, 0);
     scene.add(gltf.scene.children[0]);
   },
-  () => {
-    console.log("Progress");
+  (e) => {
+    console.log(`Map load progress: ${e.loaded} / ${e.total}`);
   },
   () => {
     console.log("Error loading: Map GTLF");
   }
 );
 
-let Lander;
-import lander from "@components/models/Lander.gltf";
-gltfLoader.load(
-  lander,
-  (gltf) => {
-    console.log("Successfully loaded: Lander GTLF");
-    Lander = gltf;
-    Lander.scene.position.set(0, 15, 0);
-    scene.add(Lander.scene);
-    initialCameraFlyIn();
-
-    return Lander;
-  },
-  () => {
-    console.log("Progress");
-  },
-  () => {
-    console.log("Error loading: Lander GTLF");
-  }
-);
-
 scene.add(galaxy);
 
-export { scene, Lander };
+export { scene };

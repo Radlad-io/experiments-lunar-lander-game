@@ -1,27 +1,40 @@
-let isState = import.meta.env.DEV || false;
+const init = {
+  devState: import.meta.env.DEV || false,
+  bwGraphics: true,
+  highscore: 0,
+  score: 0,
+  time: 1200, // 2 Mins I think...
+  fuel: 900,
+  altitude: 100,
+  horizontalSpeed: 0,
+  verticalSpeed: 0,
+  view: "front",
+};
+
+let devState = import.meta.env.DEV || false;
 const dev = {
   get: () => {
-    return isState;
+    return devState;
   },
   toggle: () => {
-    isState = !isState;
-    return isState;
+    devState = !devState;
+    return devState;
   },
 };
 
-let graphicsState = true;
+let graphicsState = init.bwGraphics;
 const graphics = {
   get: () => {
     return graphicsState;
   },
   toggle: () => {
     graphicsState = !graphicsState;
-    return isState;
+    return graphicsState;
   },
 };
 
 //    score
-let scoreValue = 0;
+let scoreValue = init.score;
 const scoreDisplay = document.querySelector(".hud-score span");
 const score = {
   get: () => {
@@ -35,7 +48,7 @@ const score = {
 };
 
 //    playtime
-let playtimeValue = 0;
+let playtimeValue = init.playtime;
 const playtimeDisplay = document.querySelector(".hud-time span");
 const playtime = {
   get: () => {
@@ -49,7 +62,7 @@ const playtime = {
 };
 
 //    fuel
-let fuelValue = 0;
+let fuelValue = init.fuel;
 const fuelDisplay = document.querySelector(".hud-fuel span");
 const fuel = {
   get: () => {
@@ -61,9 +74,10 @@ const fuel = {
     return fuelValue;
   },
 };
+fuel.set(fuelValue);
 
 //    altitude
-let altitudeValue = 0;
+let altitudeValue = init.altitude;
 const altitudeDisplay = document.querySelector(".hud-altitude span");
 const altitude = {
   get: () => {
@@ -77,7 +91,7 @@ const altitude = {
 };
 
 //    horizontal speed
-let horizontalSpeedValue = 0;
+let horizontalSpeedValue = init.horizontalSpeed;
 const horizontalSpeedDisplay = document.querySelector(".hud-horizontal span");
 const horizontalSpeed = {
   get: () => {
@@ -96,7 +110,7 @@ const horizontalSpeed = {
 };
 
 //    vertical speed
-let verticalSpeedValue = 0;
+let verticalSpeedValue = init.verticalSpeed;
 const verticalSpeedDisplay = document.querySelector(".hud-vertical span");
 const verticalSpeed = {
   get: () => {
@@ -115,7 +129,7 @@ const verticalSpeed = {
 };
 
 //    view
-let viewValue = "front";
+let viewValue = init.view;
 const viewValueDisplay = document.querySelector(".hud-view span");
 const view = {
   get: () => {

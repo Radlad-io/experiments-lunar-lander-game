@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////
 //                                             //
-//    Gallaxy: Instantiates particle system    //
+//    Galaxy: Instantiates particle system    //
 //                                             //
 /////////////////////////////////////////////////
 

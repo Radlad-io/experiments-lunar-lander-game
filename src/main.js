@@ -15,6 +15,9 @@
 // Libraries
 import * as THREE from "three";
 
+// UI Animations
+import { hud } from "@components/UI.js";
+
 // Global variables
 import { dev, graphics } from "@util/State.js";
 
@@ -31,6 +34,7 @@ window.focus(); //Capture keys right away
 
 // Animation
 import { tick } from "@util/Time.js";
+
 tick();
 
 // Event handelers

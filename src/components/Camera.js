@@ -11,13 +11,14 @@ import { view } from "@util/State.js";
 import gsap from "gsap";
 gsap.registerPlugin(CustomEase);
 
+// TODO: There camera is currently set to look at the scene origin. Needs to update with the Lander.
 const camera = new THREE.PerspectiveCamera(
   35,
   window.innerWidth / window.innerHeight,
   10,
   1000
 );
-camera.position.set(0, 400, 0);
+camera.position.set(0, 2000, 1500);
 scene.add(camera);
 
 const cameraMoveSpeed = 0.4;
@@ -27,14 +28,16 @@ let isCameraMoving = true;
 
 const initialCameraFlyIn = () => {
   gsap.to(camera.position, {
-    duration: 4,
-    ease: "back.out(1.7)",
+    delay: 3.5,
+    duration: 9,
+    ease: "power1.out",
     x: 0,
     z: 80,
   });
   gsap
     .to(camera.position, {
-      duration: 4,
+      delay: 3.5,
+      duration: 9,
       ease: "power1.out",
       y: 25,
     })
