@@ -11,7 +11,9 @@ const init = {
   view: "front",
 };
 
-let devState = import.meta.env.DEV || false;
+let devState = false;
+
+// TODO: Change dev to
 const dev = {
   get: () => {
     return devState;
