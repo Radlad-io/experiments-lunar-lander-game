@@ -9,12 +9,36 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { scene } from "@components/MainScene.js";
 import { initialCameraFlyIn } from "@components/Camera.js";
-import map from "@components/models/Map.gltf";
-import { LandingPad } from "@components/LandingPad.js";
 
+//    Enviorment variables
 const isDev = dev.get();
-const gltfLoader = new GLTFLoader();
 
+//    Loaders
+const gltfLoader = new GLTFLoader();
+const textureLoader = new THREE.TextureLoader();
+
+//    Baked material
+import bakedMapTexture from "@components/models/map-baked.jpg";
+const bakedTexture = textureLoader.load(bakedMapTexture);
+bakedTexture.flipY = false;
+bakedTexture.encoding = THREE.sRGBEncoding;
+const bakedMaterial = new THREE.MeshBasicMaterial({
+  map: bakedTexture,
+});
+
+//    Emission Material
+const landingPadMaterial = new THREE.MeshBasicMaterial({
+  color: 0xffffff,
+});
+
+//    Text Material
+const textMaterial = new THREE.MeshBasicMaterial({
+  color: 0x000000,
+});
+
+//    Map model
+import map from "@components/models/Map.glb";
+import { LandingPad } from "./LandingPad";
 let Map;
 const load = () => {
   gltfLoader.load(
@@ -24,15 +48,42 @@ const load = () => {
         console.log("Successfully loaded: Map GTLF");
       }
       Map = gltf;
+      Map.scene.traverse((child) => {
+        console.log(child.name);
+        child.material = bakedMaterial;
+      });
+
+      //    Remap landing pad material to three material
+      let landingPads = [];
+      const landingPadMesh = Map.scene.children.find((child) => {
+        if (child.name.includes("LandingPad")) {
+          landingPads.push(child);
+        }
+      });
+      landingPads.map((pad) => {
+        pad.material = landingPadMaterial;
+      });
+
+      //    Remap landing pad text material to three material
+      let landingPadText = [];
+      const landingPadTextMesh = Map.scene.children.find((child) => {
+        if (child.name.includes("Text")) {
+          landingPadText.push(child);
+        }
+      });
+      landingPadText.map((text) => {
+        text.material = textMaterial;
+      });
+
       Map.scene.children[0].position.set(0, -50, 0);
+      Map.scene.children[1].position.set(0, -50, 0);
+      Map.scene.children[2].position.set(0, -50, 0);
+      Map.scene.children[3].position.set(0, -50, 0);
+      Map.scene.children[4].position.set(0, -36, 0);
+      Map.scene.children[5].position.set(0, -41, 0);
+      Map.scene.children[6].position.set(0, -41, 0);
       scene.add(Map.scene);
-      // const LandingPad1 = LandingPad(1, 12, 12, 12, 12);
-      // LandingPad1.position.set(-35, -50, 20);
-      // const LandingPad2 = LandingPad(2, 8, 8, 12, 12);
-      // LandingPad2.position.set(30, -50, 27);
-      // const LandingPad3 = LandingPad(4, 5, 5, 12, 12);
-      // LandingPad3.position.set(20, -50, -15);
-      // scene.add(LandingPad1, LandingPad2, LandingPad3);
+
       initialCameraFlyIn();
       return Map;
     },
