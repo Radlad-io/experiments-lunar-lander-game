@@ -79,9 +79,9 @@ const load = () => {
       Map.scene.children[1].position.set(0, -50, 0);
       Map.scene.children[2].position.set(0, -50, 0);
       Map.scene.children[3].position.set(0, -50, 0);
-      Map.scene.children[4].position.set(0, -36, 0);
-      Map.scene.children[5].position.set(0, -41, 0);
-      Map.scene.children[6].position.set(0, -41, 0);
+      Map.scene.children[4].position.set(0, -37.5, 0);
+      Map.scene.children[5].position.set(0, -42, 0);
+      Map.scene.children[6].position.set(0, -42, 0);
       scene.add(Map.scene);
 
       initialCameraFlyIn();
