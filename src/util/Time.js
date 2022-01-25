@@ -9,13 +9,11 @@ import { controls } from "@util/Controls.js";
 import { renderer, composer } from "@util/Renderer.js";
 import { scene } from "@components/MainScene.js";
 import { camera } from "@components/Camera.js";
-import { score } from "@util/State.js";
 
 const tick = () => {
   // Adds stats HUD
   stats.begin();
   // Do stuff here
-  score.set(score.get() + 1);
 
   // Renderer
   controls.update();
