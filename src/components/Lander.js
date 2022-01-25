@@ -8,7 +8,6 @@ import { dev } from "@util/State.js";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { scene } from "@components/MainScene.js";
-import { initialCameraFlyIn } from "@components/Camera.js";
 import lander from "@components/models/Lander.gltf";
 
 const isDev = dev.get();
@@ -25,7 +24,6 @@ const load = () => {
       Lander = gltf;
       Lander.scene.position.set(0, 15, 0);
       scene.add(Lander.scene);
-      initialCameraFlyIn();
       return Lander;
     },
     (xhr) => {

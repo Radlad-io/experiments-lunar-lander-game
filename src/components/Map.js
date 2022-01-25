@@ -8,7 +8,6 @@ import { dev } from "@util/State.js";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { scene } from "@components/MainScene.js";
-import { initialCameraFlyIn } from "@components/Camera.js";
 
 //    Enviorment variables
 const isDev = dev.get();
@@ -83,8 +82,6 @@ const load = () => {
       Map.scene.children[5].position.set(0, -42, 0);
       Map.scene.children[6].position.set(0, -42, 0);
       scene.add(Map.scene);
-
-      initialCameraFlyIn();
       return Map;
     },
     (xhr) => {

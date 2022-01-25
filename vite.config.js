@@ -12,7 +12,7 @@ module.exports = defineConfig({
   },
   root: "./src",
   publicDir: "./public",
-  assetsInclude: ["**/*.gltf", "**/*.glb"],
+  assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp4"],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

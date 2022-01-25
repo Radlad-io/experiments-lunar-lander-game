@@ -28,16 +28,14 @@ let isCameraMoving = true;
 
 const initialCameraFlyIn = () => {
   gsap.to(camera.position, {
-    delay: 3.5,
-    duration: 9,
+    duration: 5,
     ease: "power1.out",
     x: 0,
     z: 80,
   });
   gsap
     .to(camera.position, {
-      delay: 3.5,
-      duration: 9,
+      duration: 5,
       ease: "power1.out",
       y: 25,
     })
