@@ -12,14 +12,8 @@ const init = {
 };
 
 let devState = false;
-
-// TODO: Change dev to
 const dev = {
   get: () => {
-    return devState;
-  },
-  toggle: () => {
-    devState = !devState;
     return devState;
   },
 };
@@ -148,6 +142,16 @@ const view = {
   },
 };
 
+let thrustValue = false;
+const thrust = {
+  get: () => {
+    return thrustValue;
+  },
+  toggle: () => {
+    thrustValue = !thrustValue;
+  },
+};
+
 export {
   dev,
   graphics,
@@ -158,4 +162,5 @@ export {
   horizontalSpeed,
   verticalSpeed,
   view,
+  thrust,
 };

@@ -21,6 +21,6 @@ for (let i = 0; i < starCount * 3; i++) {
 
 galaxyGeometry.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
 
-const galaxy = new THREE.Points(galaxyGeometry, starMaterial);
+const Galaxy = new THREE.Points(galaxyGeometry, starMaterial);
 
-export { galaxy };
+export { Galaxy };

@@ -37,7 +37,6 @@ const textMaterial = new THREE.MeshBasicMaterial({
 
 //    Map model
 import map from "@components/models/Map.glb";
-import { LandingPad } from "./LandingPad";
 let Map;
 const load = () => {
   gltfLoader.load(
