@@ -24,7 +24,7 @@ const sound = new THREE.Audio(listener);
 // load a sound and set it as the Audio object's buffer
 const audioLoader = new THREE.AudioLoader();
 
-//
+// Assignes audio to each sound
 const soundLoader = (file, sound, loop, volume) => {
   audioLoader.load(file, function (buffer) {
     sound.sound.setBuffer(buffer);
@@ -42,30 +42,17 @@ const mix = {
   cameraDown: 0.75,
 };
 
-// TODO: Should just be a mute fuction with status & set functions
-// TODO: Create and export a mute function. Leverage via UI instead of play / pause.
-
-const status = {
-  get: () => {
-    return muted;
-  },
-  set: () => {
-    muted = !muted;
-  },
-};
-
 let muted = false;
 const mute = {
   status: () => {
     return muted;
   },
   toggle: () => {
-    // if (muted) {
-    //   ambience.sound.muted = false;
-    // } else {
-    //   ambience.sound.muted = true;
-    // }
-    ambience.sound.muted = true;
+    if (muted) {
+      ambience.sound.play();
+    } else {
+      ambience.sound.pause();
+    }
     muted = !muted;
   },
 };
@@ -73,7 +60,9 @@ const mute = {
 const ambience = {
   sound: new THREE.Audio(listener),
   play: () => {
-    ambience.sound.play();
+    if (!muted) {
+      ambience.sound.play();
+    }
   },
   pause: () => {
     ambience.sound.pause();
@@ -84,7 +73,9 @@ soundLoader(ambienceFile, ambience, true, mix.ambience);
 const thrust = {
   sound: new THREE.Audio(listener),
   play: () => {
-    thrust.sound.play();
+    if (!muted) {
+      thrust.sound.play();
+    }
   },
   pause: () => {
     thrust.sound.pause();
@@ -98,7 +89,9 @@ soundLoader(thrustFile, thrust, true, mix.thrust);
 const rotate = {
   sound: new THREE.Audio(listener),
   play: () => {
-    rotate.sound.play();
+    if (!muted) {
+      rotate.sound.play();
+    }
   },
   pause: () => {
     rotate.sound.pause();
@@ -109,7 +102,9 @@ soundLoader(rotateFile, rotate, false, mix.rotate);
 const cameraUp = {
   sound: new THREE.Audio(listener),
   play: () => {
-    cameraUp.sound.play();
+    if (!muted) {
+      cameraUp.sound.play();
+    }
   },
   pause: () => {
     cameraUp.sound.pause();
@@ -120,7 +115,9 @@ soundLoader(cameraUpFile, cameraUp, false, mix.cameraUp);
 const cameraDown = {
   sound: new THREE.Audio(listener),
   play: () => {
-    cameraDown.sound.play();
+    if (!muted) {
+      cameraDown.sound.play();
+    }
   },
   pause: () => {
     cameraDown.sound.pause();
