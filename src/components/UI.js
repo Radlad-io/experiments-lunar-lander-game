@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import { ambience, status } from "@components/Sound.js";
+import { mute, ambience, thrust, status } from "@components/Sound.js";
 import { initialCameraFlyIn } from "@components/Camera.js";
 
 const hud = document.querySelector(".hud");
@@ -26,13 +26,16 @@ startBtn.addEventListener("click", () => {
 
 const muteBtn = document.querySelector(".sound-toggle");
 muteBtn.addEventListener("click", () => {
-  if (status.get() === false) {
-    status.set();
-    ambience.play();
-  } else if (status.get() === true) {
-    status.set();
-    ambience.pause();
-  }
+  console.log(mute.status());
+  console.log(ambience.sound);
+  mute.toggle();
+  // if (mute.status() === false) {
+  //   status.set();
+  //   ambience.play();
+  // } else if (status.get() === true) {
+  //   status.set();
+  //   ambience.pause();
+  // }
 });
 
 const info = document.querySelector(".info-modal");
@@ -51,6 +54,20 @@ infoBtn.addEventListener("click", () => {
       info.style.display = "none";
       visible = false;
     });
+  }
+});
+
+window.addEventListener("keypress", (e) => {
+  if (e.isComposing || e.key === " ") {
+    if (!thrust.sound.isPlaying) {
+      thrust.play();
+    }
+  }
+});
+
+window.addEventListener("keyup", (e) => {
+  if (e.isComposing || e.key === " ") {
+    thrust.pause();
   }
 });
 

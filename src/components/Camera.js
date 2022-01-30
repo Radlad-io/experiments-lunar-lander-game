@@ -8,6 +8,8 @@ import * as THREE from "three";
 import { dev } from "@util/State.js";
 import { scene } from "@components/MainScene.js";
 import { view } from "@util/State.js";
+import { rotate, cameraUp, cameraDown } from "@components/Sound.js";
+
 import gsap from "gsap";
 gsap.registerPlugin(CustomEase);
 
@@ -54,6 +56,7 @@ const cameraMove = () => {
       (e.key === "Shift" && isCameraFront && !isCameraMoving && !isCameraTop)
     ) {
       isCameraMoving = true;
+      rotate.play();
       gsap.to(camera.position, {
         duration: cameraMoveSpeed,
         ease: "circ.out",
@@ -79,6 +82,7 @@ const cameraMove = () => {
       (e.key === "Shift" && !isCameraFront && !isCameraMoving && !isCameraTop)
     ) {
       isCameraMoving = true;
+      rotate.play();
       gsap.to(camera.position, {
         duration: cameraMoveSpeed,
         ease: "none",
@@ -104,6 +108,7 @@ const cameraMove = () => {
       (e.key === "Control" && !isCameraMoving && !isCameraTop && isCameraFront)
     ) {
       isCameraMoving = true;
+      cameraUp.play();
       gsap
         .to(camera.position, {
           duration: cameraMoveSpeed,
@@ -128,6 +133,7 @@ const cameraMove = () => {
       (e.key === "Control" && !isCameraMoving && isCameraTop && isCameraFront)
     ) {
       isCameraMoving = true;
+      cameraDown.play();
       isCameraTop = false;
       gsap
         .to(camera.position, {
@@ -153,6 +159,7 @@ const cameraMove = () => {
       (e.key === "Control" && !isCameraMoving && !isCameraTop && !isCameraFront)
     ) {
       isCameraMoving = true;
+      cameraUp.play();
       gsap
         .to(camera.position, {
           duration: cameraMoveSpeed,
@@ -177,6 +184,7 @@ const cameraMove = () => {
       (e.key === "Control" && !isCameraMoving && isCameraTop && !isCameraFront)
     ) {
       isCameraMoving = true;
+      cameraDown.play();
       gsap
         .to(camera.position, {
           duration: cameraMoveSpeed,
@@ -196,6 +204,10 @@ const cameraMove = () => {
             console.log("Debug output: Camera Position", camera.position);
           }
         });
+    } else if (
+      e.isComposing ||
+      (e.key === "Control" && !isCameraMoving && isCameraTop && !isCameraFront)
+    ) {
     }
   });
 };
