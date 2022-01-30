@@ -7,7 +7,7 @@
 import * as THREE from "three";
 
 const galaxyGeometry = new THREE.BufferGeometry();
-const starCount = 1000;
+const starCount = 500;
 const starMaterial = new THREE.PointsMaterial({
   size: 0.5,
   color: new THREE.Color(0x000000),

@@ -49,6 +49,7 @@ const load = () => {
       Map = gltf;
       Map.scene.traverse((child) => {
         console.log(child.name);
+        // TODO: Material should change for OG graphics
         child.material = bakedMaterial;
       });
 

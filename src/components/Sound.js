@@ -24,7 +24,7 @@ const sound = new THREE.Audio(listener);
 // load a sound and set it as the Audio object's buffer
 const audioLoader = new THREE.AudioLoader();
 
-// Assignes audio to each sound
+// assignes audio to each sound
 const soundLoader = (file, sound, loop, volume) => {
   audioLoader.load(file, function (buffer) {
     sound.sound.setBuffer(buffer);
@@ -33,7 +33,7 @@ const soundLoader = (file, sound, loop, volume) => {
   });
 };
 
-// Volume mix
+// volume mix
 const mix = {
   ambience: 2.5,
   thrust: 2.5,
@@ -125,4 +125,4 @@ const cameraDown = {
 };
 soundLoader(cameraDownFile, cameraDown, false, mix.cameraDown);
 
-export { mute, ambience, thrust, status, rotate, cameraUp, cameraDown };
+export { mute, ambience, thrust, rotate, cameraUp, cameraDown };
