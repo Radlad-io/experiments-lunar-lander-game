@@ -6,10 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Physics | Lunar Lander</title>
   </head>
-  <body></body>
+  <body>
+    <div class="hud">
+      <p class="dro">rotationX: <span class="rotationX">0</span></p>
+      <p class="dro">rotationY: <span class="rotationY">0</span></p>
+      <p class="dro"><span class="touchdown">suspended</span></p>
+    </div>
+  </body>
   <style>
     * {
       margin: 0;
+    }
+    .dro {
+      margin: 5px;
+      padding: 5px;
+      background-color: rgba(0,0,0,.5);
+    }
+    .hud{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      width: 100vw;
+      z-index: 100;
+    }
+    p {
+      font-family: "IBM Plex Mono", monospace;
+      color: white;
     }
   </style>
   <script type="module" src="./scripts.js"></script>
