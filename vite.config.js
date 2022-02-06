@@ -15,7 +15,7 @@ module.exports = defineConfig({
   },
   root: "./src",
   publicDir: "./public",
-  assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp4"],
+  assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp4", "**/*.json"],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
