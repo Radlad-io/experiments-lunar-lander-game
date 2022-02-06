@@ -51,19 +51,19 @@ scene.add(sphereMesh);
 const padGeometry = new THREE.CylinderBufferGeometry(10, 10, 0.1, 20);
 const padMaterial = new THREE.MeshPhongMaterial({
   color: 0xffffff,
-  emissive: 0xffffff,
 });
 const padMesh = new THREE.Mesh(padGeometry, padMaterial);
 padMesh.position.set(-100, 0, 0);
+padMesh.receiveShadow = true;
 scene.add(padMesh);
 
 const pad2Geometry = new THREE.CylinderBufferGeometry(18, 18, 0.1, 20);
 const pad2Material = new THREE.MeshPhongMaterial({
   color: 0xffffff,
-  emissive: 0xffffff,
 });
 const pad2Mesh = new THREE.Mesh(pad2Geometry, pad2Material);
 pad2Mesh.position.set(100, 0, 0);
+pad2Mesh.receiveShadow = true;
 scene.add(pad2Mesh);
 
 const groundGeometry = new THREE.PlaneGeometry(400, 400);
@@ -71,16 +71,15 @@ const groundMaterial = new THREE.MeshPhongMaterial({ color: 0x666666 });
 const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
 groundMesh.rotation.set(-Math.PI / 2, 0, 0);
 groundMesh.receiveShadow = true;
-
 scene.add(groundMesh);
 
 let color, intensity, distance, angle, penumbra, decay;
 color = 0xffffff;
-intensity = 1;
+intensity = 2;
 distance = 200;
-angle = Math.PI / 2.5;
+angle = Math.PI / 1.5;
 penumbra = 0.5;
-decay = 0.5;
+decay = 0.25;
 
 const overHeadLight = new THREE.SpotLight(
   color,
@@ -96,18 +95,9 @@ overHeadLight.target.position.set(
   overHeadLight.position.y - 125,
   overHeadLight.position.z
 );
-
-overHeadLight.shadow.mapSize.width = 1024;
-overHeadLight.shadow.mapSize.height = 1024;
-overHeadLight.shadow.camera.left = -400;
-overHeadLight.shadow.camera.right = 350;
-overHeadLight.shadow.camera.top = 400;
-overHeadLight.shadow.camera.bottom = -300;
-overHeadLight.shadow.camera.near = 100;
-overHeadLight.shadow.camera.far = 800;
-overHeadLight.shadow.camera.position.set(0, 100, 0);
-
-console.log(overHeadLight.shadow.camera);
+overHeadLight.castShadow = true;
+overHeadLight.shadow.mapSize.width = 2048;
+overHeadLight.shadow.mapSize.height = 2048;
 
 const helper = new THREE.CameraHelper(overHeadLight.shadow.camera);
 scene.add(overHeadLight);
@@ -211,6 +201,8 @@ function animate() {
     sphereBody.applyLocalImpulse(new CANNON.Vec3(0, 3.5, 0));
   }
 
+  // TODO: I'm currently setting the quaternion rotations for steering
+  //  A better method might be to apply rotational force
   if (pressedKeys.includes("ArrowLeft")) {
     landerRotation -= 0.075;
     sphereBody.quaternion.setFromEuler(0, 0, -landerRotation / 3);
