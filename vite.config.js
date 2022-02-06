@@ -9,7 +9,8 @@ module.exports = defineConfig({
       input: {
         main: resolve(__dirname, "src/index.html"),
         tests: resolve(__dirname, "src/tests/index.html"),
-        basics: resolve(__dirname, "src/tests/steering/index.html"),
+        steering: resolve(__dirname, "src/tests/steering/index.html"),
+        altitude: resolve(__dirname, "src/tests/altitude/index.html"),
       },
     },
   },
