@@ -9,7 +9,7 @@ module.exports = defineConfig({
       input: {
         main: resolve(__dirname, "src/index.html"),
         tests: resolve(__dirname, "src/tests/index.html"),
-        physics: resolve(__dirname, "src/tests/physics/gravity/index.html"),
+        basics: resolve(__dirname, "src/tests/physics/basics/index.html"),
       },
     },
   },
