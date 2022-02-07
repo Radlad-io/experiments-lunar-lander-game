@@ -81,17 +81,34 @@ const testSphereMesh = new THREE.Mesh(testGeometry, testMaterial);
 testSphereMesh.position.set(0,-10,0)
 scene.add(testSphereMesh);
 
+// Set properties to configure:
 const altitudeText = new Text();
 scene.add(altitudeText);
-
-// Set properties to configure:
-altitudeText.text = `ALTITUDE ${75}`;
+altitudeText.text = `ALTITUDE ${75}m`;
 altitudeText.font = "./IBMPlexMono-Bold.ttf";
-altitudeText.fontSize = 8;
-altitudeText.position.y = 15;
+altitudeText.fontSize = 6;
+altitudeText.position.y = 25;
 altitudeText.position.z = -10;
 altitudeText.position.x = -25;
 altitudeText.color = 0xffffff;
+
+const vertVelocityText = new Text();
+scene.add(vertVelocityText);
+vertVelocityText.font = "./IBMPlexMono-Bold.ttf";
+vertVelocityText.fontSize = 6;
+vertVelocityText.position.y = 18;
+vertVelocityText.position.z = -10;
+vertVelocityText.position.x = -25;
+vertVelocityText.color = 0xffffff;
+
+const horizVelocityText = new Text();
+scene.add(horizVelocityText);
+horizVelocityText.font = "./IBMPlexMono-Bold.ttf";
+horizVelocityText.fontSize = 6;
+horizVelocityText.position.y = 11;
+horizVelocityText.position.z = -10;
+horizVelocityText.position.x = -25;
+horizVelocityText.color = 0xffffff;
 
 const altitudeRayCaster = new THREE.Raycaster();
 // const origin = sphereBody.position
@@ -100,14 +117,31 @@ rayTo.normalize()
 altitudeRayCaster.set(sphereBody.position,rayTo);
 let intersects, altitude
 
-setInterval(() => {
+const updateAlititude = () => {
   altitudeRayCaster.set(sphereBody.position,rayTo);
   intersects = altitudeRayCaster.intersectObject(groundMesh)
   altitude = Math.floor(intersects[0].distance -1.5)
-  altitudeText.text = `ALTITUDE ${altitude}`;
-}, 200)
+  altitudeText.text = `ALTITUDE ${altitude}m`;
+}
 
+const updateDroPosition = () => {
+  altitudeText.position.x = sphereBody.position.x - 25;
+  altitudeText.position.y = sphereBody.position.y + 25;
+  vertVelocityText.position.x = sphereBody.position.x - 25;
+  vertVelocityText.position.y = sphereBody.position.y + 18;
+  horizVelocityText.position.x = sphereBody.position.x - 25;
+  horizVelocityText.position.y = sphereBody.position.y + 11;
+}
 
+const updateVelocity = () => {
+  vertVelocityText.text = `${sphereBody.velocity.y.toFixed(1) > 0 ? "↑": "↓"} ${Math.abs(sphereBody.velocity.y.toFixed(1))}m/s`;
+  horizVelocityText.text = `${sphereBody.velocity.x.toFixed(1) > 0 ? "→" : "←"} ${Math.abs(sphereBody.velocity.x.toFixed(1))}m/s`;
+}
+
+setInterval(() => {
+  updateAlititude()
+  updateVelocity()
+}, 100)
 
 
 
@@ -256,11 +290,8 @@ function animate() {
 
   sphereMesh.position.copy(sphereBody.position);
   sphereMesh.quaternion.copy(sphereBody.quaternion);
-  altitudeText.position.x = sphereBody.position.x - 25;
-  altitudeText.position.y = sphereBody.position.y + 15;
 
-  // intersects = altitudeRayCaster.intersectObject(testSphereMesh)
-  // console.log(intersects)
+  updateDroPosition()
 
   // Run the simulation independently of framerate every 1 / 60 ms
   world.fixedStep();
