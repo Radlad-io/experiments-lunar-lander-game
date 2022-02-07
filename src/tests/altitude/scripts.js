@@ -9,7 +9,7 @@ import { GUI } from "dat.gui";
 import { Text } from "troika-three-text";
 
 const scene = new THREE.Scene();
-scene.add(new THREE.AxesHelper(5));
+// scene.add(new THREE.AxesHelper(5));
 scene.background = new THREE.Color(0x000000);
 const gui = new GUI();
 
@@ -75,48 +75,41 @@ groundMesh.rotation.set(-Math.PI / 2, 0, 0);
 groundMesh.receiveShadow = true;
 scene.add(groundMesh);
 
-// const altitudeRay = new CANNON.Ray(
-//   sphereBody.position,
-//   new CANNON.Vec3(
-//     sphereBody.position.x,
-//     sphereBody.position.y - 200,
-//     sphereBody.position.z
-//   )
-// );
-// console.log(altitudeRay);
+const testGeometry = new THREE.BoxGeometry(5, 5, 5);
+const testMaterial = new THREE.MeshNormalMaterial();
+const testSphereMesh = new THREE.Mesh(testGeometry, testMaterial);
+testSphereMesh.position.set(0,-10,0)
+scene.add(testSphereMesh);
 
-const altitudeRayCaster = new THREE.Raycaster();
-const altitudeRayCasterOrigin = sphereMesh.position;
-const altitudeRayCasterDirection = new THREE.Vector3(0, -1, 0);
-altitudeRayCasterDirection.normalize();
-altitudeRayCaster.set(altitudeRayCasterOrigin, altitudeRayCasterDirection);
-
-console.log(altitudeRayCaster.intersectObject(sphereMesh));
-
-// setInterval(() => {
-//   console.log(altitudeRayCaster.intersectObject(sphereMesh));
-// }, 1000);
-
-// const intersect = altitudeRayCaster.intersectObject(sphereMesh);
-
-let count = 25;
 const altitudeText = new Text();
 scene.add(altitudeText);
 
 // Set properties to configure:
-altitudeText.text = `ALTITUDE ${count}`;
+altitudeText.text = `ALTITUDE ${75}`;
 altitudeText.font = "./IBMPlexMono-Bold.ttf";
 altitudeText.fontSize = 8;
-altitudeText.position.y = 10;
+altitudeText.position.y = 15;
 altitudeText.position.z = -10;
 altitudeText.position.x = -25;
 altitudeText.color = 0xffffff;
 
+const altitudeRayCaster = new THREE.Raycaster();
+// const origin = sphereBody.position
+const rayTo =  new THREE.Vector3(0, -1, 0)
+rayTo.normalize()
+altitudeRayCaster.set(sphereBody.position,rayTo);
+let intersects, altitude
+
 setInterval(() => {
-  count -= 1;
-  altitudeText.text = `ALTITUDE ${count}`;
-  altitudeText.sync();
-}, 1000);
+  altitudeRayCaster.set(sphereBody.position,rayTo);
+  intersects = altitudeRayCaster.intersectObject(groundMesh)
+  altitude = Math.floor(intersects[0].distance -1.5)
+  altitudeText.text = `ALTITUDE ${altitude}`;
+}, 200)
+
+
+
+
 
 // Update the rendering:
 let color, intensity, distance, angle, penumbra, decay;
@@ -264,7 +257,10 @@ function animate() {
   sphereMesh.position.copy(sphereBody.position);
   sphereMesh.quaternion.copy(sphereBody.quaternion);
   altitudeText.position.x = sphereBody.position.x - 25;
-  altitudeText.position.y = sphereBody.position.y + 10;
+  altitudeText.position.y = sphereBody.position.y + 15;
+
+  // intersects = altitudeRayCaster.intersectObject(testSphereMesh)
+  // console.log(intersects)
 
   // Run the simulation independently of framerate every 1 / 60 ms
   world.fixedStep();
