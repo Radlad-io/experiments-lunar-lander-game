@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 
+
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { GUI } from "dat.gui";
@@ -19,7 +20,7 @@ const world = new CANNON.World({
 });
 
 const landerRenderBody = new THREE.Group();
-const landerMaterial = new THREE.MeshNormalMaterial();
+const landerMaterial = new THREE.MeshPhongMaterial({color: 0xffffff});
 
 const radius = 5; // m
 const landerBodyPhysics = new CANNON.Body({
@@ -163,7 +164,7 @@ let intersects, altitude;
 const updateAlititude = () => {
   altitudeRayCaster.set(landerBodyPhysics.position, rayTo);
   intersects = altitudeRayCaster.intersectObject(groundMesh);
-  altitude = Math.floor(intersects[0].distance - 1.5);
+  altitude = Math.floor(intersects[0].distance - 3);
   altitudeText.text = `ALTITUDE ${altitude}m`;
 };
 
@@ -224,14 +225,16 @@ const aspectRatio = window.innerWidth / window.innerHeight;
 const cameraWidth = 150;
 const cameraHeight = cameraWidth / aspectRatio;
 
-const camera = new THREE.OrthographicCamera(
-  cameraWidth / -3,
-  cameraWidth / 3,
-  cameraHeight / 3,
-  cameraHeight / -3,
-  0,
-  1000
-);
+// const camera = new THREE.OrthographicCamera(
+//   cameraWidth / -3,
+//   cameraWidth / 3,
+//   cameraHeight / 3,
+//   cameraHeight / -3,
+//   0,
+//   1000
+// );
+
+const camera = new THREE.PerspectiveCamera( 6, window.innerWidth / window.innerHeight, 1, 1000 );
 
 var gridXZ = new THREE.GridHelper(
   500,
@@ -241,7 +244,7 @@ var gridXZ = new THREE.GridHelper(
 );
 gridXZ.position.set(0, 0);
 gridXZ.rotation.set(0, 0, 0);
-scene.add(gridXZ);
+// scene.add(gridXZ);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -308,6 +311,8 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
+let landerWorldPosition
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -338,15 +343,16 @@ function animate() {
   landerRenderBody.quaternion.copy(landerBodyPhysics.quaternion);
 
   camera.lookAt(landerRenderBody.position)
-  camera.position.y = landerRenderBody.position.y + 400
-
+  // camera.position.lerp( new THREE.Vector3(landerRenderBody.position.x + 400,landerRenderBody.position.y + 400, landerRenderBody.position.z + 400), 0.9)
+  landerWorldPosition = landerRenderBody.getWorldPosition(new THREE.Vector3())
+  camera.position.lerp(new THREE.Vector3(landerWorldPosition.x + 450, landerWorldPosition.y + 300, landerWorldPosition.z+ 450), .05)
   updateDroPosition();
 
   // Run the simulation independently of framerate every 1 / 60 ms
   world.fixedStep();
 
   render();
-
+  
   stats.update();
 }
 

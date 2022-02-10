@@ -12,6 +12,7 @@ module.exports = defineConfig({
         steering: resolve(__dirname, "src/tests/steering/index.html"),
         readout: resolve(__dirname, "src/tests/readout/index.html"),
         lander: resolve(__dirname, "src/tests/lander/index.html"),
+        camera: resolve(__dirname, "src/tests/camera/index.html"),
       },
     },
   },
