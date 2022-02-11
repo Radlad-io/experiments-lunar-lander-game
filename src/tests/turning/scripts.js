@@ -132,17 +132,13 @@ pad2Mesh.position.set(100, 15, 0);
 pad2Mesh.receiveShadow = true;
 scene.add(pad2Mesh);
 
+import moonTextureCOLOR from "./textures/moonTexture_COLOR.jpg";
+import moonTextureNorm from "./textures/moonTexture_NORM.jpg";
+import moonTextureDisp from "./textures/moonTexture_DISP.png";
 const textureLoader = new THREE.TextureLoader();
-const groundTextureBaseColor = textureLoader.load(
-  "./textures/moonTexture_COLOR.jpg"
-);
-const groundTextureNormMap = textureLoader.load(
-  "./textures/moonTexture_NORM.jpg"
-);
-const groundTextureDispMap = textureLoader.load(
-  "./textures/moonTexture_DISP.png"
-);
-
+const groundTextureBaseColor = textureLoader.load(moonTextureCOLOR);
+const groundTextureNormMap = textureLoader.load(moonTextureNorm);
+const groundTextureDispMap = textureLoader.load(moonTextureDisp);
 const groundGeometry = new THREE.PlaneGeometry(400, 400, 64, 64);
 const groundMaterial = new THREE.MeshStandardMaterial({
   map: groundTextureBaseColor,
@@ -223,7 +219,6 @@ padTwoText.color = 0xffffff;
 padTwoText.anchorX = "50%";
 padTwoText.anchorY = "50%";
 padTwoText.anchorZ = "50%";
-console.log(padTwoText);
 
 const fadePadText = () => {
   if (altitude < 15) {
