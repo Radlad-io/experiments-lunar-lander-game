@@ -21,7 +21,11 @@ const world = new CANNON.World({
 });
 
 const landerRenderBody = new THREE.Group();
-const landerMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+const landerMaterial = new THREE.MeshPhongMaterial({
+  color: 0xffffff,
+  emissive: 0xffffff,
+  emissiveIntensity: 0.25,
+});
 
 const radius = 5; // m
 const landerBodyPhysics = new CANNON.Body({
@@ -103,12 +107,12 @@ world.addBody(groundBody);
 
 const cylinderShape = new CANNON.Cylinder(10, 10, 10, 20);
 const cylinderBody = new CANNON.Body({ mass: 0, shape: cylinderShape });
-cylinderBody.position.set(-100, 5, 0);
+cylinderBody.position.set(-100, 15, 0);
 world.addBody(cylinderBody);
 
 const cylinder2Shape = new CANNON.Cylinder(18, 18, 10, 20);
 const cylinder2Body = new CANNON.Body({ mass: 0, shape: cylinder2Shape });
-cylinder2Body.position.set(100, 5, 0);
+cylinder2Body.position.set(100, 15, 0);
 world.addBody(cylinder2Body);
 
 const padGeometry = new THREE.CylinderBufferGeometry(10, 10, 10, 20);
@@ -118,13 +122,13 @@ const padMaterial = new THREE.MeshPhongMaterial({
   emissiveIntensity: 0.5,
 });
 const padMesh = new THREE.Mesh(padGeometry, padMaterial);
-padMesh.position.set(-100, 5, 0);
+padMesh.position.set(-100, 15, 0);
 padMesh.receiveShadow = true;
 scene.add(padMesh);
 
 const pad2Geometry = new THREE.CylinderBufferGeometry(18, 18, 10, 20);
 const pad2Mesh = new THREE.Mesh(pad2Geometry, padMaterial);
-pad2Mesh.position.set(100, 5, 0);
+pad2Mesh.position.set(100, 15, 0);
 pad2Mesh.receiveShadow = true;
 scene.add(pad2Mesh);
 
@@ -144,7 +148,7 @@ const groundMaterial = new THREE.MeshStandardMaterial({
   map: groundTextureBaseColor,
   normalMap: groundTextureNormMap,
   displacementMap: groundTextureDispMap,
-  displacementScale: 12,
+  displacementScale: 25,
 });
 const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
 groundMesh.rotation.set(-Math.PI / 2, 0, 0);
@@ -194,6 +198,59 @@ altitudeText.anchorX = "50%";
 altitudeText.anchorY = "50%";
 altitudeText.anchorZ = "50%";
 
+const padOneText = new Text();
+scene.add(padOneText);
+padOneText.text = "4x";
+padOneText.font = font;
+padOneText.fontSize = 6;
+padOneText.position.y = cylinderBody.position.y + 12;
+padOneText.position.z = cylinderBody.position.z;
+padOneText.position.x = cylinderBody.position.x;
+padOneText.color = 0xffffff;
+padOneText.anchorX = "50%";
+padOneText.anchorY = "50%";
+padOneText.anchorZ = "50%";
+
+const padTwoText = new Text();
+scene.add(padTwoText);
+padTwoText.text = "2x";
+padTwoText.font = font;
+padTwoText.fontSize = 6;
+padTwoText.position.y = cylinder2Body.position.y + 12;
+padTwoText.position.z = cylinder2Body.position.z;
+padTwoText.position.x = cylinder2Body.position.x;
+padTwoText.color = 0xffffff;
+padTwoText.anchorX = "50%";
+padTwoText.anchorY = "50%";
+padTwoText.anchorZ = "50%";
+console.log(padTwoText);
+
+const fadePadText = () => {
+  if (altitude < 15) {
+    gsap.to(padOneText, {
+      duration: 1,
+      ease: "none",
+      fillOpacity: 0,
+    });
+    gsap.to(padTwoText, {
+      duration: 1,
+      ease: "none",
+      fillOpacity: 0,
+    });
+  } else {
+    gsap.to(padOneText, {
+      duration: 1,
+      ease: "none",
+      fillOpacity: 1,
+    });
+    gsap.to(padTwoText, {
+      duration: 1,
+      ease: "none",
+      fillOpacity: 1,
+    });
+  }
+};
+
 const altitudeRayCaster = new THREE.Raycaster();
 // const origin = landerBodyPhysics.position
 const rayTo = new THREE.Vector3(0, -1, 0);
@@ -204,7 +261,7 @@ let intersects, altitude;
 const updateAlititude = () => {
   altitudeRayCaster.set(landerBodyPhysics.position, rayTo);
   intersects = altitudeRayCaster.intersectObject(groundMesh);
-  altitude = Math.floor(intersects[0].distance - 3);
+  altitude = Math.floor(intersects[0].distance - 23);
   altitudeText.text = `ALTITUDE ${altitude}m`;
 };
 
@@ -224,7 +281,6 @@ const updateDroPosition = () => {
     ease: "power3.out",
     y: cameraSide ? 0 : Math.PI / 2,
   });
-
   gsap.to(vertVelocityText.rotation, {
     delay: 0.3,
     duration: cameraMoveSpeed * 4,
@@ -232,6 +288,18 @@ const updateDroPosition = () => {
     y: cameraSide ? 0 : Math.PI / 2,
   });
   gsap.to(horizVelocityText.rotation, {
+    delay: 0.45,
+    duration: cameraMoveSpeed * 5,
+    ease: "power3.out",
+    y: cameraSide ? 0 : Math.PI / 2,
+  });
+  gsap.to(padOneText.rotation, {
+    delay: 0.45,
+    duration: cameraMoveSpeed * 5,
+    ease: "power3.out",
+    y: cameraSide ? 0 : Math.PI / 2,
+  });
+  gsap.to(padTwoText.rotation, {
     delay: 0.45,
     duration: cameraMoveSpeed * 5,
     ease: "power3.out",
@@ -258,7 +326,7 @@ let color, intensity, distance, angle, penumbra, decay;
 color = 0xffffff;
 intensity = 2;
 distance = 250;
-angle = Math.PI / 1.25;
+angle = Math.PI / 1.5;
 penumbra = 0.5;
 decay = 0.75;
 
@@ -416,7 +484,14 @@ function checkRotation() {
   }
 }
 
+const clock = new THREE.Clock();
+let oldElapsedTime = 0;
+
 function animate() {
+  const elapsedTime = clock.getElapsedTime();
+  const deltaTime = elapsedTime - oldElapsedTime;
+  oldElapsedTime = elapsedTime;
+
   requestAnimationFrame(animate);
   // console.log(landerBodyPhysics.velocity.y);
 
@@ -438,25 +513,29 @@ function animate() {
     droRotationZ.innerHTML = landerRotation.toFixed(2);
   }
 
+  overHeadLight.position.z = landerBodyPhysics.position.z;
+  overHeadLight.position.x = landerBodyPhysics.position.x;
+
   landerRenderBody.position.copy(landerBodyPhysics.position);
   landerRenderBody.quaternion.copy(landerBodyPhysics.quaternion);
 
   landerWorldPosition = landerRenderBody.getWorldPosition(new THREE.Vector3());
-  // camera.position.lerp(
-  //   new THREE.Vector3(
-  //     landerWorldPosition.x + 550,
-  //     landerWorldPosition.y + 200,
-  //     landerWorldPosition.z + 550
-  //   ),
-  //   0.05
-  // );
-  // camera.position.z = landerWorldPosition.z;
   updateDroPosition();
   checkRotation();
   camera.lookAt(landerRenderBody.position);
 
+  fadePadText();
+
+  gsap.to(camera, {
+    duration: cameraMoveSpeed * 3,
+    ease: "power3.out",
+    fov: altitude < 30 ? 5 : 12,
+  });
+
+  camera.updateProjectionMatrix();
+
   // Run the simulation independently of framerate every 1 / 60 ms
-  world.fixedStep();
+  world.fixedStep(1 / 60, deltaTime, 3);
 
   render();
 
