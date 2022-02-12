@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Physics | Lunar Lander</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/CustomEase.min.js"></script>
+  </head>
+  <body>
+    <div class="hud">
+      <p class="dro">Use arrow keys</p>
+    </div>
+  </body>
+  <style>
+    * {
+      margin: 0;
+    }
+    .dro {
+      margin: 5px;
+      padding: 5px 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .hud {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      width: 100vw;
+      z-index: 100;
+    }
+    p {
+      font-family: "IBM Plex Mono", monospace;
+      color: white;
+    }
+  </style>
+  <script type="module" src="./scripts.js"></script>
+</html>

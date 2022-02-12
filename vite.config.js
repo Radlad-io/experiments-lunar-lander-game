@@ -15,6 +15,8 @@ module.exports = defineConfig({
         camera: resolve(__dirname, "src/tests/camera/index.html"),
         displacement: resolve(__dirname, "src/tests/displacement/index.html"),
         turning: resolve(__dirname, "src/tests/turning/index.html"),
+        input: resolve(__dirname, "src/tests/input/index.html"),
+        multiaxis: resolve(__dirname, "src/tests/multiaxis/index.html"),
       },
     },
   },
