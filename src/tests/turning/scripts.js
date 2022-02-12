@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 
+import { Galaxy } from "@components/Galaxy.js";
+
 import Stats from "three/examples/jsm/libs/stats.module";
 import { GUI } from "dat.gui";
 import { Text } from "troika-three-text";
@@ -8,6 +10,7 @@ import gsap from "gsap";
 gsap.registerPlugin(CustomEase);
 
 const scene = new THREE.Scene();
+scene.add(Galaxy);
 // scene.add(new THREE.AxesHelper(5));
 scene.background = new THREE.Color(0x000000);
 scene.fog = new THREE.Fog(0x000, 900, 1300);
@@ -478,6 +481,10 @@ function checkRotation() {
     });
   }
 }
+
+setInterval(() => {
+  console.log(pressedKeys);
+}, 500);
 
 const clock = new THREE.Clock();
 let oldElapsedTime = 0;

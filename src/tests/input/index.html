@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Physics | Lunar Lander</title>
+  </head>
+  <body>
+    <div class="hud">
+      <p class="dro">
+        The event base architecture of javascript combined with the single
+        threaded event loop creates a situation where a keyup event can
+        occasionally fire before the keydown. This happens when holding a key
+        and pressing and releasing other keys. This leads to a situation where
+        keys can become suck in application state. The solution is to timestamp
+        keydown and keyup events. This allows you to ignore key down event if
+        they've occurred after the keyup even has already been fired.
+      </p>
+    </div>
+  </body>
+  <style>
+    * {
+      margin: 0;
+    }
+    .dro {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      max-width: 75vw;
+    }
+    .hud {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      width: 100vw;
+      z-index: 100;
+    }
+    p {
+      font-family: "IBM Plex Mono", monospace;
+      color: white;
+    }
+  </style>
+  <script type="module" src="./scripts.js"></script>
+</html>
