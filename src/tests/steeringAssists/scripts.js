@@ -16,7 +16,7 @@ const gui = new GUI();
 
 // Physics
 const world = new CANNON.World({
-  gravity: new CANNON.Vec3(0, -2.75, 0),
+  gravity: new CANNON.Vec3(0, -1.62, 0),
   // Earth -9.82 m/s²
   // Moon -1.62 m/s²
 });
@@ -32,13 +32,13 @@ const radius = 5; // m
 const landerBodyPhysics = new CANNON.Body({
   mass: 50, // kg
   material: new CANNON.Material(),
-  velocity: new CANNON.Vec3(0, -10, 0),
+  velocity: new CANNON.Vec3(0, -2, -10),
   angularFactor: new CANNON.Vec3(1, 0, 1),
   angularDamping: 0.75,
-  linearDamping: 0.125,
+  linearDamping: 0.015,
   // sleepSpeedLimit: 1.0,
 });
-landerBodyPhysics.position.set(0, 125, 0);
+landerBodyPhysics.position.set(0, 100, 50);
 
 // TODO: Lander rotates from center and it should rotate form the sphere's center
 // Top Part
@@ -451,14 +451,6 @@ function checkRotation() {
       ),
       z: landerBodyPhysics.position.x + 900,
     });
-    // gsap.to(landerBodyPhysics.velocity, {
-    //   duration: cameraMoveSpeed + 1,
-    //   ease: CustomEase.create(
-    //     "custom",
-    //     "M0,0,C0.098,0.3,0.29,0.54,0.374,0.632,0.446,0.711,0.698,0.9,1,1"
-    //   ),
-    //   x: 0,
-    // });
     landerBodyPhysics.quaternion.setFromEuler(0, 0, 0);
     landerBodyPhysics.angularVelocity = new CANNON.Vec3(0, 0, 0);
   } else {
@@ -475,15 +467,6 @@ function checkRotation() {
       ease: "none",
       z: 0,
     });
-    // gsap.to(landerBodyPhysics.velocity, {
-    //   duration: cameraMoveSpeed + 1,
-    //   ease: CustomEase.create(
-    //     "custom",
-    //     "M0,0,C0.098,0.3,0.29,0.54,0.374,0.632,0.446,0.711,0.698,0.9,1,1"
-    //   ),
-    //   z: 0,
-    // });
-
     landerBodyPhysics.quaternion.setFromEuler(0, 0, 0);
     landerBodyPhysics.angularVelocity = new CANNON.Vec3(0, 0, 0);
   }
@@ -511,7 +494,7 @@ function animate() {
   // console.log(landerBodyPhysics.velocity.y);
 
   if (Object.keys(Key._pressed).includes("ArrowUp")) {
-    landerBodyPhysics.applyLocalImpulse(new CANNON.Vec3(0, 5.5, 0));
+    landerBodyPhysics.applyLocalImpulse(new CANNON.Vec3(0, 3.5, 0));
   }
 
   // TODO: I'm currently setting the quaternion rotations for steering
