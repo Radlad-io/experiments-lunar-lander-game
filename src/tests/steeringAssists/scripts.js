@@ -16,7 +16,7 @@ const gui = new GUI();
 
 // Physics
 const world = new CANNON.World({
-  gravity: new CANNON.Vec3(0, -1.62, 0),
+  gravity: new CANNON.Vec3(0, -2.75, 0),
   // Earth -9.82 m/s²
   // Moon -1.62 m/s²
 });
@@ -35,6 +35,7 @@ const landerBodyPhysics = new CANNON.Body({
   velocity: new CANNON.Vec3(0, -10, 0),
   angularFactor: new CANNON.Vec3(1, 0, 1),
   angularDamping: 0.75,
+  linearDamping: 0.125,
   // sleepSpeedLimit: 1.0,
 });
 landerBodyPhysics.position.set(0, 125, 0);
@@ -309,6 +310,7 @@ const updateVelocity = () => {
     landerBodyPhysics.velocity.y.toFixed(1) > 0 ? "↑" : "↓"
   }  ${Math.abs(landerBodyPhysics.velocity.y.toFixed(1))}m/s`;
   horizVelocityText.text = `${
+    //  FIXME: Horizonatal arrows don't work correctly
     landerBodyPhysics.velocity.x.toFixed(1) > 0 ? "→" : "←"
   }  ${
     cameraSide
@@ -396,8 +398,6 @@ document.body.appendChild(stats.dom);
 
 camera.position.set(850, 200, 850);
 
-const droRotationZ = document.querySelector(".rotationZ");
-
 let cameraSide = false;
 
 let Key = {
@@ -449,16 +449,16 @@ function checkRotation() {
         "custom",
         "M0,0,C0.098,0.3,0.29,0.54,0.374,0.632,0.446,0.711,0.698,0.9,1,1"
       ),
-      z: 900,
+      z: landerBodyPhysics.position.x + 900,
     });
-    gsap.to(landerBodyPhysics.velocity, {
-      duration: cameraMoveSpeed * 1.5,
-      ease: CustomEase.create(
-        "custom",
-        "M0,0,C0.098,0.3,0.29,0.54,0.374,0.632,0.446,0.711,0.698,0.9,1,1"
-      ),
-      z: 0,
-    });
+    // gsap.to(landerBodyPhysics.velocity, {
+    //   duration: cameraMoveSpeed + 1,
+    //   ease: CustomEase.create(
+    //     "custom",
+    //     "M0,0,C0.098,0.3,0.29,0.54,0.374,0.632,0.446,0.711,0.698,0.9,1,1"
+    //   ),
+    //   x: 0,
+    // });
     landerBodyPhysics.quaternion.setFromEuler(0, 0, 0);
     landerBodyPhysics.angularVelocity = new CANNON.Vec3(0, 0, 0);
   } else {
@@ -468,21 +468,22 @@ function checkRotation() {
         "custom",
         "M0,0,C0.098,0.3,0.29,0.54,0.374,0.632,0.446,0.711,0.698,0.9,1,1"
       ),
-      x: 900,
+      x: landerBodyPhysics.position.x + 900,
     });
     gsap.to(camera.position, {
       duration: cameraMoveSpeed,
       ease: "none",
       z: 0,
     });
-    gsap.to(landerBodyPhysics.velocity, {
-      duration: cameraMoveSpeed * 1.5,
-      ease: CustomEase.create(
-        "custom",
-        "M0,0,C0.098,0.3,0.29,0.54,0.374,0.632,0.446,0.711,0.698,0.9,1,1"
-      ),
-      x: 0,
-    });
+    // gsap.to(landerBodyPhysics.velocity, {
+    //   duration: cameraMoveSpeed + 1,
+    //   ease: CustomEase.create(
+    //     "custom",
+    //     "M0,0,C0.098,0.3,0.29,0.54,0.374,0.632,0.446,0.711,0.698,0.9,1,1"
+    //   ),
+    //   z: 0,
+    // });
+
     landerBodyPhysics.quaternion.setFromEuler(0, 0, 0);
     landerBodyPhysics.angularVelocity = new CANNON.Vec3(0, 0, 0);
   }
@@ -510,7 +511,7 @@ function animate() {
   // console.log(landerBodyPhysics.velocity.y);
 
   if (Object.keys(Key._pressed).includes("ArrowUp")) {
-    landerBodyPhysics.applyLocalImpulse(new CANNON.Vec3(0, 3.5, 0));
+    landerBodyPhysics.applyLocalImpulse(new CANNON.Vec3(0, 5.5, 0));
   }
 
   // TODO: I'm currently setting the quaternion rotations for steering
