@@ -1,8 +1,6 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 
-import { Galaxy } from "@components/Galaxy.js";
-
 import Stats from "three/examples/jsm/libs/stats.module";
 import { GUI } from "dat.gui";
 import { Text } from "troika-three-text";
@@ -10,7 +8,7 @@ import gsap from "gsap";
 gsap.registerPlugin(CustomEase);
 
 const scene = new THREE.Scene();
-scene.add(Galaxy);
+
 // scene.add(new THREE.AxesHelper(5));
 scene.background = new THREE.Color(0x000000);
 scene.fog = new THREE.Fog(0x000, 900, 1300);
@@ -37,6 +35,7 @@ const landerBodyPhysics = new CANNON.Body({
   velocity: new CANNON.Vec3(0, -10, 0),
   angularFactor: new CANNON.Vec3(1, 0, 1),
   angularDamping: 0.75,
+  // sleepSpeedLimit: 1.0,
 });
 landerBodyPhysics.position.set(0, 125, 0);
 
@@ -436,7 +435,7 @@ document.onkeyup = function (event) {
 };
 
 let landerWorldPosition;
-var cameraMoveSpeed = 1.75;
+var cameraMoveSpeed = 0.75;
 function checkRotation() {
   if (cameraSide) {
     gsap.to(camera.position, {
@@ -452,6 +451,16 @@ function checkRotation() {
       ),
       z: 900,
     });
+    gsap.to(landerBodyPhysics.velocity, {
+      duration: cameraMoveSpeed * 1.5,
+      ease: CustomEase.create(
+        "custom",
+        "M0,0,C0.098,0.3,0.29,0.54,0.374,0.632,0.446,0.711,0.698,0.9,1,1"
+      ),
+      z: 0,
+    });
+    landerBodyPhysics.quaternion.setFromEuler(0, 0, 0);
+    landerBodyPhysics.angularVelocity = new CANNON.Vec3(0, 0, 0);
   } else {
     gsap.to(camera.position, {
       duration: cameraMoveSpeed,
@@ -466,6 +475,16 @@ function checkRotation() {
       ease: "none",
       z: 0,
     });
+    gsap.to(landerBodyPhysics.velocity, {
+      duration: cameraMoveSpeed * 1.5,
+      ease: CustomEase.create(
+        "custom",
+        "M0,0,C0.098,0.3,0.29,0.54,0.374,0.632,0.446,0.711,0.698,0.9,1,1"
+      ),
+      x: 0,
+    });
+    landerBodyPhysics.quaternion.setFromEuler(0, 0, 0);
+    landerBodyPhysics.angularVelocity = new CANNON.Vec3(0, 0, 0);
   }
   cameraSide = !cameraSide;
 }

@@ -9,14 +9,18 @@ module.exports = defineConfig({
       input: {
         main: resolve(__dirname, "src/index.html"),
         tests: resolve(__dirname, "src/tests/index.html"),
-        steering: resolve(__dirname, "src/tests/steering/index.html"),
+        basic: resolve(__dirname, "src/tests/basic/index.html"),
         readout: resolve(__dirname, "src/tests/readout/index.html"),
         lander: resolve(__dirname, "src/tests/lander/index.html"),
         camera: resolve(__dirname, "src/tests/camera/index.html"),
         displacement: resolve(__dirname, "src/tests/displacement/index.html"),
         turning: resolve(__dirname, "src/tests/turning/index.html"),
         input: resolve(__dirname, "src/tests/input/index.html"),
-        multiaxis: resolve(__dirname, "src/tests/multiaxis/index.html"),
+        steering: resolve(__dirname, "src/tests/steering/index.html"),
+        steeringAssists: resolve(
+          __dirname,
+          "src/tests/steeringAssists/index.html"
+        ),
       },
     },
   },
