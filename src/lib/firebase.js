@@ -12,13 +12,4 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
-export default async function handler(req, res) {
-  console.log(req.body)
-  const score = await db.collection('scores').doc('kevin_merinsky').get();
-
-  if (!score.exists) {
-    return res.status(404).json({});
-  }
-
-  return res.status(200).json({ id: score.id, ...score.data() });
-}
+export { db };
