@@ -32,13 +32,13 @@ const radius = 5; // m
 const landerBodyPhysics = new CANNON.Body({
   mass: 50, // kg
   material: new CANNON.Material(),
-  velocity: new CANNON.Vec3(0, -2, -10),
+  velocity: new CANNON.Vec3(0, -2, 10),
   angularFactor: new CANNON.Vec3(1, 0, 1),
   angularDamping: 0.75,
   linearDamping: 0.015,
   // sleepSpeedLimit: 1.0,
 });
-landerBodyPhysics.position.set(0, 100, 50);
+landerBodyPhysics.position.set(0, 100, -50);
 
 // TODO: Lander rotates from center and it should rotate form the sphere's center
 // Top Part
@@ -155,7 +155,11 @@ groundMesh.receiveShadow = true;
 scene.add(groundMesh);
 
 landerBodyPhysics.addEventListener("collide", (event) => {
-  console.log(event.contact.getImpactVelocityAlongNormal());
+  const contactForce = event.contact.getImpactVelocityAlongNormal();
+  console.log(contactForce);
+  if (contactForce > 1) {
+    isPlaying = false;
+  }
 });
 
 import font from "./IBMPlexMono-Bold.ttf";
@@ -467,6 +471,11 @@ function checkRotation() {
       ease: "none",
       z: 0,
     });
+    gsap.to(camera.position, {
+      duration: cameraMoveSpeed,
+      ease: "none",
+      z: 0,
+    });
     landerBodyPhysics.quaternion.setFromEuler(0, 0, 0);
     landerBodyPhysics.angularVelocity = new CANNON.Vec3(0, 0, 0);
   }
@@ -484,90 +493,91 @@ const cameraSnapZoom = (i) => {
 
 const clock = new THREE.Clock();
 let oldElapsedTime = 0;
+let isPlaying = true;
 
 function animate() {
   const elapsedTime = clock.getElapsedTime();
   const deltaTime = elapsedTime - oldElapsedTime;
   oldElapsedTime = elapsedTime;
 
+  if (isPlaying) {
+    if (Object.keys(Key._pressed).includes("ArrowUp")) {
+      landerBodyPhysics.applyLocalImpulse(new CANNON.Vec3(0, 3.5, 0));
+    }
+
+    // TODO: I'm currently setting the quaternion rotations for steering
+    //  A better method might be to apply rotational force
+    if (Object.keys(Key._pressed).includes("ArrowLeft") && !cameraSide) {
+      landerBodyPhysics.applyLocalImpulse(
+        new CANNON.Vec3(2, 0, 0),
+        new CANNON.Vec3(0, -3.5, 0)
+      );
+      landerBodyPhysics.applyLocalImpulse(
+        new CANNON.Vec3(-2, 0, 0),
+        new CANNON.Vec3(0, 3.5, 0)
+      );
+    }
+
+    if (Object.keys(Key._pressed).includes("ArrowRight") && !cameraSide) {
+      landerBodyPhysics.applyLocalImpulse(
+        new CANNON.Vec3(-2, 0, 0),
+        new CANNON.Vec3(0, -3.5, 0)
+      );
+      landerBodyPhysics.applyLocalImpulse(
+        new CANNON.Vec3(2, 0, 0),
+        new CANNON.Vec3(0, 3.5, 0)
+      );
+    }
+
+    if (Object.keys(Key._pressed).includes("ArrowLeft") && cameraSide) {
+      landerBodyPhysics.applyLocalImpulse(
+        new CANNON.Vec3(0, 0, -2),
+        new CANNON.Vec3(0, -3.5, 0)
+      );
+      landerBodyPhysics.applyLocalImpulse(
+        new CANNON.Vec3(0, 0, 1.5),
+        new CANNON.Vec3(0, 3.5, 0)
+      );
+    }
+
+    if (Object.keys(Key._pressed).includes("ArrowRight") && cameraSide) {
+      landerBodyPhysics.applyLocalImpulse(
+        new CANNON.Vec3(0, 0, 2),
+        new CANNON.Vec3(0, -3.5, 0)
+      );
+      landerBodyPhysics.applyLocalImpulse(
+        new CANNON.Vec3(0, 0, -2),
+        new CANNON.Vec3(0, 3.5, 0)
+      );
+    }
+
+    overHeadLight.position.z = landerBodyPhysics.position.z;
+    overHeadLight.position.x = landerBodyPhysics.position.x;
+
+    landerRenderBody.position.copy(landerBodyPhysics.position);
+    landerRenderBody.quaternion.copy(landerBodyPhysics.quaternion);
+
+    landerWorldPosition = landerRenderBody.getWorldPosition(
+      new THREE.Vector3()
+    );
+    updateDroPosition();
+
+    camera.lookAt(landerRenderBody.position);
+
+    fadePadText();
+    cameraSnapZoom(altitude < 30 ? 5 : 12);
+
+    // Run the simulation independently of framerate every 1 / 60 ms
+    world.fixedStep(1 / 60, deltaTime, 3);
+
+    render();
+  }
   requestAnimationFrame(animate);
-  // console.log(landerBodyPhysics.velocity.y);
-
-  if (Object.keys(Key._pressed).includes("ArrowUp")) {
-    landerBodyPhysics.applyLocalImpulse(new CANNON.Vec3(0, 3.5, 0));
-  }
-
-  // TODO: I'm currently setting the quaternion rotations for steering
-  //  A better method might be to apply rotational force
-  if (Object.keys(Key._pressed).includes("ArrowLeft") && !cameraSide) {
-    landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(1.5, 0, 0),
-      new CANNON.Vec3(0, -2, 0)
-    );
-    landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(-1.5, 0, 0),
-      new CANNON.Vec3(0, 2, 0)
-    );
-  }
-
-  if (Object.keys(Key._pressed).includes("ArrowRight") && !cameraSide) {
-    landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(-1.5, 0, 0),
-      new CANNON.Vec3(0, -2, 0)
-    );
-    landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(1.5, 0, 0),
-      new CANNON.Vec3(0, 2, 0)
-    );
-  }
-
-  if (Object.keys(Key._pressed).includes("ArrowLeft") && cameraSide) {
-    landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0, -1.5),
-      new CANNON.Vec3(0, -2, 0)
-    );
-    landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0, 1.5),
-      new CANNON.Vec3(0, 2, 0)
-    );
-  }
-
-  if (Object.keys(Key._pressed).includes("ArrowRight") && cameraSide) {
-    landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0, 1.5),
-      new CANNON.Vec3(0, -2, 0)
-    );
-    landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0, -1.5),
-      new CANNON.Vec3(0, 2, 0)
-    );
-  }
-
-  overHeadLight.position.z = landerBodyPhysics.position.z;
-  overHeadLight.position.x = landerBodyPhysics.position.x;
-
-  landerRenderBody.position.copy(landerBodyPhysics.position);
-  landerRenderBody.quaternion.copy(landerBodyPhysics.quaternion);
-
-  landerWorldPosition = landerRenderBody.getWorldPosition(new THREE.Vector3());
-  updateDroPosition();
-
-  camera.lookAt(landerRenderBody.position);
-
-  fadePadText();
-  cameraSnapZoom(altitude < 30 ? 5 : 12);
-
-  // Run the simulation independently of framerate every 1 / 60 ms
-  world.fixedStep(1 / 60, deltaTime, 3);
-
-  render();
-
   stats.update();
 }
 
 function render() {
   renderer.render(scene, camera);
 }
-
 animate();
 checkRotation();
