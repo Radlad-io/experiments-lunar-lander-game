@@ -21,6 +21,7 @@ module.exports = defineConfig({
           __dirname,
           "src/tests/steeringAssists/index.html"
         ),
+        scoreboard: resolve(__dirname, "src/tests/scoreboard/index.html"),
       },
     },
   },

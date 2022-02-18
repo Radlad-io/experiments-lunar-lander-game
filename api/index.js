@@ -1,4 +1,7 @@
 import * as admin from 'firebase-admin';
+import Filter from 'bad-words';
+
+var filter = new Filter()
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -11,14 +14,44 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
+const scoresRef = admin.firestore().collection('scores');
+const getHighScores = scoresRef
+                        .orderBy("score", "desc")
+                        .limit(2)
+                        .get()
 
 export default async function handler(req, res) {
-  console.log(req.body)
-  const score = await db.collection('scores').doc('kevin_merinsky').get();
-
-  if (!score.exists) {
-    return res.status(404).json({});
+  if(req.method === 'GET'){
+    getHighScores.then((snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.log(error)
+      return res.status(404).json(error);
+    });
   }
 
-  return res.status(200).json({ id: score.id, ...score.data() });
+  if(req.method === 'POST'){
+    const submission = JSON.parse(req.body)
+    console.log(submission.name)
+    if(filter.isProfane(submission.name)){
+      console.log('firing')
+      return res.status(404).json({success: false});
+    }
+    scoresRef.add({
+      name: submission.name,
+      score: submission.score
+    })
+    .then(() => {
+      return res.status(200).json({success: true});
+    })
+    .catch((error) => {
+      return res.status(404).json(error);
+    })
+
+  }
 }

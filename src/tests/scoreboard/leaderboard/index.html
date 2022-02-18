@@ -20,22 +20,14 @@
     <title>Lunar Lander</title>
 </head>
 <body>
-    <div class="submit-wrapper">
+    <div class="wrapper">
         <h1>Good job astronaut!</h1>
-        <p class="submit-score">Score: <span class="score-display">0</span></p>
-        <p>You've scored high enough to be on the leaderboard.</p>
+        <p class="submit-score">Score: 250</p>
+        <p>You've score high enough to be on the leaderboard.</p>
         <form method="POST" action="/api" enctype="multipart/form-data" class="form">
             <input name="name" type="text" placeholder="Name">
             <button>submit</button>
         </form>
-    </div>
-    <div class="scoreboard-wrapper">
-        <h2>Top Scores</h2>
-        <div class="grid">
-            <ol class="scoreboard-list">
-                <li>This is the list</li>
-            </ol>
-        </div>
     </div>
 </body>
 <style>
@@ -50,12 +42,11 @@
         padding: 0;
       }
       body {
-          color: white;
           background-color: black;
+          color: white;
       }
-      .submit-wrapper {
-          opacity: 0;
-          display: none;
+      .wrapper {
+          display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
@@ -67,7 +58,6 @@
       }
       h1{
           display: block;
-          font-weight: 400;
       }
       p {
           font-size: 1.125rem;
@@ -76,14 +66,11 @@
           text-align: center;
           margin: 20px;
       }
-      span {
-        font-weight: 300;
-      }
       input {
           font-size: 1rem;
           width: 350px;
           margin: 5px;
-          padding: 8px 12px;
+          padding: 5px 10px;
           font-weight: 300;
       }
       input:focus{
@@ -102,22 +89,13 @@
           font-weight: 400;
       }
       
-      li {
-          color: white;
-          font-weight: 300;
-          margin: 10px;
-          padding: 10px 20px;
-      }
-
-      .scoreboard-wrapper {
-          display: none;
-      }
-
-      h2 {
-          font-weight: 300;
-          color: white;
-      }
-      
 </style>
-<script type="module" src="./scripts.js"></script>
+<script>
+    const form = document.querySelector(".form")
+    
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        console.log(form.querySelector('input[name="name"]').value)
+    })
+</script>
 </html>

@@ -2,7 +2,7 @@ const init = {
   devState: import.meta.env.DEV || false,
   bwGraphics: true,
   highscore: 0,
-  score: 0,
+  score: 550,
   time: 1200, // 2 Mins I think...
   fuel: 900,
   altitude: 100,
