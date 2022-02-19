@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-   
+
     <meta name="msapplication-TileColor" content="#ffc40d" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,106 +18,131 @@
       rel="stylesheet"
     />
     <title>Lunar Lander</title>
-</head>
-<body>
-    <div class="submit-wrapper">
+  </head>
+  <body>
+    <div class="submit-flex">
+      <div class="submit-wrapper">
         <h1>Good job astronaut!</h1>
         <p class="submit-score">Score: <span class="score-display">0</span></p>
         <p>You've scored high enough to be on the leaderboard.</p>
-        <form method="POST" action="/api" enctype="multipart/form-data" class="form">
-            <input name="name" type="text" placeholder="Name">
-            <button>submit</button>
+        <form enctype="multipart/form-data" class="form">
+          <input name="name" type="text" placeholder="Name" />
+          <button>submit</button>
         </form>
+      </div>
     </div>
     <div class="scoreboard-wrapper">
-        <h2>Top Scores</h2>
-        <div class="grid">
-            <ol class="scoreboard-list">
-                <li>This is the list</li>
-            </ol>
-        </div>
+      <div class="scoreboard-flex">
+        <h2>HIGH SCORES</h2>
+        <table class="score-table"></table>
+      </div>
     </div>
-</body>
-<style>
+  </body>
+  <style>
     html {
-        -webkit-font-smoothing: antialiased;
-      }
-      
-      * {
-        font-family: "IBM Plex Mono", monospace;
-        font-weight: 100;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-          color: white;
-          background-color: black;
-      }
-      .submit-wrapper {
-          opacity: 0;
-          display: none;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-      }
-      .submit-score {
-          margin: 10px;
-          font-weight: 400;
-      }
-      h1{
-          display: block;
-          font-weight: 400;
-      }
-      p {
-          font-size: 1.125rem;
-          font-weight: 300;
-          max-width: 350px;
-          text-align: center;
-          margin: 20px;
-      }
-      span {
-        font-weight: 300;
-      }
-      input {
-          font-size: 1rem;
-          width: 350px;
-          margin: 5px;
-          padding: 8px 12px;
-          font-weight: 300;
-      }
-      input:focus{
-        outline: none;
-      }
+      -webkit-font-smoothing: antialiased;
+    }
 
-      button {
-          display: block;
-          margin: 5px 5px 150px 5px;
-          padding: 10px;
-          color: white;
-          background-color: black;
-          border: 1px solid white;
-          border-radius: 2px;
-          width: calc(100% - 10px);
-          font-weight: 400;
-      }
-      
-      li {
-          color: white;
-          font-weight: 300;
-          margin: 10px;
-          padding: 10px 20px;
-      }
+    * {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 100;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      color: white;
+      background-color: black;
+    }
+    .submit-flex {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .submit-wrapper {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+    }
+    .submit-score {
+      margin: 10px;
+      font-weight: 400;
+    }
+    h1 {
+      display: block;
+      font-weight: 400;
+    }
+    p {
+      display: block;
+      font-size: 1.125rem;
+      font-weight: 300;
+      max-width: 350px;
+      text-align: center;
+      margin: 20px;
+    }
+    span {
+      display: block;
+      font-weight: 300;
+    }
+    input {
+      display: block;
+      font-size: 1rem;
+      width: 350px;
+      margin: 5px;
+      padding: 8px 12px;
+      font-weight: 300;
+    }
+    input:focus {
+      outline: none;
+    }
 
-      .scoreboard-wrapper {
-          display: none;
-      }
+    button {
+      display: block;
+      margin: 5px;
+      padding: 10px;
+      color: white;
+      background-color: black;
+      border: 1px solid white;
+      border-radius: 2px;
+      width: calc(100% - 10px);
+      font-weight: 400;
+    }
 
-      h2 {
-          font-weight: 300;
-          color: white;
-      }
-      
-</style>
-<script type="module" src="./scripts.js"></script>
+    .scoreboard-wrapper {
+      display: none;
+    }
+
+    .scoreboard-flex {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    h2 {
+      font-weight: 300;
+      color: white;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      max-width: 550px;
+      font-size: 1rem;
+    }
+
+    .table-headers {
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding-right: 20px;
+    }
+  </style>
+  <script type="module" src="./scripts.js"></script>
 </html>

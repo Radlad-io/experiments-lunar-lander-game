@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-   
+
     <meta name="msapplication-TileColor" content="#ffc40d" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,84 +18,214 @@
       rel="stylesheet"
     />
     <title>Lunar Lander</title>
-</head>
-<body>
-    <div class="wrapper">
-        <h1>Good job astronaut!</h1>
-        <p class="submit-score">Score: 250</p>
-        <p>You've score high enough to be on the leaderboard.</p>
-        <form method="POST" action="/api" enctype="multipart/form-data" class="form">
-            <input name="name" type="text" placeholder="Name">
-            <button>submit</button>
-        </form>
+  </head>
+  <body>
+    <div class="scoreboard-wrapper">
+      <div class="flex">
+        <h2>HIGH SCORES</h2>
+        <table class="score-table">
+          <!-- <tr>
+            <td class="table-headers">Rank</td>
+            <td class="table-headers">Score</td>
+            <td class="table-headers">Name</td>
+            <td class="table-headers">Level</td>
+            <td class="table-headers">Date</td>
+          </tr>
+          <tr>
+            <td>1.</td>
+            <td>750</td>
+            <td>RadLad</td>
+            <td>10</td>
+            <td>12/22/22</td>
+          </tr>
+          <tr>
+            <td>2.</td>
+            <td>725</td>
+            <td>Other Guy</td>
+            <td>9</td>
+            <td>12/30/22</td>
+          </tr>
+          <tr>
+            <td>3.</td>
+            <td>700</td>
+            <td>Mr. Has A Long Name But L</td>
+            <td>9</td>
+            <td>11/16/22</td>
+          </tr>
+          <tr>
+            <td>4.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>5.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>6.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>7.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>8.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>9.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>10.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>11.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>12.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>13.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>14.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>15.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>16.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>17.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>18.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>19.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr>
+          <tr>
+            <td>20.</td>
+            <td>700</td>
+            <td>Michael Scott</td>
+            <td>9</td>
+            <td>10/16/22</td>
+          </tr> -->
+        </table>
+      </div>
     </div>
-</body>
-<style>
+  </body>
+  <style>
     html {
-        -webkit-font-smoothing: antialiased;
-      }
-      
-      * {
-        font-family: "IBM Plex Mono", monospace;
-        font-weight: 100;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-          background-color: black;
-          color: white;
-      }
-      .wrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-      }
-      .submit-score {
-          margin: 10px;
-          font-weight: 400;
-      }
-      h1{
-          display: block;
-      }
-      p {
-          font-size: 1.125rem;
-          font-weight: 300;
-          max-width: 350px;
-          text-align: center;
-          margin: 20px;
-      }
-      input {
-          font-size: 1rem;
-          width: 350px;
-          margin: 5px;
-          padding: 5px 10px;
-          font-weight: 300;
-      }
-      input:focus{
-        outline: none;
-      }
+      -webkit-font-smoothing: antialiased;
+    }
 
-      button {
-          display: block;
-          margin: 5px 5px 150px 5px;
-          padding: 10px;
-          color: white;
-          background-color: black;
-          border: 1px solid white;
-          border-radius: 2px;
-          width: calc(100% - 10px);
-          font-weight: 400;
-      }
-      
-</style>
-<script>
-    const form = document.querySelector(".form")
-    
-    form.addEventListener('submit', (e) => {
-        e.preventDefault()
-        console.log(form.querySelector('input[name="name"]').value)
-    })
-</script>
+    * {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 100;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      color: white;
+      background-color: black;
+    }
+
+    li {
+      display: block;
+      color: white;
+      font-weight: 300;
+      margin: 10px;
+      padding: 10px 20px;
+    }
+
+    .flex {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    h2 {
+      font-weight: 300;
+      color: white;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      max-width: 550px;
+      margin-bottom: 50px;
+      font-size: 1rem;
+    }
+
+    .table-headers {
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding-right: 20px;
+    }
+  </style>
 </html>
