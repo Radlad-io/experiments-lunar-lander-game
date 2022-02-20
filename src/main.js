@@ -20,7 +20,7 @@ import { hud } from "@components/UI.js";
 
 // Imports
 import "./style.css";
-import { cameraMove } from "@components/Camera.js";
+import { move } from "@components/Camera.js";
 
 // Utilities
 import * as Sizes from "@util/Sizes.js";
@@ -32,5 +32,3 @@ tick();
 
 // Event handelers
 Sizes.handleResize();
-
-cameraMove();

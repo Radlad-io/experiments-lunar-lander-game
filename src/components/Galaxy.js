@@ -5,12 +5,13 @@
 /////////////////////////////////////////////////
 
 import * as THREE from "three";
+import { graphics } from "@util/State.js";
 
 const galaxyGeometry = new THREE.BufferGeometry();
 const starCount = 500;
 const starMaterial = new THREE.PointsMaterial({
-  size: 0.5,
-  color: new THREE.Color(0x000000),
+  size: graphics.get() ? 0.5 : 1.25,
+  color: graphics.get() ? new THREE.Color(0x000000) : new THREE.Color(0xffffff),
 });
 
 // TODO: Create a minimum distance from center point

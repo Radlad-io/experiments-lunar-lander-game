@@ -1,4 +1,4 @@
-import Filter from "bad-words";
+// import Filter from "bad-words";
 import gsap from "gsap";
 const body = document.querySelector("body");
 const form = document.querySelector(".form");
@@ -9,7 +9,7 @@ const scoreUI = document.querySelector(".score-display");
 const scoreboard = document.querySelector(".scoreboard-flex");
 const scoreTable = document.querySelector(".score-table");
 
-var filter = new Filter();
+// var filter = new Filter();
 
 let score;
 let records;
@@ -67,39 +67,38 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  if (filter.isProfane(submission)) {
-    confirm("The name you provided contains profanity. Try again.");
-    return;
-  }
-  
-  gsap
-    .to(scoreSubmit, {
-      opacity: 0,
-      y: 10,
-      duration: 1,
-    })
+  // if (filter.isProfane(submission)) {
+  //   confirm("The name you provided contains profanity. Try again.");
+  //   return;
+  // }
+
+  gsap.to(scoreSubmit, {
+    opacity: 0,
+    y: 10,
+    duration: 1,
+  });
   fetch("/api", {
-      method: "POST",
-      body: JSON.stringify({ name: submission, score: score }),
-    })
+    method: "POST",
+    body: JSON.stringify({ name: submission, score: score }),
+  })
     .then((response) => response.json())
     .then((data) => {
-        records = data
-  })
-  .then(() => {
-        // TODO: Need to update the list first
-   
-          scoreTable.innerHTML =
-            ` <tr>
+      records = data;
+    })
+    .then(() => {
+      // TODO: Need to update the list first
+
+      scoreTable.innerHTML =
+        ` <tr>
               <td class="table-headers">Rank</td>
               <td class="table-headers">Score</td>
               <td class="table-headers">Name</td>
               <td class="table-headers">Level</td>
               <td class="table-headers">Date</td>
             </tr>` +
-            records
-              .map((record, index) => {
-                return `
+        records
+          .map((record, index) => {
+            return `
               <tr>
                 <td>${index + 1}.</td>
                 <td> ${record.score}</td>
@@ -108,11 +107,10 @@ form.addEventListener("submit", (e) => {
                 <td>12/22/22</td>
               </tr>
               `;
-              })
-              // Join removes commas returned by map
-              .join("");
-
-  })
+          })
+          // Join removes commas returned by map
+          .join("");
+    })
 
     .then(() => {
       scoreSubmitFlex.style.display = "none";

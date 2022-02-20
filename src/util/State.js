@@ -1,6 +1,6 @@
 const init = {
   devState: import.meta.env.DEV || false,
-  bwGraphics: true,
+  bwGraphics: false,
   highscore: 0,
   score: 550,
   time: 1200, // 2 Mins I think...
@@ -11,9 +11,10 @@ const init = {
   view: "front",
 };
 
-let devState = false;
+let devState = init.devState;
 const dev = {
   get: () => {
+    0;
     return devState;
   },
 };

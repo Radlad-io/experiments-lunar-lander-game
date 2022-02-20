@@ -1,7 +1,7 @@
 import * as THREE from "three";
-import { graphics, thrust } from "@util/State.js";
+import { dev, graphics, thrust } from "@util/State.js";
 import * as Sounds from "@components/Sound.js";
-import { initialCameraFlyIn } from "@components/Camera.js";
+import { move } from "@components/Camera.js";
 import { scene } from "@components/MainScene.js";
 import gsap from "gsap";
 
@@ -12,9 +12,18 @@ const instructions = document.querySelector(".instruction-modal");
 const startBtn = document.querySelector(".start-btn");
 
 // Initial title sequence
-gsap.to(title, { delay: 0.75, duration: 0.75, opacity: 1 });
-gsap.to(title, { delay: 4, duration: 1, opacity: 0 });
-gsap.to(instructions, { delay: 5, duration: 0.75, opacity: 1 });
+// Skips sequence if Dev
+if (dev.get()) {
+  title.style.display = "none";
+  instructions.style.display = "none";
+  move.initialCameraFlyIn();
+  gsap.to(hud, { delay: 5, duration: 1, opacity: 1 });
+  gsap.to(bottomBar, { delay: 5, duration: 1, opacity: 1 });
+} else {
+  gsap.to(title, { delay: 0.75, duration: 0.75, opacity: 1 });
+  gsap.to(title, { delay: 4, duration: 1, opacity: 0 });
+  gsap.to(instructions, { delay: 5, duration: 0.75, opacity: 1 });
+}
 
 //Capture keys right away
 window.focus();

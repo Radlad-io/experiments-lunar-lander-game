@@ -23,38 +23,34 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.set(0, 2000, 1500);
 scene.add(camera);
 
+// TODO: Refactor this into Util/State
 const cameraMoveSpeed = 0.4;
 let isCameraFront = true;
-let isCameraTop = false;
 let isCameraMoving = true;
 
-const initialCameraFlyIn = () => {
-  gsap.to(camera.position, {
-    duration: 5,
-    ease: "power1.out",
-    x: 0,
-    z: 80,
-  });
-  gsap
-    .to(camera.position, {
+const move = {
+  initialCameraFlyIn: () => {
+    gsap.to(camera.position, {
       duration: 5,
       ease: "power1.out",
-      y: 25,
-    })
-    .then(() => {
-      isCameraMoving = false;
-      if (dev.get()) {
-        console.log("Debug output: Camera Position", camera.position);
-      }
+      x: 0,
+      z: 80,
     });
-};
-
-const cameraMove = () => {
-  window.addEventListener("keydown", (e) => {
-    if (
-      e.isComposing ||
-      (e.key === "Shift" && isCameraFront && !isCameraMoving && !isCameraTop)
-    ) {
+    gsap
+      .to(camera.position, {
+        duration: 5,
+        ease: "power1.out",
+        y: 25,
+      })
+      .then(() => {
+        isCameraMoving = false;
+        if (dev.get()) {
+          console.log("Debug output: Camera Position", camera.position);
+        }
+      });
+  },
+  rotate: () => {
+    if (isCameraFront && !isCameraMoving) {
       isCameraMoving = true;
       rotate.play();
       gsap.to(camera.position, {
@@ -77,10 +73,7 @@ const cameraMove = () => {
             console.log("Debug output: Camera position", camera.position);
           }
         });
-    } else if (
-      e.isComposing ||
-      (e.key === "Shift" && !isCameraFront && !isCameraMoving && !isCameraTop)
-    ) {
+    } else if (!isCameraFront && !isCameraMoving) {
       isCameraMoving = true;
       rotate.play();
       gsap.to(camera.position, {
@@ -103,113 +96,8 @@ const cameraMove = () => {
             console.log("Debug output: Camera Position", camera.position);
           }
         });
-    } else if (
-      e.isComposing ||
-      (e.key === "Control" && !isCameraMoving && !isCameraTop && isCameraFront)
-    ) {
-      isCameraMoving = true;
-      cameraUp.play();
-      gsap
-        .to(camera.position, {
-          duration: cameraMoveSpeed,
-          ease: CustomEase.create(
-            "custom",
-            "M0,0 C0.304,0.068 0.368,0.222 0.5,0.5 0.638,0.792 0.822,1 1,1 "
-          ),
-          x: 0,
-          y: 100,
-          z: 0.1,
-        })
-        .then(() => {
-          isCameraMoving = false;
-          isCameraTop = true;
-          view.set("top");
-          if (dev.get()) {
-            console.log("Debug output: Camera Position", camera.position);
-          }
-        });
-    } else if (
-      e.isComposing ||
-      (e.key === "Control" && !isCameraMoving && isCameraTop && isCameraFront)
-    ) {
-      isCameraMoving = true;
-      cameraDown.play();
-      isCameraTop = false;
-      gsap
-        .to(camera.position, {
-          duration: cameraMoveSpeed,
-          ease: CustomEase.create(
-            "custom",
-            "M0,0 C0.304,0.068 0.368,0.222 0.5,0.5 0.638,0.792 0.822,1 1,1 "
-          ),
-          x: 0,
-          z: 80,
-          y: 25,
-        })
-        .then(() => {
-          isCameraMoving = false;
-          isCameraTop = false;
-          view.set(isCameraFront ? "front" : "side");
-          if (dev.get()) {
-            console.log("Debug output: Camera Position", camera.position);
-          }
-        });
-    } else if (
-      e.isComposing ||
-      (e.key === "Control" && !isCameraMoving && !isCameraTop && !isCameraFront)
-    ) {
-      isCameraMoving = true;
-      cameraUp.play();
-      gsap
-        .to(camera.position, {
-          duration: cameraMoveSpeed,
-          ease: CustomEase.create(
-            "custom",
-            "M0,0 C0.304,0.068 0.368,0.222 0.5,0.5 0.638,0.792 0.822,1 1,1 "
-          ),
-          x: -0.1,
-          z: 0,
-          y: 100,
-        })
-        .then(() => {
-          isCameraMoving = false;
-          isCameraTop = true;
-          view.set("top");
-          if (dev.get()) {
-            console.log("Debug output: Camera Position", camera.position);
-          }
-        });
-    } else if (
-      e.isComposing ||
-      (e.key === "Control" && !isCameraMoving && isCameraTop && !isCameraFront)
-    ) {
-      isCameraMoving = true;
-      cameraDown.play();
-      gsap
-        .to(camera.position, {
-          duration: cameraMoveSpeed,
-          ease: CustomEase.create(
-            "custom",
-            "M0,0 C0.304,0.068 0.368,0.222 0.5,0.5 0.638,0.792 0.822,1 1,1 "
-          ),
-          x: -80,
-          z: 0,
-          y: 25,
-        })
-        .then(() => {
-          isCameraMoving = false;
-          isCameraTop = false;
-          view.set(isCameraFront ? "front" : "side");
-          if (dev.get()) {
-            console.log("Debug output: Camera Position", camera.position);
-          }
-        });
-    } else if (
-      e.isComposing ||
-      (e.key === "Control" && !isCameraMoving && isCameraTop && !isCameraFront)
-    ) {
     }
-  });
+  },
 };
 
-export { camera, cameraMove, initialCameraFlyIn };
+export { camera, move };
