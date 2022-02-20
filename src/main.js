@@ -14,13 +14,16 @@
 
 // Libraries
 import * as THREE from "three";
+import { dev } from "@util/State.js";
 
 // // UI Animations
 import { hud } from "@components/UI.js";
 
 // Imports
 import "./style.css";
+import { scene } from "@components/MainScene.js";
 import { move } from "@components/Camera.js";
+import { landerBodyPhysics } from "@components/Physics.js";
 
 // Utilities
 import * as Sizes from "@util/Sizes.js";
@@ -29,6 +32,10 @@ import * as Sizes from "@util/Sizes.js";
 import { tick } from "@util/Time.js";
 
 tick();
+
+if (dev.get()) {
+  console.log(scene);
+}
 
 // Event handelers
 Sizes.handleResize();

@@ -20,7 +20,7 @@ const camera = new THREE.PerspectiveCamera(
   10,
   1000
 );
-camera.position.set(0, 2000, 1500);
+camera.position.set(0, 2000, 1000);
 scene.add(camera);
 
 // TODO: Refactor this into Util/State

@@ -16,6 +16,5 @@ scene.background = graphics.get()
   ? new THREE.Color(0xffffff)
   : new THREE.Color(0x000000);
 scene.add(Galaxy, Lighting);
-console.log(scene);
 
 export { scene };
