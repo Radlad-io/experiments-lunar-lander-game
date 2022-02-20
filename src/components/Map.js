@@ -8,6 +8,7 @@ import { dev } from "@util/State.js";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { scene } from "@components/MainScene.js";
+import { LandingPad } from "@components/LandingPad.js";
 
 //    Enviorment variables
 const isDev = dev.get();
@@ -42,8 +43,9 @@ const load = () => {
       //   console.log(child.name);
       //   child.material = bakedMaterial;
       // });
-      Map.scene.children[0].position.set(0, -50, 0);
+      Map.scene.position.set(0, -50, 0);
       scene.add(Map.scene);
+
       return Map;
     },
     (xhr) => {
