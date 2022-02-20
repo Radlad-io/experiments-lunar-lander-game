@@ -1,4 +1,4 @@
-import { move } from "@components/Camera.js";
+import * as Camera from "@components/Camera.js";
 
 let key = {
   _pressed: {},
@@ -16,15 +16,14 @@ let key = {
       return false;
     }
     this._pressed[event.key] = true;
-    if (Object.keys(key._pressed).includes("shift")) {
-      move.rotate();
-    } else {
-      move.rotate();
+    if (key._pressed.Shift === true) {
+      Camera.move.rotate();
     }
   },
 
   onkeyup: function (event) {
     delete this._pressed[event.key];
+    console.log(key._pressed);
     this._release_time[event.key] = new Date().getTime();
   },
 };
