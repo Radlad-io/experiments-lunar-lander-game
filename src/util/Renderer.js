@@ -17,6 +17,7 @@ import { SobelOperatorShader } from "three/examples/jsm/shaders/SobelOperatorSha
 
 import { CopyShader } from "three/examples/jsm/shaders/CopyShader.js";
 import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
+import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
 
 let composer;
 let effectSobel;
@@ -30,7 +31,9 @@ const canvas = document.querySelector("canvas.webgl");
 
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
-  antialias: true,
+  powerPreference: "high-performance",
+  // antialias: true,
+  // NOTE: Antialias isn't supposed to work with postprocessing
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -58,24 +61,10 @@ const setSobel = (isOn) => {
   }
 };
 
-let composer1, composer2, fxaaPass, container;
-container = document.querySelector("canvas.webgl");
-fxaaPass = new ShaderPass(FXAAShader);
-const copyPass = new ShaderPass(CopyShader);
-
-composer1 = new EffectComposer(renderer);
-composer1.addPass(renderPass);
-composer1.addPass(copyPass);
-
-const pixelRatio = renderer.getPixelRatio();
-
-fxaaPass.material.uniforms["resolution"].value.x =
-  1 / (container.offsetWidth * pixelRatio);
-fxaaPass.material.uniforms["resolution"].value.y =
-  1 / (container.offsetHeight * pixelRatio);
-
-composer2 = new EffectComposer(renderer);
-composer2.addPass(renderPass);
-composer2.addPass(fxaaPass);
+const pass = new SMAAPass(
+  window.innerWidth * renderer.getPixelRatio(),
+  window.innerHeight * renderer.getPixelRatio()
+);
+composer.addPass(pass);
 
 export { renderer, composer, setSobel };
