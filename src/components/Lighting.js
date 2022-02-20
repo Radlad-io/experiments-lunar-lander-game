@@ -9,7 +9,7 @@ sunLight.position.set(-100, 50, -100);
 Lighting.add(sunLight);
 
 gsap.to(sunLight, {
-  delay: 1.25,
+  delay: 2.25,
   duration: 2.75,
   ease: "circ.easeIn",
   intensity: 0.75,

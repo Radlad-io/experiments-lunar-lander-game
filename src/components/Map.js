@@ -25,16 +25,6 @@ const bakedMaterial = new THREE.MeshBasicMaterial({
   map: bakedTexture,
 });
 
-//    Emission Material
-const landingPadMaterial = new THREE.MeshBasicMaterial({
-  color: 0xffffff,
-});
-
-//    Text Material
-const textMaterial = new THREE.MeshBasicMaterial({
-  color: 0x000000,
-});
-
 //    Map model
 import map from "@components/models/Map.glb";
 let Map;
@@ -45,42 +35,14 @@ const load = () => {
       if (isDev) {
         console.log("Successfully loaded: Map GTLF");
       }
+      // FIXME: Map texture not loading right
+      // TODO: Material should change for OG graphics
       Map = gltf;
-      Map.scene.traverse((child) => {
-        console.log(child.name);
-        // TODO: Material should change for OG graphics
-        child.material = bakedMaterial;
-      });
-
-      //    Remap landing pad material to three material
-      let landingPads = [];
-      const landingPadMesh = Map.scene.children.find((child) => {
-        if (child.name.includes("LandingPad")) {
-          landingPads.push(child);
-        }
-      });
-      landingPads.map((pad) => {
-        pad.material = landingPadMaterial;
-      });
-
-      //    Remap landing pad text material to three material
-      let landingPadText = [];
-      const landingPadTextMesh = Map.scene.children.find((child) => {
-        if (child.name.includes("Text")) {
-          landingPadText.push(child);
-        }
-      });
-      landingPadText.map((text) => {
-        text.material = textMaterial;
-      });
-
+      // Map.scene.traverse((child) => {
+      //   console.log(child.name);
+      //   child.material = bakedMaterial;
+      // });
       Map.scene.children[0].position.set(0, -50, 0);
-      Map.scene.children[1].position.set(0, -50, 0);
-      Map.scene.children[2].position.set(0, -50, 0);
-      Map.scene.children[3].position.set(0, -50, 0);
-      Map.scene.children[4].position.set(0, -37.5, 0);
-      Map.scene.children[5].position.set(0, -42, 0);
-      Map.scene.children[6].position.set(0, -42, 0);
       scene.add(Map.scene);
       return Map;
     },
