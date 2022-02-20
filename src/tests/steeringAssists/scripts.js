@@ -36,7 +36,8 @@ const landerBodyPhysics = new CANNON.Body({
   angularFactor: new CANNON.Vec3(1, 0, 1),
   angularDamping: 0.75,
   linearDamping: 0.015,
-  // sleepSpeedLimit: 1.0,
+  allowSleep: true,
+  sleepSpeedLimit: 1.0,
 });
 landerBodyPhysics.position.set(0, 100, -50);
 
@@ -53,18 +54,18 @@ landerBodyPhysics.addShape(new CANNON.Sphere(1), new CANNON.Vec3(3, -2.5, 3));
 
 world.addBody(landerBodyPhysics);
 
-const geometry = new THREE.BoxGeometry(5, 3, 5);
+const geometry = new THREE.BoxBufferGeometry(5, 3, 5);
 const sphereMesh = new THREE.Mesh(geometry, landerMaterial);
 sphereMesh.castShadow = true;
 landerRenderBody.add(sphereMesh);
 
-const landerTopGeometry = new THREE.SphereGeometry(3.5, 16, 8);
+const landerTopGeometry = new THREE.SphereBufferGeometry(3.5, 16, 8);
 const landerTopMesh = new THREE.Mesh(landerTopGeometry, landerMaterial);
 landerTopMesh.castShadow = true;
 landerTopMesh.position.set(0, 3.5, 0);
 landerRenderBody.add(landerTopMesh);
 
-const landerFirstFootGeometry = new THREE.SphereGeometry(1, 8, 8);
+const landerFirstFootGeometry = new THREE.SphereBufferGeometry(1, 8, 8);
 const landerFistFootMesh = new THREE.Mesh(
   landerFirstFootGeometry,
   landerMaterial
@@ -72,7 +73,7 @@ const landerFistFootMesh = new THREE.Mesh(
 landerFistFootMesh.castShadow = true;
 landerFistFootMesh.position.set(-3, -2.5, -3);
 landerRenderBody.add(landerFistFootMesh);
-const landerSecondFootGeometry = new THREE.SphereGeometry(1, 8, 8);
+const landerSecondFootGeometry = new THREE.SphereBufferGeometry(1, 8, 8);
 const landerSecondFootMesh = new THREE.Mesh(
   landerSecondFootGeometry,
   landerMaterial
@@ -80,7 +81,7 @@ const landerSecondFootMesh = new THREE.Mesh(
 landerSecondFootMesh.castShadow = true;
 landerSecondFootMesh.position.set(-3, -2.5, 3);
 landerRenderBody.add(landerSecondFootMesh);
-const landerThirdFootGeometry = new THREE.SphereGeometry(1, 8, 8);
+const landerThirdFootGeometry = new THREE.SphereBufferGeometry(1, 8, 8);
 const landerThirdFootMesh = new THREE.Mesh(
   landerThirdFootGeometry,
   landerMaterial
@@ -88,7 +89,7 @@ const landerThirdFootMesh = new THREE.Mesh(
 landerThirdFootMesh.castShadow = true;
 landerThirdFootMesh.position.set(3, -2.5, -3);
 landerRenderBody.add(landerThirdFootMesh);
-const landerFourthFootGeometry = new THREE.SphereGeometry(1, 8, 8);
+const landerFourthFootGeometry = new THREE.SphereBufferGeometry(1, 8, 8);
 const landerFourthFootMesh = new THREE.Mesh(
   landerFourthFootGeometry,
   landerMaterial
@@ -142,7 +143,7 @@ const textureLoader = new THREE.TextureLoader();
 const groundTextureBaseColor = textureLoader.load(moonTextureCOLOR);
 const groundTextureNormMap = textureLoader.load(moonTextureNorm);
 const groundTextureDispMap = textureLoader.load(moonTextureDisp);
-const groundGeometry = new THREE.PlaneGeometry(400, 400, 64, 64);
+const groundGeometry = new THREE.PlaneBufferGeometry(400, 400, 8, 8);
 const groundMaterial = new THREE.MeshStandardMaterial({
   map: groundTextureBaseColor,
   normalMap: groundTextureNormMap,
@@ -488,8 +489,10 @@ const cameraSnapZoom = (i) => {
     ease: "power3.out",
     fov: i,
   });
+  // TODO: Right now this runs every frame and it might only be needed during the camera snap transision. Possible performance increase.
   camera.updateProjectionMatrix();
 };
+
 
 const clock = new THREE.Clock();
 let oldElapsedTime = 0;
@@ -565,10 +568,10 @@ function animate() {
     camera.lookAt(landerRenderBody.position);
 
     fadePadText();
-    cameraSnapZoom(altitude < 30 ? 5 : 12);
+    // cameraSnapZoom(altitude < 30 ? 5 : 12);
 
     // Run the simulation independently of framerate every 1 / 60 ms
-    world.fixedStep(1 / 60, deltaTime, 3);
+    world.fixedStep(1 / 60, deltaTime, 2);
 
     render();
   }
