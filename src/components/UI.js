@@ -31,7 +31,7 @@ window.focus();
 // UI Start Button
 startBtn.addEventListener("click", () => {
   Sounds.ambience.play();
-  initialCameraFlyIn();
+  move.initialCameraFlyIn();
   gsap.to(instructions, { duration: 0.75, opacity: 0 }).then(() => {
     instructions.style.display = "none";
   });

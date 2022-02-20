@@ -23,7 +23,6 @@ let key = {
 
   onkeyup: function (event) {
     delete this._pressed[event.key];
-    console.log(key._pressed);
     this._release_time[event.key] = new Date().getTime();
   },
 };
