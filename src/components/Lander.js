@@ -13,6 +13,12 @@ import landerModel from "@components/models/Lander.gltf";
 const isDev = dev.get();
 const gltfLoader = new GLTFLoader();
 
+const landerMaterial = new THREE.MeshLambertMaterial({
+  color: 0x000000,
+  emissive: 0xffffff,
+  emissiveIntensity: 0.5,
+});
+
 let Lander;
 const load = () => {
   gltfLoader.load(
@@ -22,6 +28,9 @@ const load = () => {
         console.log("Successfully loaded: Lander GTLF");
       }
       Lander = gltf;
+      Lander.scene.traverse((child) => {
+        child.material = landerMaterial;
+      });
       scene.add(Lander.scene);
       return Lander;
     },
@@ -36,12 +45,8 @@ const load = () => {
       console.log("Error loading: Lander GTLF", e);
     }
   );
-  // const landerGeo = new THREE.SphereBufferGeometry(1,8,8)
-  // const landerMat = new THREE.MeshBasicMaterial({color: 0x000000})
-  // const landerMesh = new THREE.Mesh(landerGeo, landerMat)
-  // Lander = landerMesh
 
-  return Lander
+  return Lander;
 };
 
 load();

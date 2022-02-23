@@ -22,8 +22,8 @@ import { hud } from "@components/UI.js";
 // Imports
 import "./style.css";
 import { scene } from "@components/MainScene.js";
-import { move } from "@components/Camera.js";
-import { landerBodyPhysics } from "@components/Physics.js";
+// import { move } from "@components/Camera.js";
+// import { landerBodyPhysics } from "@components/Physics.js";
 
 // Utilities
 import * as Sizes from "@util/Sizes.js";

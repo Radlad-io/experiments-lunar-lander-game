@@ -5,6 +5,7 @@
 ///////////////////////////////////////////
 
 import * as Camera from "@components/Camera.js";
+import { landerPhysics } from "@components/Physics";
 
 let key = {
   _pressed: {},
@@ -24,6 +25,7 @@ let key = {
     this._pressed[event.key] = true;
     if (key._pressed.Shift === true) {
       Camera.move.rotate();
+      landerPhysics.resetForces();
     }
   },
 

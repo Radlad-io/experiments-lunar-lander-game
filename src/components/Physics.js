@@ -14,6 +14,7 @@ const params = {
   sleepSpeedLimit: 1.0,
   landerThrust: 3.5,
   landerMass: 50,
+  rotationFactor: 4,
 };
 
 const world = new CANNON.World({
@@ -61,15 +62,52 @@ const landerPhysics = {
     );
   },
   foward: () => {
+    landerBodyPhysics.applyLocalImpulse(
+      new CANNON.Vec3(0, 0, 1.5),
+      new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
+    );
+    landerBodyPhysics.applyLocalImpulse(
+      new CANNON.Vec3(0, 0, -1.5),
+      new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
+    );
     return;
   },
   backward: () => {
+    landerBodyPhysics.applyLocalImpulse(
+      new CANNON.Vec3(0, 0, -1.5),
+      new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
+    );
+    landerBodyPhysics.applyLocalImpulse(
+      new CANNON.Vec3(0, 0, 1.5),
+      new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
+    );
     return;
   },
   left: () => {
+    landerBodyPhysics.applyLocalImpulse(
+      new CANNON.Vec3(1.5, 0, 0),
+      new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
+    );
+    landerBodyPhysics.applyLocalImpulse(
+      new CANNON.Vec3(-1.5, 0, 0),
+      new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
+    );
     return;
   },
   right: () => {
+    landerBodyPhysics.applyLocalImpulse(
+      new CANNON.Vec3(-1.5, 0, 0),
+      new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
+    );
+    landerBodyPhysics.applyLocalImpulse(
+      new CANNON.Vec3(1.5, 0, 0),
+      new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
+    );
+    return;
+  },
+  resetForces: () => {
+    landerBodyPhysics.quaternion.setFromEuler(0, 0, 0);
+    landerBodyPhysics.angularVelocity = new CANNON.Vec3(0, 0, 0);
     return;
   },
 };

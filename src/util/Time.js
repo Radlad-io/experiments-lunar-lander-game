@@ -5,7 +5,7 @@
 ////////////////////////////////////////
 
 import * as THREE from "three";
-import { playing, fuel, verticalSpeed } from "@util/State.js";
+import { playing, view, fuel, verticalSpeed } from "@util/State.js";
 import { stats } from "@util/Stats.js";
 import { key } from "@util/Controls.js";
 import { renderer, composer } from "@util/Renderer.js";
@@ -44,13 +44,47 @@ const tick = () => {
     Sounds.thrust.pause();
   }
 
+  if (
+    key._pressed.ArrowLeft === true > 0 &&
+    view.get() === "front" &&
+    playing.get()
+  ) {
+    landerPhysics.left();
+  }
+
+  if (
+    key._pressed.ArrowRight === true > 0 &&
+    view.get() === "front" &&
+    playing.get()
+  ) {
+    landerPhysics.right();
+  }
+
+  if (
+    key._pressed.ArrowLeft === true > 0 &&
+    view.get() === "side" &&
+    playing.get()
+  ) {
+    landerPhysics.foward();
+  }
+
+  if (
+    key._pressed.ArrowRight === true > 0 &&
+    view.get() === "side" &&
+    playing.get()
+  ) {
+    landerPhysics.backward();
+  }
+
   if (playing.get()) {
     Lander.scene.position.copy(landerBodyPhysics.position);
+    Lander.scene.quaternion.copy(landerBodyPhysics.quaternion);
     camera.lookAt(
       landerBodyPhysics.position.x,
       landerBodyPhysics.position.y,
       landerBodyPhysics.position.z
     );
+
     camera.position.y = landerBodyPhysics.position.y + 25;
     // Run the simulation independently of framerate every 1 / 60 ms
     world.fixedStep(1 / 60, deltaTime, 3);
