@@ -5,7 +5,7 @@
 ////////////////////////////////////////
 
 import * as THREE from "three";
-import { fuel, verticalSpeed } from "@util/State.js";
+import { playing, fuel, verticalSpeed } from "@util/State.js";
 import { stats } from "@util/Stats.js";
 import { key } from "@util/Controls.js";
 import { renderer, composer } from "@util/Renderer.js";
@@ -22,11 +22,6 @@ import { Lander } from "@components/Lander.js";
 
 const clock = new THREE.Clock();
 let oldElapsedTime = 0;
-
-let init = false;
-setTimeout(() => {
-  init = true;
-}, 1200);
 
 setInterval(() => {
   verticalSpeed.set(landerBodyPhysics.velocity.y);
@@ -49,7 +44,7 @@ const tick = () => {
     Sounds.thrust.pause();
   }
 
-  if (init) {
+  if (playing.get()) {
     Lander.scene.position.copy(landerBodyPhysics.position);
     camera.lookAt(
       landerBodyPhysics.position.x,
@@ -57,11 +52,12 @@ const tick = () => {
       landerBodyPhysics.position.z
     );
     camera.position.y = landerBodyPhysics.position.y + 25;
+    // Run the simulation independently of framerate every 1 / 60 ms
+    world.fixedStep(1 / 60, deltaTime, 3);
   }
+
   composer.render(scene, camera);
 
-  // Run the simulation independently of framerate every 1 / 60 ms
-  world.fixedStep(1 / 60, deltaTime, 3);
 
   stats.end();
   window.requestAnimationFrame(tick);

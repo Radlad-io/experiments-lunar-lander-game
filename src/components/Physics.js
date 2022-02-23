@@ -6,8 +6,7 @@ const params = {
   // Earth -9.82 m/s²
   // Moon -1.62 m/s²
   material: new CANNON.Material(),
-  // velocity: new CANNON.Vec3(0, -2, 10),
-  velocity: new CANNON.Vec3(0, 0, 0),
+  velocity: new CANNON.Vec3(0, -5, 0),
   angularFactor: new CANNON.Vec3(1, 0, 1),
   angularDamping: 0.75,
   linearDamping: 0.015,
@@ -41,7 +40,7 @@ landerBodyPhysics.addShape(new CANNON.Sphere(1), new CANNON.Vec3(3, -2.5, -3));
 landerBodyPhysics.addShape(new CANNON.Sphere(1), new CANNON.Vec3(3, -2.5, 3));
 //  TODO: Y Offset here accounds for the origin of the lander model I think
 //        Try reseting the origin in blender to the icosphere
-landerBodyPhysics.position.set(0, 0.766, 0);
+landerBodyPhysics.position.set(0, 50.766, 0);
 world.addBody(landerBodyPhysics);
 
 //  Temp ground plane

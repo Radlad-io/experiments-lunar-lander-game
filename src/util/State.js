@@ -1,5 +1,6 @@
 const init = {
   devState: import.meta.env.DEV || false,
+  // devState: false,
   bwGraphics: true,
   highscore: 0,
   score: 550,
@@ -10,12 +11,24 @@ const init = {
   verticalSpeed: 0,
   view: "front",
   fuelBurnRate: 0.25,
+  playingState: false,
 };
 
 let devState = init.devState;
 const dev = {
   get: () => {
     return devState;
+  },
+};
+
+let playingState = init.playingState;
+const playing = {
+  get: () => {
+    return playingState;
+  },
+  toggle: () => {
+    playingState = !playingState;
+    return playingState;
   },
 };
 
@@ -155,6 +168,7 @@ const thrust = {
 
 export {
   dev,
+  playing,
   graphics,
   score,
   playtime,

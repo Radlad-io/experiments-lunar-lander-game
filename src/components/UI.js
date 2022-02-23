@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { dev, graphics, thrust } from "@util/State.js";
+import { dev, playing, graphics, thrust } from "@util/State.js";
 import * as Sounds from "@components/Sound.js";
 import { move } from "@components/Camera.js";
 import { scene } from "@components/MainScene.js";
@@ -16,13 +16,17 @@ const startBtn = document.querySelector(".start-btn");
 if (dev.get()) {
   title.style.display = "none";
   instructions.style.display = "none";
-  // move.initialCameraFlyIn();
+  move.initialCameraFlyIn();
+  // TODO:: I don't know about this pal. Maybe an event with the three loading manager can help
+  setTimeout(()=>{
+    playing.toggle()
+  }, 500)
   // TODO: Reset 5 second delays
   gsap.to(hud, { delay: 0, duration: 1, opacity: 1 });
   gsap.to(bottomBar, { delay: 0, duration: 1, opacity: 1 });
 } else {
   gsap.to(title, { delay: 0.75, duration: 0.75, opacity: 1 });
-  gsap.to(title, { delay: 4, duration: 1, opacity: 0 });
+  gsap.to(title, { delay: 5, duration: 1, opacity: 0 });
   gsap.to(instructions, { delay: 5, duration: 0.75, opacity: 1 });
 }
 
@@ -38,6 +42,7 @@ startBtn.addEventListener("click", () => {
   });
   gsap.to(hud, { delay: 5, duration: 1, opacity: 1 });
   gsap.to(bottomBar, { delay: 5, duration: 1, opacity: 1 });
+  playing.toggle()
 });
 
 // UI Mute Button

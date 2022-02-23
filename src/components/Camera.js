@@ -21,14 +21,17 @@ const camera = new THREE.PerspectiveCamera(
   10,
   1000
 );
-// camera.position.set(0, 2000, 1000);
-camera.position.set(0, 25, 80);
+camera.position.set(0, 0, 2000);
+// camera.position.set(0, 25, 80);
 camera.lookAt(scene.position);
 scene.add(camera);
 
 // TODO: Refactor this into Util/State
-const cameraMoveSpeed = 0.4;
+const cameraMoveSpeed = 0.25;
+
+// TODO: Use state view instead
 let isCameraFront = true;
+// TODO: Hoist this state into State.js
 let isCameraMoving = false;
 
 const move = {
@@ -37,14 +40,8 @@ const move = {
       duration: 5,
       ease: "power1.out",
       x: 0,
-      z: Lander.scene.position.z + 80,
-    });
-    gsap
-      .to(camera.position, {
-        duration: 5,
-        ease: "power1.out",
-        y: Lander.scene.position.y + 25,
-      })
+      z: 80,
+    })
       .then(() => {
         isCameraMoving = false;
         if (dev.get()) {
