@@ -6,7 +6,7 @@
 
 import * as THREE from "three";
 
-import { dev, graphics } from "@util/State.js";
+import { graphics } from "@util/State.js";
 import { scene } from "@components/MainScene.js";
 import { camera } from "@components/Camera.js";
 
@@ -14,9 +14,6 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { SobelOperatorShader } from "three/examples/jsm/shaders/SobelOperatorShader.js";
-
-import { CopyShader } from "three/examples/jsm/shaders/CopyShader.js";
-import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
 import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
 
 let composer;
@@ -53,6 +50,7 @@ if (graphics.get()) {
   composer.addPass(effectSobel);
 }
 
+//  B&W Line padd
 const setSobel = (isOn) => {
   if (isOn) {
     composer.addPass(effectSobel);
@@ -61,10 +59,11 @@ const setSobel = (isOn) => {
   }
 };
 
-const pass = new SMAAPass(
+//  Anti Aliasing Pass
+const aaPass = new SMAAPass(
   window.innerWidth * renderer.getPixelRatio(),
   window.innerHeight * renderer.getPixelRatio()
 );
-composer.addPass(pass);
+composer.addPass(aaPass);
 
 export { renderer, composer, setSobel };

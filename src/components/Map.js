@@ -43,7 +43,7 @@ const load = () => {
       //   console.log(child.name);
       //   child.material = bakedMaterial;
       // });
-      Map.scene.position.set(0, -50, 0);
+      Map.scene.position.set(0, -80, 0);
       scene.add(Map.scene);
 
       return Map;

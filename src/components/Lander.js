@@ -8,7 +8,8 @@ import { dev } from "@util/State.js";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { scene } from "@components/MainScene.js";
-import lander from "@components/models/Lander.gltf";
+import landerModel from "@components/models/Lander.gltf";
+import { origin } from "@components/MainScene.js";
 
 const isDev = dev.get();
 const gltfLoader = new GLTFLoader();
@@ -16,13 +17,12 @@ const gltfLoader = new GLTFLoader();
 let Lander;
 const load = () => {
   gltfLoader.load(
-    lander,
+    landerModel,
     (gltf) => {
       if (isDev) {
         console.log("Successfully loaded: Lander GTLF");
       }
       Lander = gltf;
-      Lander.scene.position.set(0, 15, 0);
       scene.add(Lander.scene);
       return Lander;
     },
@@ -41,4 +41,4 @@ const load = () => {
 
 load();
 
-export { Lander };
+export { Lander, load };

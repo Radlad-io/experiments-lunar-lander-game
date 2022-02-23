@@ -3,12 +3,13 @@ const init = {
   bwGraphics: true,
   highscore: 0,
   score: 550,
-  time: 1200, // 2 Mins I think...
+  time: 12000, // 2 Mins I think...
   fuel: 900,
   altitude: 100,
   horizontalSpeed: 0,
   verticalSpeed: 0,
   view: "front",
+  fuelBurnRate: 0.25,
 };
 
 let devState = init.devState;
@@ -64,9 +65,9 @@ const fuel = {
   get: () => {
     return fuelValue;
   },
-  set: (fuel) => {
-    fuelValue = fuel;
-    fuelDisplay.innerHTML = fuelValue;
+  set: () => {
+    fuelValue -= init.fuelBurnRate;
+    fuelDisplay.innerHTML = fuelValue.toFixed(0);
     return fuelValue;
   },
 };
@@ -116,9 +117,9 @@ const verticalSpeed = {
     verticalSpeedValue = verticalSpeed;
     verticalSpeedDisplay.innerHTML =
       verticalSpeedValue < 0
-        ? Math.abs(verticalSpeedValue) + " ↓"
+        ? Math.abs(verticalSpeedValue).toFixed(1) + " ↓"
         : verticalSpeedValue > 0
-        ? verticalSpeedValue + " ↑"
+        ? Math.abs(verticalSpeedValue).toFixed(1) + " ↑"
         : verticalSpeedValue;
     return verticalSpeedValue;
   },

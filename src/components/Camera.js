@@ -9,6 +9,7 @@ import { dev } from "@util/State.js";
 import { scene } from "@components/MainScene.js";
 import { view } from "@util/State.js";
 import { rotate, cameraUp, cameraDown } from "@components/Sound.js";
+import { Lander } from "@components/Lander.js";
 
 import gsap from "gsap";
 gsap.registerPlugin(CustomEase);
@@ -20,13 +21,15 @@ const camera = new THREE.PerspectiveCamera(
   10,
   1000
 );
-camera.position.set(0, 2000, 1000);
+// camera.position.set(0, 2000, 1000);
+camera.position.set(0, 25, 80);
+camera.lookAt(scene.position);
 scene.add(camera);
 
 // TODO: Refactor this into Util/State
 const cameraMoveSpeed = 0.4;
 let isCameraFront = true;
-let isCameraMoving = true;
+let isCameraMoving = false;
 
 const move = {
   initialCameraFlyIn: () => {
@@ -34,13 +37,13 @@ const move = {
       duration: 5,
       ease: "power1.out",
       x: 0,
-      z: 80,
+      z: Lander.scene.position.z + 80,
     });
     gsap
       .to(camera.position, {
         duration: 5,
         ease: "power1.out",
-        y: 25,
+        y: Lander.scene.position.y + 25,
       })
       .then(() => {
         isCameraMoving = false;
@@ -56,14 +59,13 @@ const move = {
       gsap.to(camera.position, {
         duration: cameraMoveSpeed,
         ease: "circ.out",
-        x: -80,
+        x: Lander.scene.position.x - 80,
       });
       gsap
         .to(camera.position, {
           duration: cameraMoveSpeed,
           ease: "none",
-          z: 0,
-          y: 25,
+          z: Lander.scene.position.z,
         })
         .then(() => {
           isCameraMoving = false;
@@ -79,14 +81,13 @@ const move = {
       gsap.to(camera.position, {
         duration: cameraMoveSpeed,
         ease: "none",
-        x: 0,
+        x: Lander.scene.position.x,
       });
       gsap
         .to(camera.position, {
           duration: cameraMoveSpeed,
           ease: "circ.out",
-          z: 80,
-          y: 25,
+          z: Lander.scene.position.z + 80,
         })
         .then(() => {
           isCameraMoving = false;

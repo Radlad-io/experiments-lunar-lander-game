@@ -24,6 +24,7 @@ const sound = new THREE.Audio(listener);
 // load a sound and set it as the Audio object's buffer
 const audioLoader = new THREE.AudioLoader();
 
+// TODO: This is currently using the ThreeJS audio system and it can just be vanilla.js
 // assignes audio to each sound
 const soundLoader = (file, sound, loop, volume) => {
   audioLoader.load(file, function (buffer) {
@@ -36,7 +37,7 @@ const soundLoader = (file, sound, loop, volume) => {
 // volume mix
 const mix = {
   ambience: 2.5,
-  thrust: 2.5,
+  thrust: 2,
   rotate: 0.5,
   cameraUp: 0.75,
   cameraDown: 0.75,
@@ -73,7 +74,7 @@ soundLoader(ambienceFile, ambience, true, mix.ambience);
 const thrust = {
   sound: new THREE.Audio(listener),
   play: () => {
-    if (!muted) {
+    if (!muted && !thrust.isPlaying()) {
       thrust.sound.play();
     }
   },

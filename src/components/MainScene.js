@@ -17,4 +17,9 @@ scene.background = graphics.get()
   : new THREE.Color(0x000000);
 scene.add(Galaxy, Lighting);
 
-export { scene };
+const originGeo = new THREE.SphereBufferGeometry(1.5, 16, 8);
+const originMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+const origin = new THREE.Mesh(originGeo, originMat);
+// scene.add(origin);
+
+export { scene, origin };

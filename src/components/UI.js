@@ -16,9 +16,10 @@ const startBtn = document.querySelector(".start-btn");
 if (dev.get()) {
   title.style.display = "none";
   instructions.style.display = "none";
-  move.initialCameraFlyIn();
-  gsap.to(hud, { delay: 5, duration: 1, opacity: 1 });
-  gsap.to(bottomBar, { delay: 5, duration: 1, opacity: 1 });
+  // move.initialCameraFlyIn();
+  // TODO: Reset 5 second delays
+  gsap.to(hud, { delay: 0, duration: 1, opacity: 1 });
+  gsap.to(bottomBar, { delay: 0, duration: 1, opacity: 1 });
 } else {
   gsap.to(title, { delay: 0.75, duration: 0.75, opacity: 1 });
   gsap.to(title, { delay: 4, duration: 1, opacity: 0 });
