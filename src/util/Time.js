@@ -36,7 +36,7 @@ const tick = () => {
   const deltaTime = elapsedTime - oldElapsedTime;
   oldElapsedTime = elapsedTime;
 
-  if (key._pressed.ArrowUp === true && fuel.get() > 0) {
+  if (key._pressed.ArrowUp === true && fuel.get() > 0 && playing.get()) {
     landerPhysics.thrust();
     fuel.set();
     Sounds.thrust.play();
@@ -57,7 +57,6 @@ const tick = () => {
   }
 
   composer.render(scene, camera);
-
 
   stats.end();
   window.requestAnimationFrame(tick);
