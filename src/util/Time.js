@@ -5,7 +5,7 @@
 ////////////////////////////////////////
 
 import * as THREE from "three";
-import { playing, view, fuel, verticalSpeed } from "@util/State.js";
+import { playing, view, fuel, horizontalSpeed,verticalSpeed } from "@util/State.js";
 import { stats } from "@util/Stats.js";
 import { key } from "@util/Controls.js";
 import { renderer, composer } from "@util/Renderer.js";
@@ -25,6 +25,11 @@ let oldElapsedTime = 0;
 
 setInterval(() => {
   verticalSpeed.set(landerBodyPhysics.velocity.y);
+  if(view.get() === 'front'){
+    horizontalSpeed.set(landerBodyPhysics.velocity.x)
+  } else {
+    horizontalSpeed.set(landerBodyPhysics.velocity.z)
+  }
 }, 100);
 
 const tick = () => {

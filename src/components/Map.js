@@ -44,6 +44,7 @@ const load = () => {
       //   child.material = bakedMaterial;
       // });
       Map.scene.position.set(0, -80, 0);
+      Map.matrixAutoUpdate = false;
       scene.add(Map.scene);
 
       return Map;

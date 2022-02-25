@@ -1,6 +1,6 @@
 const init = {
-  // devState: import.meta.env.DEV || false,
-  devState: false,
+  devState: import.meta.env.DEV || false,
+  // devState: false,
   bwGraphics: true,
   highscore: 0,
   score: 550,
@@ -111,10 +111,10 @@ const horizontalSpeed = {
     horizontalSpeedValue = horizontalSpeed;
     horizontalSpeedDisplay.innerHTML =
       horizontalSpeedValue < 0
-        ? Math.abs(horizontalSpeedValue) + " ←"
+        ? Math.abs(horizontalSpeedValue).toFixed(1) + " ←"
         : horizontalSpeedValue > 0
-        ? horizontalSpeedValue + " →"
-        : horizontalSpeedValue;
+        ? Math.abs(horizontalSpeedValue).toFixed(1) + " →"
+        : horizontalSpeedValue.toFixed(1);
     return horizontalSpeedValue;
   },
 };
@@ -133,7 +133,7 @@ const verticalSpeed = {
         ? Math.abs(verticalSpeedValue).toFixed(1) + " ↓"
         : verticalSpeedValue > 0
         ? Math.abs(verticalSpeedValue).toFixed(1) + " ↑"
-        : verticalSpeedValue;
+        : verticalSpeedValue.toFixed(1);
     return verticalSpeedValue;
   },
 };
