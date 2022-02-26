@@ -5,6 +5,7 @@ import { move } from "@components/Camera.js";
 import { scene } from "@components/MainScene.js";
 import gsap from "gsap";
 
+const banner = document.querySelector(".banner");
 const hud = document.querySelector(".hud");
 const bottomBar = document.querySelector(".bottom-bar");
 const title = document.querySelector(".intro-modal");
@@ -14,13 +15,14 @@ const startBtn = document.querySelector(".start-btn");
 // Initial title sequence
 // Skips sequence if Dev
 if (dev.get()) {
+  banner.style.display = "none";
   title.style.display = "none";
   instructions.style.display = "none";
-  move.initialCameraFlyIn()
+  move.initialCameraFlyIn();
   // TODO:: I don't know about this pal. Maybe an event with the three loading manager can help
-  setTimeout(()=>{
-    playing.toggle()
-  }, 1000)
+  setTimeout(() => {
+    playing.toggle();
+  }, 1000);
   // TODO: Reset 5 second delays
   gsap.to(hud, { delay: 0, duration: 1, opacity: 1 });
   gsap.to(bottomBar, { delay: 0, duration: 1, opacity: 1 });
@@ -42,7 +44,7 @@ startBtn.addEventListener("click", () => {
   });
   gsap.to(hud, { delay: 5, duration: 1, opacity: 1 });
   gsap.to(bottomBar, { delay: 5, duration: 1, opacity: 1 });
-  playing.toggle()
+  playing.toggle();
 });
 
 // UI Mute Button
