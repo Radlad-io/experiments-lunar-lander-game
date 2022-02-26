@@ -1,4 +1,5 @@
 import * as CANNON from "cannon-es";
+import gsap from "gsap";
 
 // Physics
 const params = {
@@ -63,50 +64,57 @@ const landerPhysics = {
   },
   foward: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, .5, 1.5),
+      new CANNON.Vec3(0, 0.75, 1.5),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, .5, -1.5),
+      new CANNON.Vec3(0, 0.75, -1.5),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
   },
   backward: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, .5, -1.5),
+      new CANNON.Vec3(0, 0.75, -1.5),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, .5, 1.5),
+      new CANNON.Vec3(0, 0.75, 1.5),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
   },
   left: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(1.5, .5, 0),
+      new CANNON.Vec3(1.5, 0.75, 0),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(-1.5, .5, 0),
+      new CANNON.Vec3(-1.5, 1, 0),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
   },
   right: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(-1.5, .5, 0),
+      new CANNON.Vec3(-1.5, 0.75, 0),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(1.5, .5, 0),
+      new CANNON.Vec3(1.5, 0.75, 0),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
   },
   resetForces: () => {
-    landerBodyPhysics.quaternion.setFromEuler(0, 0, 0);
+    gsap.to(landerBodyPhysics.quaternion, {
+      // TODO: Refactor camera movement speed into global state
+      duration: 0.4,
+      ease: "none",
+      x: 0,
+      y: 0,
+      z: 0,
+    });
     landerBodyPhysics.angularVelocity = new CANNON.Vec3(0, 0, 0);
     return;
   },
