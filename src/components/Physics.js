@@ -11,8 +11,8 @@ const params = {
   angularFactor: new CANNON.Vec3(1, 0, 1),
   angularDamping: 0.75,
   linearDamping: 0.015,
-  allowSleep: false,
-  sleepSpeedLimit: 1.0,
+  allowSleep: true,
+  sleepSpeedLimit: 2.0,
   landerThrust: 3.5,
   landerMass: 50,
   rotationFactor: 4,
@@ -34,12 +34,23 @@ const landerBodyPhysics = new CANNON.Body({
 });
 
 // Lander parts (Top, Middle, Feet)
-landerBodyPhysics.addShape(new CANNON.Sphere(3.5), new CANNON.Vec3(0, 3.5, 0));
-landerBodyPhysics.addShape(new CANNON.Box(new CANNON.Vec3(2.5, 1.5, 2.5)));
-landerBodyPhysics.addShape(new CANNON.Sphere(1), new CANNON.Vec3(-3, -2.5, -3));
-landerBodyPhysics.addShape(new CANNON.Sphere(1), new CANNON.Vec3(-3, -2.5, 3));
-landerBodyPhysics.addShape(new CANNON.Sphere(1), new CANNON.Vec3(3, -2.5, -3));
-landerBodyPhysics.addShape(new CANNON.Sphere(1), new CANNON.Vec3(3, -2.5, 3));
+landerBodyPhysics.addShape(new CANNON.Sphere(0.9), new CANNON.Vec3(0, 2.25, 0));
+landerBodyPhysics.addShape(
+  new CANNON.Sphere(0.15),
+  new CANNON.Vec3(-0.9, 0.75, -0.9)
+);
+landerBodyPhysics.addShape(
+  new CANNON.Sphere(0.15),
+  new CANNON.Vec3(-0.9, 0.75, 0.9)
+);
+landerBodyPhysics.addShape(
+  new CANNON.Sphere(0.15),
+  new CANNON.Vec3(0.9, 0.75, -0.9)
+);
+landerBodyPhysics.addShape(
+  new CANNON.Sphere(0.15),
+  new CANNON.Vec3(0.9, 0.75, 0.9)
+);
 //  TODO: Y Offset here accounds for the origin of the lander model I think
 //        Try reseting the origin in blender to the icosphere
 landerBodyPhysics.position.set(0, 50.766, 0);
@@ -53,7 +64,7 @@ const groundBody = new CANNON.Body({
 });
 10;
 groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // make it face up
-groundBody.position.y = -75;
+groundBody.position.y = -80;
 world.addBody(groundBody);
 
 const landerPhysics = {
@@ -64,44 +75,44 @@ const landerPhysics = {
   },
   foward: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0.75, 1.5),
+      new CANNON.Vec3(0, 0, 0.25),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0.75, -1.5),
+      new CANNON.Vec3(0, 0.75, -0.25),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
   },
   backward: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0.75, -1.5),
+      new CANNON.Vec3(0, 0, -0.25),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0.75, 1.5),
+      new CANNON.Vec3(0, 0, 0.25),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
   },
   left: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(1.5, 0.75, 0),
+      new CANNON.Vec3(0.25, 0, 0),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(-1.5, 1, 0),
+      new CANNON.Vec3(-0.25, 1, 0),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
   },
   right: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(-1.5, 0.75, 0),
+      new CANNON.Vec3(-0.25, 0, 0),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(1.5, 0.75, 0),
+      new CANNON.Vec3(0.25, 0, 0),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;

@@ -47,6 +47,7 @@ const load = () => {
       Map.matrixAutoUpdate = false;
       scene.add(Map.scene);
 
+      scene.add(LandingPad(6));
       return Map;
     },
     (xhr) => {

@@ -16,18 +16,18 @@ const gltfLoader = new GLTFLoader();
 const landerMaterial = new THREE.MeshLambertMaterial({
   color: 0x000000,
   emissive: 0xffffff,
-  emissiveIntensity: 0.5,
+  emissiveIntensity: 0.65,
 });
 
 const thrustMaterial = new THREE.MeshLambertMaterial({
-  color: 0x000000,
-  emissive: 0xffffff,
-  emissiveIntensity: .75,
+  color: 0xffa500,
+  emissive: 0xffa500,
+  emissiveIntensity: 0.8,
 });
 
-const thrustGeometry = new THREE.ConeBufferGeometry( .4, 1.5, 6 );
-const thrustMesh = new THREE.Mesh( thrustGeometry, thrustMaterial );
-thrustMesh.rotation.set(Math.PI,0,0)
+const thrustGeometry = new THREE.ConeBufferGeometry(0.4, 1.5, 6);
+const thrustMesh = new THREE.Mesh(thrustGeometry, thrustMaterial);
+thrustMesh.rotation.set(Math.PI, 0, 0);
 // scene.add( thrustMesh );
 
 let Lander;
@@ -42,9 +42,9 @@ const load = () => {
       Lander.scene.traverse((child) => {
         child.material = landerMaterial;
       });
-      Lander.scene.add(thrustMesh)
+      Lander.scene.add(thrustMesh);
       scene.add(Lander.scene);
-      console.log(scene.children[4].children[11])
+      console.log(scene.children[4].children[11]);
       return Lander;
     },
     (xhr) => {

@@ -12,6 +12,7 @@ import {
   fuel,
   horizontalSpeed,
   verticalSpeed,
+  dev,
 } from "@util/State.js";
 import { stats } from "@util/Stats.js";
 import { key } from "@util/Controls.js";
@@ -23,9 +24,12 @@ import {
   landerBodyPhysics,
   landerPhysics,
 } from "@components/Physics.js";
-import * as Sounds from "@components/Sound.js";
+import CannonDebugger from "cannon-es-debugger";
 
+import * as Sounds from "@components/Sound.js";
 import { Lander } from "@components/Lander.js";
+
+const cannonDebugger = new CannonDebugger(scene, world);
 
 const clock = new THREE.Clock();
 let oldElapsedTime = 0;
@@ -89,6 +93,9 @@ const tick = () => {
   }
 
   if (playing.get()) {
+    // Run the simulation independently of framerate every 1 / 60 ms
+    world.fixedStep(1 / 60, deltaTime, 2);
+
     Lander.scene.position.copy(landerBodyPhysics.position);
     Lander.scene.quaternion.copy(landerBodyPhysics.quaternion);
     camera.lookAt(
@@ -105,8 +112,9 @@ const tick = () => {
       camera.position.z = landerBodyPhysics.position.z;
     }
 
-    // Run the simulation independently of framerate every 1 / 60 ms
-    world.fixedStep(1 / 60, deltaTime, 3);
+    if (dev.get()) {
+      cannonDebugger.update();
+    }
   }
 
   composer.render(scene, camera);
