@@ -5,7 +5,7 @@
 ////////////////////////////////////////
 
 import * as THREE from "three";
-import { playing, view, fuel, horizontalSpeed,verticalSpeed } from "@util/State.js";
+import { playing, cameraMoving, view, fuel, horizontalSpeed, verticalSpeed } from "@util/State.js";
 import { stats } from "@util/Stats.js";
 import { key } from "@util/Controls.js";
 import { renderer, composer } from "@util/Renderer.js";
@@ -91,6 +91,13 @@ const tick = () => {
     );
 
     camera.position.y = landerBodyPhysics.position.y + 25;
+    if(view.get() === 'front' && !cameraMoving.get()){
+      camera.position.x = Lander.scene.position.x
+    }
+    if(view.get() === 'side' && !cameraMoving.get()){
+      camera.position.z = landerBodyPhysics.position.z
+    }
+    
     // Run the simulation independently of framerate every 1 / 60 ms
     world.fixedStep(1 / 60, deltaTime, 3);
   }

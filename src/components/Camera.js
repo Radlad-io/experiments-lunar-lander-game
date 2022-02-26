@@ -5,7 +5,7 @@
 ///////////////////////////////////////
 
 import * as THREE from "three";
-import { dev } from "@util/State.js";
+import { dev, cameraMoving } from "@util/State.js";
 import { scene } from "@components/MainScene.js";
 import { view } from "@util/State.js";
 import { rotate, cameraUp, cameraDown } from "@components/Sound.js";
@@ -44,12 +44,14 @@ const move = {
     })
       .then(() => {
         isCameraMoving = false;
+        cameraMoving.toggle()
         if (dev.get()) {
           console.log("Debug output: Camera Position", camera.position);
         }
       });
   },
   rotate: () => {
+    cameraMoving.toggle()
     if (isCameraFront && !isCameraMoving) {
       isCameraMoving = true;
       rotate.play();
@@ -67,6 +69,7 @@ const move = {
         .then(() => {
           isCameraMoving = false;
           isCameraFront = false;
+          cameraMoving.toggle()
           view.set("side");
           if (dev.get()) {
             console.log("Debug output: Camera position", camera.position);
@@ -89,6 +92,7 @@ const move = {
         .then(() => {
           isCameraMoving = false;
           isCameraFront = true;
+          cameraMoving.toggle()
           view.set("front");
           if (dev.get()) {
             console.log("Debug output: Camera Position", camera.position);

@@ -12,6 +12,7 @@ const init = {
   view: "front",
   fuelBurnRate: 0.25,
   playingState: false,
+  cameraMovingState: true,
 };
 
 let devState = init.devState;
@@ -29,6 +30,17 @@ const playing = {
   toggle: () => {
     playingState = !playingState;
     return playingState;
+  },
+};
+
+let cameraMovingState = init.cameraMovingState;
+const cameraMoving = {
+  get: () => {
+    return cameraMovingState;
+  },
+  toggle: () => {
+    cameraMovingState = !cameraMovingState;
+    return cameraMovingState;
   },
 };
 
@@ -169,6 +181,7 @@ const thrust = {
 export {
   dev,
   playing,
+  cameraMoving,
   graphics,
   score,
   playtime,

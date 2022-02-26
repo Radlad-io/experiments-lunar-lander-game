@@ -16,11 +16,11 @@ const startBtn = document.querySelector(".start-btn");
 if (dev.get()) {
   title.style.display = "none";
   instructions.style.display = "none";
-  move.initialCameraFlyIn();
+  move.initialCameraFlyIn()
   // TODO:: I don't know about this pal. Maybe an event with the three loading manager can help
   setTimeout(()=>{
     playing.toggle()
-  }, 500)
+  }, 1000)
   // TODO: Reset 5 second delays
   gsap.to(hud, { delay: 0, duration: 1, opacity: 1 });
   gsap.to(bottomBar, { delay: 0, duration: 1, opacity: 1 });
