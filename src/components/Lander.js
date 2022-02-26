@@ -28,7 +28,6 @@ const thrustMaterial = new THREE.MeshLambertMaterial({
 const thrustGeometry = new THREE.ConeBufferGeometry(0.4, 1.5, 6);
 const thrustMesh = new THREE.Mesh(thrustGeometry, thrustMaterial);
 thrustMesh.rotation.set(Math.PI, 0, 0);
-// scene.add( thrustMesh );
 
 let Lander;
 const load = () => {
@@ -44,7 +43,7 @@ const load = () => {
       });
       Lander.scene.add(thrustMesh);
       scene.add(Lander.scene);
-      console.log(scene.children[4].children[11]);
+
       return Lander;
     },
     (xhr) => {

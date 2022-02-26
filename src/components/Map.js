@@ -6,7 +6,18 @@
 
 import { dev } from "@util/State.js";
 import * as THREE from "three";
+import * as CANNON from "cannon-es";
+import {
+  world,
+  landerBodyPhysics,
+  landerPhysics,
+} from "@components/Physics.js";
+
+import CannonUtils from "@util/CannonUtil.ts";
+
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { ConvexGeometry } from "three/examples/jsm/geometries/ConvexGeometry";
+
 import { scene } from "@components/MainScene.js";
 import { LandingPad } from "@components/LandingPad.js";
 
@@ -48,6 +59,31 @@ const load = () => {
       scene.add(Map.scene);
 
       scene.add(LandingPad(6));
+
+      const mapMesh = gltf.scene.children[0];
+      const mapShape = CannonUtils.CreateTrimesh(mapMesh.geometry);
+      const mapBody = new CANNON.Body({ mass: 0 });
+      mapBody.position.y = -80;
+
+      mapBody.addShape(mapShape);
+      world.addBody(mapBody);
+
+      // const positions = mapMesh.geometry.attributes.position.array;
+      // const points = [];
+
+      // for (let i = 0; i < positions.length; i += 3) {
+      //   points.push(
+      //     new THREE.Vector3(positions[i], positions[i + 1], positions[i + 3])
+      //   );
+      // }
+
+      // const convexHull = new ConvexGeometry(points);
+      // const mapShape = new CANNON.ConvexPolyhedron(convexHull);
+      // const mapBody = new CANNON.Body({ mass: 0 });
+      // mapBody.addShape(mapShape);
+      // world.addBody(mapBody);
+
+      // console.log(positions);
       return Map;
     },
     (xhr) => {
