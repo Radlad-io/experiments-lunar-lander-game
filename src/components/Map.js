@@ -58,7 +58,10 @@ const load = () => {
       Map.matrixAutoUpdate = false;
       scene.add(Map.scene);
 
-      scene.add(LandingPad(6));
+      // Adding landing Pads to map
+      scene.add(LandingPad(2, -30, -78, 25));
+      scene.add(LandingPad(4, 40, -76.5, 0));
+      scene.add(LandingPad(6, 16, -76, -43));
 
       const mapMesh = gltf.scene.children[0];
       const mapShape = CannonUtils.CreateTrimesh(mapMesh.geometry);
@@ -68,22 +71,6 @@ const load = () => {
       mapBody.addShape(mapShape);
       world.addBody(mapBody);
 
-      // const positions = mapMesh.geometry.attributes.position.array;
-      // const points = [];
-
-      // for (let i = 0; i < positions.length; i += 3) {
-      //   points.push(
-      //     new THREE.Vector3(positions[i], positions[i + 1], positions[i + 3])
-      //   );
-      // }
-
-      // const convexHull = new ConvexGeometry(points);
-      // const mapShape = new CANNON.ConvexPolyhedron(convexHull);
-      // const mapBody = new CANNON.Body({ mass: 0 });
-      // mapBody.addShape(mapShape);
-      // world.addBody(mapBody);
-
-      // console.log(positions);
       return Map;
     },
     (xhr) => {

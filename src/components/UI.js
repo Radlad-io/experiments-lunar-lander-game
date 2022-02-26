@@ -29,7 +29,7 @@ if (dev.get()) {
 } else {
   gsap.to(title, { delay: 0.75, duration: 0.75, opacity: 1 });
   gsap.to(title, { delay: 5, duration: 1, opacity: 0 });
-  gsap.to(instructions, { delay: 5, duration: 0.75, opacity: 1 });
+  gsap.to(instructions, { delay: 6, duration: 0.75, opacity: 1 });
 }
 
 //Capture keys right away

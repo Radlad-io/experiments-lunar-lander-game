@@ -10,7 +10,7 @@ const init = {
   horizontalSpeed: 0,
   verticalSpeed: 0,
   view: "front",
-  fuelBurnRate: 0.25,
+  fuelBurnRate: 0.2,
   playingState: false,
   cameraMovingState: true,
 };

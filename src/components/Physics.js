@@ -131,4 +131,9 @@ const landerPhysics = {
   },
 };
 
+landerBodyPhysics.addEventListener("collide", (event) => {
+  const contactForce = event.contact.getImpactVelocityAlongNormal();
+  console.log(contactForce);
+});
+
 export { world, landerBodyPhysics, landerPhysics };
