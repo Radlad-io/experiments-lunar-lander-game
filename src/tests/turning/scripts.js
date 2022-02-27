@@ -1,8 +1,6 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 
-import { Galaxy } from "@components/Galaxy.js";
-
 import Stats from "three/examples/jsm/libs/stats.module";
 import { GUI } from "dat.gui";
 import { Text } from "troika-three-text";
@@ -10,7 +8,6 @@ import gsap from "gsap";
 gsap.registerPlugin(CustomEase);
 
 const scene = new THREE.Scene();
-scene.add(Galaxy);
 // scene.add(new THREE.AxesHelper(5));
 scene.background = new THREE.Color(0x000000);
 scene.fog = new THREE.Fog(0x000, 900, 1300);
@@ -135,9 +132,9 @@ pad2Mesh.position.set(100, 15, 0);
 pad2Mesh.receiveShadow = true;
 scene.add(pad2Mesh);
 
-import moonTextureCOLOR from "./textures/moonTexture_COLOR.jpg";
-import moonTextureNorm from "./textures/moonTexture_NORM.jpg";
-import moonTextureDisp from "./textures/moonTexture_DISP.png";
+import moonTextureCOLOR from "../textures/moonTexture_COLOR.jpg";
+import moonTextureNorm from "../textures/moonTexture_NORM.jpg";
+import moonTextureDisp from "../textures/moonTexture_DISP.png";
 const textureLoader = new THREE.TextureLoader();
 const groundTextureBaseColor = textureLoader.load(moonTextureCOLOR);
 const groundTextureNormMap = textureLoader.load(moonTextureNorm);

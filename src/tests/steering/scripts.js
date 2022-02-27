@@ -134,9 +134,9 @@ pad2Mesh.position.set(20, 15, 75);
 pad2Mesh.receiveShadow = true;
 scene.add(pad2Mesh);
 
-import moonTextureCOLOR from "./textures/moonTexture_COLOR.jpg";
-import moonTextureNorm from "./textures/moonTexture_NORM.jpg";
-import moonTextureDisp from "./textures/moonTexture_DISP.png";
+import moonTextureCOLOR from "../textures/moonTexture_COLOR.jpg";
+import moonTextureNorm from "../textures/moonTexture_NORM.jpg";
+import moonTextureDisp from "../textures/moonTexture_DISP.png";
 const textureLoader = new THREE.TextureLoader();
 const groundTextureBaseColor = textureLoader.load(moonTextureCOLOR);
 const groundTextureNormMap = textureLoader.load(moonTextureNorm);

@@ -28,7 +28,7 @@ import {
 import CannonDebugger from "cannon-es-debugger";
 
 import * as Sounds from "@components/Sound.js";
-import * as UI from '@components/UI.js'
+import * as UI from "@components/UI.js";
 import { Lander } from "@components/Lander.js";
 
 const cannonDebugger = new CannonDebugger(scene, world);
@@ -37,6 +37,7 @@ const clock = new THREE.Clock();
 let oldElapsedTime = 0;
 
 //  TODO: Should be able to map through children and get the closest contact point
+//  FIXME: Double check that it's not reporting negative values when on pads
 let intersects;
 const altitudeRayCaster = new THREE.Raycaster();
 const rayTo = new THREE.Vector3(0, -1, 0);
@@ -46,11 +47,10 @@ rayTo.normalize();
 const updateAlititude = () => {
   altitudeRayCaster.set(landerBodyPhysics.position, rayTo);
   intersects = altitudeRayCaster.intersectObjects(scene.children);
-  if(intersects.length > 0){
-    altitude.set(intersects[0].distance)
+  if (intersects.length > 0) {
+    altitude.set(intersects[0].distance);
   }
 };
-
 
 setInterval(() => {
   verticalSpeed.set(landerBodyPhysics.velocity.y);
@@ -59,13 +59,13 @@ setInterval(() => {
   } else {
     horizontalSpeed.set(landerBodyPhysics.velocity.z);
   }
-  updateAlititude()
+  updateAlititude();
 }, 100);
 
 setInterval(() => {
-  if(fuel.get() < 200){
-    Sounds.lowFuel.play()
-    UI.initLowFuelIndicator.toggle()
+  if (fuel.get() < 200) {
+    Sounds.lowFuel.play();
+    UI.initLowFuelIndicator.toggle();
   }
 }, 2000);
 

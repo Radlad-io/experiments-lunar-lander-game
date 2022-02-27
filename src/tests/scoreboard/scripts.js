@@ -1,4 +1,3 @@
-// import Filter from "bad-words";
 import gsap from "gsap";
 const body = document.querySelector("body");
 const form = document.querySelector(".form");
@@ -15,7 +14,10 @@ let score;
 let records;
 
 fetch("/api")
-  .then((response) => response.json())
+  .then((response) => {
+    response.json();
+    console.log(response);
+  })
   .then((data) => {
     records = data;
     score = data[0].score + 25;
@@ -56,7 +58,7 @@ fetch("/api")
       );
     }
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.log("Caught Error: ", err));
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();

@@ -136,9 +136,9 @@ pad2Mesh.position.set(20, 15, 75);
 pad2Mesh.receiveShadow = true;
 scene.add(pad2Mesh);
 
-import moonTextureCOLOR from "./textures/moonTexture_COLOR.jpg";
-import moonTextureNorm from "./textures/moonTexture_NORM.jpg";
-import moonTextureDisp from "./textures/moonTexture_DISP.png";
+import moonTextureCOLOR from "../textures/moonTexture_COLOR.jpg";
+import moonTextureNorm from "../textures/moonTexture_NORM.jpg";
+import moonTextureDisp from "../textures/moonTexture_DISP.png";
 const textureLoader = new THREE.TextureLoader();
 const groundTextureBaseColor = textureLoader.load(moonTextureCOLOR);
 const groundTextureNormMap = textureLoader.load(moonTextureNorm);
@@ -492,7 +492,6 @@ const cameraSnapZoom = (i) => {
   // TODO: Right now this runs every frame and it might only be needed during the camera snap transision. Possible performance increase.
   camera.updateProjectionMatrix();
 };
-
 
 const clock = new THREE.Clock();
 let oldElapsedTime = 0;
