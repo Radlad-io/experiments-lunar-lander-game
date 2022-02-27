@@ -25,7 +25,6 @@ if (dev.get()) {
   setTimeout(() => {
     playing.toggle();
   }, 1000);
-  // TODO: Reset 5 second delays
   gsap.to(hud, { delay: 0, duration: 1, opacity: 1 });
   gsap.to(bottomBar, { delay: 0, duration: 1, opacity: 1 });
 } else {
@@ -39,13 +38,20 @@ window.focus();
 
 const initLowFuelIndicator = {
   toggle: () => {
-    lowFuelIndicatorBG.style.opacity = 1
-    gsap.fromTo(lowFuelIndicator, {opacity: 0},{
-      ease: CustomEase.create("custom", "M0,0 C0,0.196 0,1 0.5,1 1,1 1,0.2 1,0 "),
-      duration:2,
-      opacity: 1,
-      repeat: -1
-    })
+    lowFuelIndicatorBG.style.opacity = 1;
+    gsap.fromTo(
+      lowFuelIndicator,
+      { opacity: 0 },
+      {
+        ease: CustomEase.create(
+          "custom",
+          "M0,0 C0,0.196 0,1 0.5,1 1,1 1,0.2 1,0 "
+        ),
+        duration: 2,
+        opacity: 1,
+        repeat: -1,
+      }
+    );
   },
 };
 

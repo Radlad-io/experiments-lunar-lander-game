@@ -28,6 +28,10 @@ let key = {
       Camera.move.rotate();
       landerPhysics.resetForces();
     }
+    if (!cameraMoving.get() && key._pressed.Control === true) {
+      Camera.move.top();
+      landerPhysics.resetForces();
+    }
   },
 
   onkeyup: function (event) {

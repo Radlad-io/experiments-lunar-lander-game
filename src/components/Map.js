@@ -38,7 +38,7 @@ const bakedMaterial = new THREE.MeshBasicMaterial({
 });
 
 //    Map model
-import map from "@components/models/Map.glb";
+import map from "@components/models/Map.gltf";
 let Map;
 const load = () => {
   gltfLoader.load(

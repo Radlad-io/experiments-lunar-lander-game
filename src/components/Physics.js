@@ -75,44 +75,44 @@ const landerPhysics = {
   },
   foward: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0, 0.25),
+      new CANNON.Vec3(0, 0.5, 0.25),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0.75, -0.25),
+      new CANNON.Vec3(0, 0.5, -0.125),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
   },
   backward: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0, -0.25),
+      new CANNON.Vec3(0, 0.5, -0.25),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0, 0, 0.25),
+      new CANNON.Vec3(0, 0.5, 0.25),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
   },
   left: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0.25, 0, 0),
+      new CANNON.Vec3(0.25, 0.5, 0),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(-0.25, 1, 0),
+      new CANNON.Vec3(-0.25, 0.5, 0),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
   },
   right: () => {
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(-0.25, 0, 0),
+      new CANNON.Vec3(-0.25, 0.5, 0),
       new CANNON.Vec3(0, -1 * params.rotationFactor, 0)
     );
     landerBodyPhysics.applyLocalImpulse(
-      new CANNON.Vec3(0.25, 0, 0),
+      new CANNON.Vec3(0.25, 0.5, 0),
       new CANNON.Vec3(0, 1 * params.rotationFactor, 0)
     );
     return;
