@@ -10,6 +10,7 @@ import {
   cameraMoving,
   view,
   fuel,
+  altitude,
   horizontalSpeed,
   verticalSpeed,
   dev,
@@ -35,6 +36,22 @@ const cannonDebugger = new CannonDebugger(scene, world);
 const clock = new THREE.Clock();
 let oldElapsedTime = 0;
 
+//  TODO: Should be able to map through children and get the closest contact point
+let intersects;
+const altitudeRayCaster = new THREE.Raycaster();
+const rayTo = new THREE.Vector3(0, -1, 0);
+rayTo.normalize();
+// altitudeRayCaster.set(landerBodyPhysics.position, rayTo);
+
+const updateAlititude = () => {
+  altitudeRayCaster.set(landerBodyPhysics.position, rayTo);
+  intersects = altitudeRayCaster.intersectObjects(scene.children);
+  if(intersects.length > 0){
+    altitude.set(intersects[0].distance)
+  }
+};
+
+
 setInterval(() => {
   verticalSpeed.set(landerBodyPhysics.velocity.y);
   if (view.get() === "front") {
@@ -42,6 +59,7 @@ setInterval(() => {
   } else {
     horizontalSpeed.set(landerBodyPhysics.velocity.z);
   }
+  updateAlititude()
 }, 100);
 
 setInterval(() => {

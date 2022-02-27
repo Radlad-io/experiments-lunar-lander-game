@@ -1,7 +1,7 @@
 
 const init = {
-  // devState: import.meta.env.DEV || false,
-  devState: false,
+  devState: import.meta.env.DEV || false,
+  // devState: false,
   bwGraphics: true,
   highscore: 0,
   score: 550,
@@ -107,7 +107,7 @@ const altitude = {
     return altitudeValue;
   },
   set: (altitude) => {
-    altitudeValue = altitude;
+    altitudeValue = altitude.toFixed(0);
     altitudeDisplay.innerHTML = altitudeValue;
     return altitudeValue;
   },
