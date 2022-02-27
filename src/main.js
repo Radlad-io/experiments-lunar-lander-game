@@ -16,6 +16,9 @@
 import * as THREE from "three";
 import { dev } from "@util/State.js";
 
+// Mobile check
+import  '@util/Mobile.js'
+
 // // UI Animations
 import { hud } from "@components/UI.js";
 

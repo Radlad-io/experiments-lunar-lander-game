@@ -299,3 +299,23 @@ p {
   color: white;
   font-weight: 100;
 }
+
+.mobile-reject-wrapper {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  z-index: 400;
+}
+
+.mobile-reject-wrapper p{
+  max-width: 375px;
+  font-size: 1.125rem;
+  font-weight: 200;
+  margin: 25px;
+}
