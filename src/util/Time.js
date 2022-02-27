@@ -27,6 +27,7 @@ import {
 import CannonDebugger from "cannon-es-debugger";
 
 import * as Sounds from "@components/Sound.js";
+import * as UI from '@components/UI.js'
 import { Lander } from "@components/Lander.js";
 
 const cannonDebugger = new CannonDebugger(scene, world);
@@ -42,6 +43,13 @@ setInterval(() => {
     horizontalSpeed.set(landerBodyPhysics.velocity.z);
   }
 }, 100);
+
+setInterval(() => {
+  if(fuel.get() < 200){
+    Sounds.lowFuel.play()
+    UI.initLowFuelIndicator.toggle()
+  }
+}, 2000);
 
 const tick = () => {
   // Adds stats HUD
@@ -105,6 +113,7 @@ const tick = () => {
     );
 
     camera.position.y = landerBodyPhysics.position.y + 25;
+
     if (view.get() === "front" && !cameraMoving.get()) {
       camera.position.x = landerBodyPhysics.position.x;
     }
@@ -112,9 +121,9 @@ const tick = () => {
       camera.position.z = landerBodyPhysics.position.z;
     }
 
-    if (dev.get()) {
-      cannonDebugger.update();
-    }
+    // if (dev.get()) {
+    //   cannonDebugger.update();
+    // }
   }
 
   composer.render(scene, camera);

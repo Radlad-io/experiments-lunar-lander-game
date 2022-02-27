@@ -17,6 +17,7 @@ import thrustFile from "./sounds/thrust.mp3";
 import rotateFile from "./sounds/rotate.mp3";
 import cameraDownFile from "./sounds/camera-down.mp3";
 import cameraUpFile from "./sounds/camera-up.mp3";
+import lowFuelFile from "./sounds/beep.mp3";
 
 // create a global audio source
 const sound = new THREE.Audio(listener);
@@ -41,6 +42,7 @@ const mix = {
   rotate: 0.5,
   cameraUp: 0.75,
   cameraDown: 0.75,
+  lowFuelBeep: .035,
 };
 
 let muted = false;
@@ -126,4 +128,20 @@ const cameraDown = {
 };
 soundLoader(cameraDownFile, cameraDown, false, mix.cameraDown);
 
-export { mute, ambience, thrust, rotate, cameraUp, cameraDown };
+const lowFuel = {
+  sound: new THREE.Audio(listener),
+  play: () => {
+    if (!muted && !lowFuel.isPlaying()) {
+      lowFuel.sound.play();
+    }
+  },
+  pause: () => {
+    lowFuel.sound.pause();
+  },
+  isPlaying: () => {
+    return lowFuel.sound.isPlaying;
+  },
+};
+soundLoader(lowFuelFile, lowFuel, true, mix.lowFuelBeep);
+
+export { mute, ambience, thrust, rotate, cameraUp, cameraDown, lowFuel };

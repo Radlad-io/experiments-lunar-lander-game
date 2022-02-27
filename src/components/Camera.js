@@ -18,7 +18,7 @@ gsap.registerPlugin(CustomEase);
 const camera = new THREE.PerspectiveCamera(
   35,
   window.innerWidth / window.innerHeight,
-  10,
+  .1,
   1000
 );
 camera.position.set(0, 0, 2000);

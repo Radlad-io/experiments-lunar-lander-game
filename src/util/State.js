@@ -1,3 +1,4 @@
+
 const init = {
   devState: import.meta.env.DEV || false,
   // devState: false,
@@ -5,7 +6,7 @@ const init = {
   highscore: 0,
   score: 550,
   time: 12000, // 2 Mins I think...
-  fuel: 900,
+  fuel: 1000,
   altitude: 100,
   horizontalSpeed: 0,
   verticalSpeed: 0,

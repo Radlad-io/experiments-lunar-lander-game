@@ -11,6 +11,8 @@ const bottomBar = document.querySelector(".bottom-bar");
 const title = document.querySelector(".intro-modal");
 const instructions = document.querySelector(".instruction-modal");
 const startBtn = document.querySelector(".start-btn");
+const lowFuelIndicatorBG = document.querySelector(".low-fuel-indicator-bg");
+const lowFuelIndicator = document.querySelector(".low-fuel-indicator");
 
 // Initial title sequence
 // Skips sequence if Dev
@@ -35,17 +37,17 @@ if (dev.get()) {
 //Capture keys right away
 window.focus();
 
-// UI Start Button
-startBtn.addEventListener("click", () => {
-  Sounds.ambience.play();
-  move.initialCameraFlyIn();
-  gsap.to(instructions, { duration: 0.75, opacity: 0 }).then(() => {
-    instructions.style.display = "none";
-  });
-  gsap.to(hud, { delay: 5, duration: 1, opacity: 1 });
-  gsap.to(bottomBar, { delay: 5, duration: 1, opacity: 1 });
-  playing.toggle();
-});
+const initLowFuelIndicator = {
+  toggle: () => {
+    lowFuelIndicatorBG.style.opacity = 1
+    gsap.fromTo(lowFuelIndicator, {opacity: 0},{
+      ease: CustomEase.create("custom", "M0,0 C0,0.196 0,1 0.5,1 1,1 1,0.2 1,0 "),
+      duration:2,
+      opacity: 1,
+      repeat: -1
+    })
+  },
+};
 
 // UI Mute Button
 const muteBtn = document.querySelector(".sound-toggle");
@@ -82,6 +84,18 @@ graphicsToggle.addEventListener("click", () => {
   setSobel(current);
 });
 
+// UI Start Button
+startBtn.addEventListener("click", () => {
+  Sounds.ambience.play();
+  move.initialCameraFlyIn();
+  gsap.to(instructions, { duration: 0.75, opacity: 0 }).then(() => {
+    instructions.style.display = "none";
+  });
+  gsap.to(hud, { delay: 5, duration: 1, opacity: 1 });
+  gsap.to(bottomBar, { delay: 5, duration: 1, opacity: 1 });
+  playing.toggle();
+});
+
 // UI Thrust Input
 window.addEventListener("keypress", (e) => {
   if (e.isComposing || e.key === " ") {
@@ -107,4 +121,4 @@ window.addEventListener("keyup", (e) => {
   }
 });
 
-export { hud };
+export { hud, initLowFuelIndicator };

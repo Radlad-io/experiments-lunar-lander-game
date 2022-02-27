@@ -214,6 +214,29 @@ body {
   padding: 8px 20px;
 }
 
+.fuel-wrapper {
+  position: fixed;
+  top: 0;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+}
+
+.low-fuel-indicator-bg {
+  opacity: 0;
+  background-color: black;
+}
+
+.fuel-wrapper p {
+  margin-top: 85vh;
+  text-transform: uppercase;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 200;
+  padding: 5px 8px;
+}
+
 .small {
   padding: 8px 15px;
 }
