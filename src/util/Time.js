@@ -14,6 +14,7 @@ import {
   horizontalSpeed,
   verticalSpeed,
   dev,
+  level,
 } from "@util/State.js";
 import { stats } from "@util/Stats.js";
 import { key } from "@util/Controls.js";
@@ -25,6 +26,7 @@ import {
   landerBodyPhysics,
   landerPhysics,
 } from "@components/Physics.js";
+import * as Map from "@components/Map.js";
 import CannonDebugger from "cannon-es-debugger";
 
 import * as Sounds from "@components/Sound.js";
@@ -68,6 +70,8 @@ setInterval(() => {
     UI.initLowFuelIndicator.toggle();
   }
 }, 2000);
+
+Map.load(level.get());
 
 const tick = () => {
   // Adds stats HUD
@@ -139,9 +143,9 @@ const tick = () => {
       camera.position.z = landerBodyPhysics.position.z;
     }
 
-    // if (dev.get()) {
-    //   cannonDebugger.update();
-    // }
+    if (dev.get()) {
+      cannonDebugger.update();
+    }
   }
 
   composer.render(scene, camera);

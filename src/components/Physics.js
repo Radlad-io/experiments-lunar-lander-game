@@ -57,15 +57,15 @@ landerBodyPhysics.position.set(0, 50.766, 0);
 world.addBody(landerBodyPhysics);
 
 //  Temp ground plane
-const groundBody = new CANNON.Body({
-  type: CANNON.Body.STATIC,
-  shape: new CANNON.Plane(),
-  material: new CANNON.Material(),
-});
-10;
-groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // make it face up
-groundBody.position.y = -80;
-world.addBody(groundBody);
+// const groundBody = new CANNON.Body({
+//   type: CANNON.Body.STATIC,
+//   shape: new CANNON.Plane(),
+//   material: new CANNON.Material(),
+// });
+// 10;
+// groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // make it face up
+// groundBody.position.y = -80;
+// world.addBody(groundBody);
 
 const landerPhysics = {
   thrust: () => {

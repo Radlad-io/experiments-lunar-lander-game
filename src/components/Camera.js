@@ -16,17 +16,16 @@ gsap.registerPlugin(CustomEase);
 
 // TODO: There camera is currently set to look at the scene origin. Needs to update with the Lander.
 const camera = new THREE.PerspectiveCamera(
-  35,
+  50,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
 camera.position.set(0, 0, 2000);
-// camera.position.set(0, 25, 80);
 camera.lookAt(scene.position);
 scene.add(camera);
 
-// TODO: Refactor this into Util/State
+// TODO: Hoist this state into State.js
 const cameraMoveSpeed = 0.25;
 
 // TODO: Use state view instead

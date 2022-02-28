@@ -1,6 +1,7 @@
 const init = {
-  // devState: import.meta.env.DEV || false,
-  devState: false,
+  devState: import.meta.env.DEV || false,
+  // devState: false,
+  levelState: 1,
   bwGraphics: true,
   highscore: 0,
   score: 550,
@@ -41,6 +42,17 @@ const cameraMoving = {
   toggle: () => {
     cameraMovingState = !cameraMovingState;
     return cameraMovingState;
+  },
+};
+
+let levelState = init.levelState;
+const level = {
+  get: () => {
+    return levelState;
+  },
+  increment: () => {
+    levelState += 1;
+    return levelState;
   },
 };
 
@@ -182,6 +194,7 @@ export {
   dev,
   playing,
   cameraMoving,
+  level,
   graphics,
   score,
   playtime,
