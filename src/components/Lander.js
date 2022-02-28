@@ -42,6 +42,7 @@ const load = () => {
         child.material = landerMaterial;
       });
       Lander.scene.add(thrustMesh);
+      Lander.scene.name = "Lander";
       scene.add(Lander.scene);
 
       return Lander;

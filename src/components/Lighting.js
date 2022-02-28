@@ -6,6 +6,7 @@ const Lighting = new THREE.Group();
 
 const sunLight = new THREE.PointLight(0xffffff, 0, 300);
 sunLight.position.set(-100, 50, -100);
+Lighting.name = "Lighting";
 Lighting.add(sunLight);
 
 gsap.to(sunLight, {

@@ -73,6 +73,11 @@ setInterval(() => {
 
 Map.load(level.get());
 
+setTimeout(() => {
+  Map.dispose();
+}, 6000);
+Map.dispose();
+
 const tick = () => {
   // Adds stats HUD
   stats.begin();
@@ -143,9 +148,9 @@ const tick = () => {
       camera.position.z = landerBodyPhysics.position.z;
     }
 
-    if (dev.get()) {
-      cannonDebugger.update();
-    }
+    // if (dev.get()) {
+    //   cannonDebugger.update();
+    // }
   }
 
   composer.render(scene, camera);

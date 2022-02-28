@@ -3,6 +3,7 @@ import * as CANNON from "cannon-es";
 import { Text } from "troika-three-text";
 import font from "./fonts/IBMPlexMono-Bold.ttf";
 import { world } from "./Physics";
+import { Map } from "@components/Map.js";
 
 // NOTE: Pad values 2x / 3x /4x / 5x
 const padRenderMaterial = new THREE.MeshLambertMaterial({
@@ -24,6 +25,7 @@ const LandingPad = (multiplier, positionX, positionY, positionZ) => {
   const landingPadMesh = new THREE.Mesh(landingPadRenderGeo, padRenderMaterial);
   landingPadMesh.receiveShadow = true;
   landingPad.position.set(positionX, positionY, positionZ);
+  landingPad.name = `Landing Pad ${multiplier}`;
   landingPad.add(landingPadMesh);
 
   const landingPadPhysicsBody = new CANNON.Body({

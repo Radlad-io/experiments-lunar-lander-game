@@ -23,6 +23,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.set(0, 0, 2000);
 camera.lookAt(scene.position);
+camera.name = "Camera";
 scene.add(camera);
 
 // TODO: Hoist this state into State.js

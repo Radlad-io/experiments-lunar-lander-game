@@ -61,6 +61,7 @@ const load = (level) => {
       // });
       Map.scene.position.set(0, -80, 0);
       Map.matrixAutoUpdate = false;
+      Map.scene.name = `Map.${level}`;
       scene.add(Map.scene);
 
       // Adding landing Pads to map
@@ -91,6 +92,5 @@ const load = (level) => {
     }
   );
 };
-// load();
 
 export { Map, load };
