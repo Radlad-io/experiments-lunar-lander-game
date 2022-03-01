@@ -73,10 +73,10 @@ setInterval(() => {
 
 Map.load(level.get());
 
-setTimeout(() => {
-  Map.dispose();
-}, 6000);
-Map.dispose();
+// setTimeout(() => {
+//   Map.dispose();
+// }, 6000);
+// Map.dispose();
 
 const tick = () => {
   // Adds stats HUD
