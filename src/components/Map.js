@@ -12,16 +12,12 @@ import {
   landerBodyPhysics,
   landerPhysics,
 } from "@components/Physics.js";
-
-import CannonUtils from "@util/CannonUtil.ts";
-
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { ConvexGeometry } from "three/examples/jsm/geometries/ConvexGeometry";
-
+import CannonUtils from "@util/CannonUtil.ts";
 import * as Levels from "@components/Levels.js";
-
 import { scene } from "@components/MainScene.js";
 import { LandingPad } from "@components/LandingPad.js";
+
 
 //    Enviorment variables
 const isDev = dev.get();
@@ -55,10 +51,6 @@ const load = (level) => {
       // FIXME: Map texture not loading right
       // TODO: Material should change for OG graphics
       Map = gltf;
-      // Map.scene.traverse((child) => {
-      //   console.log(child.name);
-      //   child.material = bakedMaterial;
-      // });
       Map.scene.position.set(0, -80, 0);
       Map.matrixAutoUpdate = false;
       Map.scene.name = `Map.${level}`;
@@ -66,7 +58,6 @@ const load = (level) => {
 
       // Adding landing Pads to map
       Levels.list[level].pads.map((pad) => {
-        console.log(pad);
         scene.add(LandingPad(pad[0], pad[1], pad[2], pad[3]));
       });
 
@@ -93,4 +84,26 @@ const load = (level) => {
   );
 };
 
-export { Map, load };
+const remove = () => {
+  let needsRemoval = []
+  scene.children.map((child, index) => {
+    if(child.name.includes('Map') || child.name.includes('Landing')){
+      needsRemoval.push(index)
+    }
+  })
+  needsRemoval.reverse().map((index) => {
+    scene.remove(scene.children[index])
+  })
+
+  let physicsBodies = []
+  world.bodies.map((body, index) => {
+    if(index > 0){
+      physicsBodies.push(index)
+    }
+  })
+  physicsBodies.reverse().map((index)=>{
+    world.removeBody(world.bodies[index])
+  })
+} 
+
+export { Map, load, remove };
