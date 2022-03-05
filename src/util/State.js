@@ -14,6 +14,7 @@ const init = {
   fuelBurnRate: 0.2,
   playingState: false,
   cameraMovingState: true,
+  contactThreshold: 1,
 };
 
 let devState = init.devState;
@@ -53,6 +54,24 @@ const level = {
   increment: () => {
     levelState += 1;
     return levelState;
+  },
+};
+
+let collisionState = [];
+const collisions = {
+  get: () => {
+    return collisionState;
+  },
+  add: (i) => {
+    if (i.contactForce > init.contactThreshold) {
+      console.log("Crashed");
+    }
+    collisionState.push(i);
+    return collisionState;
+  },
+  clear: () => {
+    collisionState.length = 0;
+    return collisionState;
   },
 };
 
@@ -194,6 +213,7 @@ export {
   dev,
   playing,
   cameraMoving,
+  collisions,
   level,
   graphics,
   score,

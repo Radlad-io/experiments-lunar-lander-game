@@ -6,6 +6,7 @@
 
 import { dev } from "@util/State.js";
 import * as THREE from "three";
+import gsap from "gsap";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { scene } from "@components/MainScene.js";
 import landerModel from "@components/models/Lander.gltf";
@@ -25,7 +26,7 @@ const thrustMaterial = new THREE.MeshLambertMaterial({
   emissiveIntensity: 0.8,
 });
 
-const thrustGeometry = new THREE.ConeBufferGeometry(0.4, 1.5, 6);
+const thrustGeometry = new THREE.ConeGeometry(0.4, 1.5, 6);
 const thrustMesh = new THREE.Mesh(thrustGeometry, thrustMaterial);
 thrustMesh.rotation.set(Math.PI, 0, 0);
 

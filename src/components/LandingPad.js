@@ -34,6 +34,7 @@ const LandingPad = (multiplier, positionX, positionY, positionZ) => {
     shape: new CANNON.Cylinder(radius, radius, 10, 20),
   });
   landingPadPhysicsBody.position.set(positionX, positionY, positionZ);
+  landingPadPhysicsBody.id = multiplier;
   world.addBody(landingPadPhysicsBody);
 
   // Set properties to configure:

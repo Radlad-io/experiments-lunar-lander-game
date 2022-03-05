@@ -1,3 +1,4 @@
+import { collisions } from "@util/State.js";
 import * as CANNON from "cannon-es";
 import gsap from "gsap";
 
@@ -54,6 +55,7 @@ landerBodyPhysics.addShape(
 //  TODO: Y Offset here accounds for the origin of the lander model I think
 //        Try reseting the origin in blender to the icosphere
 landerBodyPhysics.position.set(0, 50.766, 0);
+landerBodyPhysics.id = "lander";
 world.addBody(landerBodyPhysics);
 
 const landerPhysics = {
@@ -119,10 +121,19 @@ const landerPhysics = {
     return;
   },
 };
+console.log(landerBodyPhysics.addEventListener());
 
 landerBodyPhysics.addEventListener("collide", (event) => {
   const contactForce = event.contact.getImpactVelocityAlongNormal();
-  console.log(contactForce);
+  const contactBody = event.contact.bj.id;
+  const contactEvent = { contactBody, contactForce };
+  console.log(event.contact);
+  collisions.add(contactEvent);
+  console.log(collisions.get());
+  // console.log(
+  //   `Lander contacted ${event.contact.bj.id}: `,
+  //   event.contact.getImpactVelocityAlongNormal()
+  // );
 });
 
 export { world, landerBodyPhysics, landerPhysics };

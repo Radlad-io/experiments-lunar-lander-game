@@ -18,7 +18,6 @@ import * as Levels from "@components/Levels.js";
 import { scene } from "@components/MainScene.js";
 import { LandingPad } from "@components/LandingPad.js";
 
-
 //    Enviorment variables
 const isDev = dev.get();
 
@@ -65,6 +64,7 @@ const load = (level) => {
       const mapShape = CannonUtils.CreateTrimesh(mapMesh.geometry);
       const mapBody = new CANNON.Body({ mass: 0 });
       mapBody.position.y = -80;
+      mapBody.id = "ground";
 
       mapBody.addShape(mapShape);
       world.addBody(mapBody);
@@ -85,25 +85,25 @@ const load = (level) => {
 };
 
 const remove = () => {
-  let needsRemoval = []
+  let needsRemoval = [];
   scene.children.map((child, index) => {
-    if(child.name.includes('Map') || child.name.includes('Landing')){
-      needsRemoval.push(index)
+    if (child.name.includes("Map") || child.name.includes("Landing")) {
+      needsRemoval.push(index);
     }
-  })
+  });
   needsRemoval.reverse().map((index) => {
-    scene.remove(scene.children[index])
-  })
+    scene.remove(scene.children[index]);
+  });
 
-  let physicsBodies = []
+  let physicsBodies = [];
   world.bodies.map((body, index) => {
-    if(index > 0){
-      physicsBodies.push(index)
+    if (index > 0) {
+      physicsBodies.push(index);
     }
-  })
-  physicsBodies.reverse().map((index)=>{
-    world.removeBody(world.bodies[index])
-  })
-} 
+  });
+  physicsBodies.reverse().map((index) => {
+    world.removeBody(world.bodies[index]);
+  });
+};
 
 export { Map, load, remove };
