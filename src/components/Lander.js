@@ -30,6 +30,30 @@ const thrustGeometry = new THREE.ConeGeometry(0.4, 1.5, 6);
 const thrustMesh = new THREE.Mesh(thrustGeometry, thrustMaterial);
 thrustMesh.rotation.set(Math.PI, 0, 0);
 
+let color, intensity, distance, angle, penumbra, decay;
+color = 0xffa500;
+intensity = 1;
+distance = 100;
+angle = 0.025;
+penumbra = 0.75;
+decay = 0;
+
+const landerLight = new THREE.SpotLight(
+  color,
+  intensity,
+  distance,
+  angle,
+  penumbra,
+  decay
+);
+
+landerLight.position.y = 100;
+landerLight.rotation.set(0, 0, Math.PI / 2);
+landerLight.name = "lander-light";
+landerLight.target.position.set(0, 0, 0);
+
+const landerLightHelper = new THREE.SpotLightHelper(landerLight);
+
 let Lander;
 const load = () => {
   gltfLoader.load(
@@ -44,6 +68,7 @@ const load = () => {
       });
       Lander.scene.add(thrustMesh);
       Lander.scene.name = "Lander";
+      Lander.scene.add(landerLight, landerLight.target);
       scene.add(Lander.scene);
 
       return Lander;
