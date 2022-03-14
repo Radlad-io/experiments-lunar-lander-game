@@ -2,12 +2,11 @@ import { collisions } from "@util/State.js";
 import * as CANNON from "cannon-es";
 import gsap from "gsap";
 
-// Physics
+// Initial physics parameters
 const params = {
   gravity: new CANNON.Vec3(0, -1.62, 0),
   // Earth -9.82 m/s²
   // Moon -1.62 m/s²
-  material: new CANNON.Material(),
   velocity: new CANNON.Vec3(0, -5, 0),
   angularFactor: new CANNON.Vec3(1, 0, 1),
   angularDamping: 0.75,
@@ -19,13 +18,27 @@ const params = {
   rotationFactor: 4,
 };
 
+// Initializes cannnon world & lander body
+const moonMaterial = new CANNON.Material("moon");
+const landerMaterial = new CANNON.Material("lander");
 const world = new CANNON.World({
   gravity: params.gravity,
+  material: moonMaterial,
 });
+
+const landingContactMaterial = new CANNON.ContactMaterial(
+  moonMaterial,
+  landerMaterial,
+  {
+    friction: 0.1,
+    restitution: 0.9,
+  }
+);
+world.addContactMaterial(landingContactMaterial);
 
 const landerBodyPhysics = new CANNON.Body({
   mass: params.landerMass, // kg
-  material: params.material,
+  material: landerMaterial,
   velocity: params.velocity,
   angularFactor: params.angularFactor,
   angularDamping: params.angularDamping,
@@ -123,17 +136,20 @@ const landerPhysics = {
 };
 console.log(landerBodyPhysics.addEventListener());
 
+// Adds collisions to an array in state
 landerBodyPhysics.addEventListener("collide", (event) => {
   const contactForce = event.contact.getImpactVelocityAlongNormal();
   const contactBody = event.contact.bj.id;
   const contactEvent = { contactBody, contactForce };
-  console.log(event.contact);
+  // console.log(event.contact);
   collisions.add(contactEvent);
-  console.log(collisions.get());
-  // console.log(
-  //   `Lander contacted ${event.contact.bj.id}: `,
-  //   event.contact.getImpactVelocityAlongNormal()
-  // );
+  // console.log(collisions.get());
+});
+
+// Clears the collision state when contact is removed
+world.addEventListener("endContact", (event) => {
+  collisions.clear();
+  // console.log(collisions.get());
 });
 
 export { world, landerBodyPhysics, landerPhysics };

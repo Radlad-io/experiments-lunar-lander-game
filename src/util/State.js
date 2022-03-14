@@ -66,6 +66,9 @@ const collisions = {
     if (i.contactForce > init.contactThreshold) {
       console.log("Crashed");
     }
+    if (collisionState.length > 3) {
+      console.log(collisions.get());
+    }
     collisionState.push(i);
     return collisionState;
   },

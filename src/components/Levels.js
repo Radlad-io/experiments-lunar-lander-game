@@ -4,6 +4,9 @@
 //                                        //
 ////////////////////////////////////////////
 
+import { level } from "@util/State.js";
+import * as Map from "@components/Map.js";
+
 import Map01 from "../assets/maps/Map01.gltf";
 import Map02 from "../assets/maps/Map02.gltf";
 import Map03 from "../assets/maps/Map03.gltf";
@@ -35,4 +38,10 @@ const list = {
   },
 };
 
-export { list };
+const advance = () => {
+  level.increment();
+  Map.remove();
+  Map.load(level.get());
+};
+
+export { list, advance };

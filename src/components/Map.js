@@ -34,11 +34,6 @@ const bakedMaterial = new THREE.MeshBasicMaterial({
   map: bakedTexture,
 });
 
-//    Map models
-import Map01 from "../assets/maps/Map01.gltf";
-import Map02 from "../assets/maps/Map02.gltf";
-import Map03 from "../assets/maps/Map03.gltf";
-
 let Map;
 const load = (level) => {
   gltfLoader.load(
@@ -92,6 +87,7 @@ const remove = () => {
     }
   });
   needsRemoval.reverse().map((index) => {
+    // TODO: Need to dispose geometry from memory
     scene.remove(scene.children[index]);
   });
 

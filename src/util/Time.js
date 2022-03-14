@@ -8,6 +8,7 @@ import * as THREE from "three";
 import {
   playing,
   cameraMoving,
+  collisions,
   view,
   fuel,
   altitude,
@@ -27,6 +28,7 @@ import {
   landerPhysics,
 } from "@components/Physics.js";
 import * as Map from "@components/Map.js";
+import { advance } from "@components/Levels.js";
 import CannonDebugger from "cannon-es-debugger";
 
 import * as Sounds from "@components/Sound.js";
@@ -142,6 +144,13 @@ const tick = () => {
     if (view.get() === "side" && !cameraMoving.get()) {
       camera.position.z = landerBodyPhysics.position.z;
     }
+
+    // if (collisions.get().length > 1) {
+    //   landerPhysics.resetForces();
+    //   landerBodyPhysics.position.set(0, 50.766, 0);
+    //   advance();
+    //   collisions.clear();
+    // }
 
     // if (dev.get()) {
     //   cannonDebugger.update();
