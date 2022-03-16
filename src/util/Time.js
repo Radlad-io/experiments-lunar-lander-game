@@ -145,12 +145,11 @@ const tick = () => {
       camera.position.z = landerBodyPhysics.position.z;
     }
 
-    // if (collisions.get().length > 1) {
-    //   landerPhysics.resetForces();
-    //   landerBodyPhysics.position.set(0, 50.766, 0);
-    //   advance();
-    //   collisions.clear();
-    // }
+    if (collisions.get().length >= 2) {
+      const colliders  = collisions.get()
+      const multiplier = colliders[colliders.length - 1].contactBody
+      advance(multiplier);
+    }
 
     // if (dev.get()) {
     //   cannonDebugger.update();

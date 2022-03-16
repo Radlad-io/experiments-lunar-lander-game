@@ -4,7 +4,7 @@ const init = {
   levelState: 1,
   bwGraphics: true,
   highscore: 0,
-  score: 550,
+  score: 0,
   time: 12000, // 2 Mins I think...
   fuel: 1000,
   altitude: 100,
@@ -96,8 +96,9 @@ const score = {
   get: () => {
     return scoreValue;
   },
-  set: (score) => {
-    scoreValue = score;
+  set: (multiplier) => {
+    const levelScore = 100 * multiplier
+    scoreValue += levelScore;
     scoreDisplay.innerHTML = scoreValue;
     return scoreValue;
   },
