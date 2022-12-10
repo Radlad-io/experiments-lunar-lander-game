@@ -5,9 +5,8 @@
 ///////////////////////////////////////
 
 import * as THREE from "three";
-import { dev, cameraMoving } from "@util/State.js";
+import { dev, cameraMoving, view, level } from "@util/State.js";
 import { scene } from "@components/MainScene.js";
-import { view, level } from "@util/State.js";
 import { rotate, cameraUp, cameraDown } from "@components/Sound.js";
 import { Lander } from "@components/Lander.js";
 
@@ -37,16 +36,20 @@ let isCameraMoving = false;
 const move = {
   initialCameraFlyIn: () => {
     gsap
-      .fromTo(camera.position, {
-        x: 0,
-        y: 0,
-        z: level.get() == 1 ? 2000 : 1000,
-      },{
-        duration: 5,
-        ease: "power1.out",
-        x: 0,
-        z: 80,
-      })
+      .fromTo(
+        camera.position,
+        {
+          x: 0,
+          y: 0,
+          z: level.get() == 1 ? 2000 : 1000,
+        },
+        {
+          duration: 5,
+          ease: "power1.out",
+          x: 0,
+          z: 80,
+        }
+      )
       .then(() => {
         isCameraMoving = false;
         cameraMoving.toggle();

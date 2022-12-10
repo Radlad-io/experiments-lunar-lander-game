@@ -4,10 +4,10 @@
 //                                        //
 ////////////////////////////////////////////
 
-import { level, collisions, cameraMoving, score } from "@util/State.js";
+import { level, view, collisions, cameraMoving, score } from "@util/State.js";
 import * as Map from "@components/Map.js";
-import { landerPhysics,landerBodyPhysics } from "@components/Physics.js";
-import {move} from '@components/Camera.js'
+import { landerPhysics, landerBodyPhysics } from "@components/Physics.js";
+import { move } from "@components/Camera.js";
 
 import Map01 from "../assets/maps/Map01.gltf";
 import Map02 from "../assets/maps/Map02.gltf";
@@ -41,15 +41,16 @@ const list = {
 };
 
 const advance = (multiplier) => {
-  score.set(multiplier)
+  score.set(multiplier);
   level.increment();
   Map.remove();
   Map.load(level.get());
   landerPhysics.resetForces();
+  view.set("front");
   landerBodyPhysics.position.set(0, 50.766, 0);
   collisions.clear();
   cameraMoving.toggle();
-  move.initialCameraFlyIn()
+  move.initialCameraFlyIn();
 };
 
 export { list, advance };
