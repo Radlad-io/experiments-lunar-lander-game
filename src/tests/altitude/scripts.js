@@ -3,6 +3,7 @@ import * as CANNON from "cannon-es";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Stats from "three/examples/jsm/libs/stats.module";
+// TODO: Remove dat.gui package from tests and package.json
 import { GUI } from "dat.gui";
 // import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 // import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
@@ -106,17 +107,17 @@ horizVelocityText.color = 0xffffff;
 
 const altitudeRayCaster = new THREE.Raycaster();
 // const origin = sphereBody.position
-const rayTo =  new THREE.Vector3(0, -1, 0)
-rayTo.normalize()
-altitudeRayCaster.set(sphereBody.position,rayTo);
-let intersects, altitude
+const rayTo = new THREE.Vector3(0, -1, 0);
+rayTo.normalize();
+altitudeRayCaster.set(sphereBody.position, rayTo);
+let intersects, altitude;
 
 const updateAlititude = () => {
-  altitudeRayCaster.set(sphereBody.position,rayTo);
-  intersects = altitudeRayCaster.intersectObject(groundMesh)
-  altitude = Math.floor(intersects[0].distance -1.5)
+  altitudeRayCaster.set(sphereBody.position, rayTo);
+  intersects = altitudeRayCaster.intersectObject(groundMesh);
+  altitude = Math.floor(intersects[0].distance - 1.5);
   altitudeText.text = `ALTITUDE ${altitude}m`;
-}
+};
 
 const updateDroPosition = () => {
   altitudeText.position.x = sphereBody.position.x - 25;
@@ -125,19 +126,21 @@ const updateDroPosition = () => {
   vertVelocityText.position.y = sphereBody.position.y + 18;
   horizVelocityText.position.x = sphereBody.position.x - 25;
   horizVelocityText.position.y = sphereBody.position.y + 11;
-}
+};
 
 const updateVelocity = () => {
-  vertVelocityText.text = `${sphereBody.velocity.y.toFixed(1) > 0 ? "↑": "↓"} ${Math.abs(sphereBody.velocity.y.toFixed(1))}m/s`;
-  horizVelocityText.text = `${sphereBody.velocity.x.toFixed(1) > 0 ? "→" : "←"} ${Math.abs(sphereBody.velocity.x.toFixed(1))}m/s`;
-}
+  vertVelocityText.text = `${
+    sphereBody.velocity.y.toFixed(1) > 0 ? "↑" : "↓"
+  } ${Math.abs(sphereBody.velocity.y.toFixed(1))}m/s`;
+  horizVelocityText.text = `${
+    sphereBody.velocity.x.toFixed(1) > 0 ? "→" : "←"
+  } ${Math.abs(sphereBody.velocity.x.toFixed(1))}m/s`;
+};
 
 setInterval(() => {
-  updateAlititude()
-  updateVelocity()
-}, 100)
-
-
+  updateAlititude();
+  updateVelocity();
+}, 100);
 
 // Update the rendering:
 let color, intensity, distance, angle, penumbra, decay;
@@ -285,7 +288,7 @@ function animate() {
   sphereMesh.position.copy(sphereBody.position);
   sphereMesh.quaternion.copy(sphereBody.quaternion);
 
-  updateDroPosition()
+  updateDroPosition();
 
   // Run the simulation independently of framerate every 1 / 60 ms
   world.fixedStep();

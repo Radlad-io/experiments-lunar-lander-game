@@ -11,12 +11,16 @@
     "vite": "^2.7.0"
   },
   "dependencies": {
+    "@0b5vr/tweakpane-plugin-profiler": "^0.3.0",
+    "@tweakpane/plugin-camerakit": "^0.2.2",
+    "@tweakpane/plugin-essentials": "^0.1.5",
     "cannon-es": "^0.19.0",
     "dat.gui": "^0.7.7",
     "firebase": "^9.6.6",
     "firebase-admin": "^10.0.2",
     "gsap": "^3.8.0",
     "three": "^0.135.0",
-    "troika-three-text": "^0.45.0"
+    "troika-three-text": "^0.45.0",
+    "tweakpane": "^3.1.1"
   }
 }

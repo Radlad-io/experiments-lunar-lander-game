@@ -7,7 +7,7 @@ module.exports = defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "src/index.html"),
+        main: resolve(__dirname, "index.html"),
         tests: resolve(__dirname, "src/tests/index.html"),
         basic: resolve(__dirname, "src/tests/basic/index.html"),
         readout: resolve(__dirname, "src/tests/readout/index.html"),
@@ -25,15 +25,14 @@ module.exports = defineConfig({
       },
     },
   },
-  root: "./src",
-  publicDir: "./public",
   assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp4", "**/*.json"],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "@lib": path.resolve(__dirname, "./src/lib"),
-      "@util": path.resolve(__dirname, "./src/util"),
-      "@components": path.resolve(__dirname, "./src/components"),
+      "@": path.resolve(__dirname, "./"),
+      "@src": path.resolve(__dirname, "./src"),
+      "@Experience": path.resolve(__dirname, "./src/Experience"),
+      "@Utils": path.resolve(__dirname, "./src/Experience/Utils"),
+      "@World": path.resolve(__dirname, "./src/Experience/World"),
     },
   },
 });
