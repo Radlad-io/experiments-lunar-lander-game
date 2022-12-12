@@ -11,15 +11,6 @@ export default class Physics {
       gravity: new CANNON.Vec3(0, -1.62, 0),
       // Earth -9.82 m/s²
       // Moon -1.62 m/s²
-      initialVelocity: new CANNON.Vec3(0, -5, 0),
-      angularFactor: new CANNON.Vec3(1, 0, 1),
-      angularDamping: 0.75,
-      linearDamping: 0.015,
-      allowSleep: true,
-      sleepSpeedLimit: 2.0,
-      landerThrust: 3.5,
-      landerMass: 50,
-      rotationFactor: 4,
     };
 
     this.setDebug();

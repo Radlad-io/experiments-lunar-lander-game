@@ -7,10 +7,11 @@ export default class Stars {
     this.scene = this.experience.scene;
     this.debug = this.experience.debug;
     this.params = {
-      count: 500,
+      count: 1000,
       size: 0.75,
-      color: "#ff0000",
+      color: "#ffffff",
       amplitude: 100,
+      min: 10,
     };
 
     this.setMesh();
@@ -56,7 +57,7 @@ export default class Stars {
     if (this.debug.active) {
       this.debugFolder = this.debug.pane.addFolder({
         title: "Star System",
-        expanded: true,
+        expanded: false,
       });
     }
 

@@ -10,8 +10,11 @@ export default class Camera {
     this.canvas = this.experience.canvas;
     this.debug = this.experience.debug;
     this.params = {
+      front: new THREE.Vector3(0, 5, 16),
       orbit: false,
-      fov: 50,
+      fov: 85,
+      rotationSpeed: 0.001,
+      inTransit: false,
     };
 
     this.setInstace();
@@ -19,15 +22,34 @@ export default class Camera {
     this.setDebug();
   }
 
+  getInTransit() {
+    return this.params.inTransit;
+  }
+
+  setInTransit() {
+    this.params.inTransit = !this.params.inTransit;
+  }
+
   setInstace() {
     this.instance = new THREE.PerspectiveCamera(
       this.params.fov,
       this.sizes.width / this.sizes.height,
-      4,
-      100
+      1,
+      200
     );
-    this.instance.position.set(6, 4, 8);
-    this.scene.add(this.instance);
+    this.instance.position.set(...this.params.front);
+    this.rig = new THREE.Group();
+    this.rotatorGeo = new THREE.BoxGeometry(5, 5, 16 * 2);
+    this.rotatorMat = new THREE.MeshBasicMaterial({
+      color: 0x00ff00,
+      wireframe: true,
+      visible: false,
+    });
+    this.rotatorMesh = new THREE.Mesh(this.rotatorGeo, this.rotatorMat);
+    this.rig.add(this.rotatorMesh);
+    this.rig.add(this.instance);
+    this.rig.position.set(0, 8, 0);
+    this.scene.add(this.rig);
   }
 
   setOrbitControls() {
@@ -43,8 +65,13 @@ export default class Camera {
   enableOrbitControls() {
     this.controls.enabled = true;
   }
+
   disableOrbitControls() {
     this.controls.enabled = false;
+  }
+
+  rotateCamera() {
+    this.state.inTransit.set(true);
   }
 
   setDebug() {
@@ -54,28 +81,7 @@ export default class Camera {
         expanded: true,
       });
 
-      this.controller = this.debug.pane.addInput(
-        { key: 0, fov: this.params.fov },
-        "key",
-        {
-          view: "cameraring",
-          series: 1,
-          // Scale unit
-          unit: {
-            // Pixels for the unit
-            pixels: 50,
-            // Number of ticks for the unit
-            ticks: 10,
-            // Amount of a value for the unit
-            value: 0.2,
-          },
-          // You can use `min`, `max`, `step` same as a number input
-          min: 1,
-          step: 0.02,
-        }
-      );
-
-      this.orbitDebug = this.debug.pane.addInput(
+      this.orbitDebug = this.debugFolder.addInput(
         { Orbit: this.params.orbit },
         "Orbit"
       );
@@ -86,6 +92,36 @@ export default class Camera {
           this.disableOrbitControls();
         }
       });
+
+      this.fovControl = this.debugFolder.addInput(
+        { fov: this.params.fov },
+        "fov",
+        {
+          view: "cameraring",
+          series: 1,
+        }
+      );
+      this.fovControl.on("change", (e) => {
+        this.instance.fov = e.value;
+        this.instance.updateProjectionMatrix();
+      });
+
+      this.rotateControl = this.debugFolder.addButton({
+        title: "right",
+        label: "rotate",
+      });
+
+      this.rotateControl.on("click", (e) => {
+        this.rotateCamera();
+      });
+
+      Object.keys(this.params).forEach((key, index) => {
+        this[key] = this.debugFolder.addInput(this.params, key);
+        this[key].on("change", (e) => {
+          this.params[key] = e.value;
+          console.log(`Set ${key} to:`, this.params[key]);
+        });
+      });
     }
   }
 
@@ -95,6 +131,14 @@ export default class Camera {
   }
 
   update() {
-    this.controls.update();
+    if (this.params.orbit) {
+      this.controls.update();
+    }
+    if (this.params.inTransit) {
+      this.rig.rotateOnWorldAxis(
+        new THREE.Vector3(0, -1, 0),
+        this.params.rotationSpeed
+      );
+    }
   }
 }

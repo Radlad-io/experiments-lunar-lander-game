@@ -7,32 +7,36 @@ export default class Environment {
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
     this.debug = this.experience.debug;
-
-    if (this.debug.active) {
-      this.debugFolder = this.debug.pane.addFolder({
-        title: "Environment",
-        expanded: true,
-      });
-    }
+    this.params = {
+      sunIntensity: 4,
+      sunPositionX: 3,
+      sunPositionY: 3,
+      envIntensity: 0.4,
+    };
 
     this.setSunLight();
     this.setEnviornmentMap();
-    this.initDebug();
+    this.setDebug();
   }
 
   setSunLight() {
     this.sunLight = new THREE.DirectionalLight("#ffffff", 4);
     this.sunLight.castShadow = true;
+    this.sunLight.intensity = this.params.sunIntensity;
     this.sunLight.shadow.camera.far = 15;
     this.sunLight.shadow.mapSize.set(1024, 1024);
     this.sunLight.shadow.normalBias = 0.05;
-    this.sunLight.position.set(3, 3, -2.25);
+    this.sunLight.position.set(
+      this.params.sunPositionX,
+      this.params.sunPositionY,
+      -2.25
+    );
     this.scene.add(this.sunLight);
   }
 
   setEnviornmentMap() {
     this.environmentMap = {};
-    this.environmentMap.intensity = 0.4;
+    this.environmentMap.intensity = this.params.envIntensity;
     this.environmentMap.texture = this.resources.items.environmentMapTexture;
     this.environmentMap.texture.encoding = THREE.sRGBEncoding;
 
@@ -54,31 +58,37 @@ export default class Environment {
     this.environmentMap.updateMaterials();
   }
 
-  initDebug() {
+  setDebug() {
     if (this.debug.active) {
+      this.debugFolder = this.debug.pane.addFolder({
+        title: "Environment",
+        // FIXME: Still expanded. Is this a bug?
+        expanded: false,
+      });
+
       const sliders = {
-        lightIntensity: this.debug.pane.addBlade({
+        lightIntensity: this.debugFolder.addBlade({
           view: "slider",
           label: "Sun Intensity",
           min: 0,
           max: 10,
           value: this.sunLight.intensity,
         }),
-        positionX: this.debug.pane.addBlade({
+        positionX: this.debugFolder.addBlade({
           view: "slider",
           label: "Position X",
           min: -5,
           max: 5,
           value: this.sunLight.position.x,
         }),
-        positionY: this.debug.pane.addBlade({
+        positionY: this.debugFolder.addBlade({
           view: "slider",
           label: "Position Y",
           min: -5,
           max: 5,
           value: this.sunLight.position.y,
         }),
-        envIntensity: this.debug.pane.addBlade({
+        envIntensity: this.debugFolder.addBlade({
           view: "slider",
           label: "Env Intensity",
           min: 0,

@@ -19,9 +19,8 @@ export default class Renderer {
     this.debug = this.experience.debug;
     this.params = {
       sobel: false,
-      AA: true,
+      AA: false,
     };
-
     this.setInstance();
   }
 
@@ -30,7 +29,10 @@ export default class Renderer {
       canvas: this.canvas,
       powerPreference: "high-performance",
     });
+    this.instance.physicallyCorrectLights = true;
     this.instance.outputEncoding = THREE.sRGBEncoding;
+    this.instance.toneMapping = THREE.CineonToneMapping;
+    this.instance.toneMappingExposure = 1.75;
     this.instance.shadowMap.enabled = true;
     this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
     this.instance.setClearColor("#211d20");
@@ -40,6 +42,7 @@ export default class Renderer {
     this.renderPass = new RenderPass(this.scene, this.camera.instance);
     this.composer.addPass(this.renderPass);
     this.setSobelPass();
+    this.setAAPass();
     this.setDebug();
   }
 
@@ -74,7 +77,6 @@ export default class Renderer {
   }
 
   toggleAAPass() {
-    // FIXME: AA toggle not working
     if (this.params.AA) {
       this.composer.removePass(this.aaPass);
     } else {
@@ -88,7 +90,7 @@ export default class Renderer {
     if (this.debug.active) {
       this.debugFolder = this.debug.pane.addFolder({
         title: "Renderer",
-        expanded: true,
+        expanded: false,
       });
       this.keys = [];
       Object.keys(this.params).forEach((key, index) => {

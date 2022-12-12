@@ -25,7 +25,7 @@ html {
   --tp-input-foreground-color: hsla(0, 0%, 100%, 0.5);
   --tp-label-foreground-color: hsla(0, 0%, 100%, 0.5);
   --tp-monitor-background-color: hsla(0, 0%, 0%, 0.3);
-  --tp-monitor-foreground-color: hsla(0, 100%, 50%, 0.9);
+  --tp-monitor-foreground-color: hsla(0, 100%, 50%, 1);
 }
 
 .tp-dfwv {
@@ -51,7 +51,7 @@ body {
 .banner {
   position: absolute;
   display: block;
-  background-color: hsla(0, 100%, 50%, 0.9);
+  background-color: hsla(0, 100%, 50%, 1);
   top: 0px;
   left: 0;
   z-index: 800;
