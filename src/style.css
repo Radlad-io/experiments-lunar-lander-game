@@ -5,7 +5,7 @@ html {
 }
 
 :root {
-  --tp-base-background-color: hsla(0, 0%, 10%, 0.9);
+  --tp-base-background-color: hsla(0, 0%, 10%, 1);
   --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
   --tp-button-background-color: hsla(0, 0%, 80%, 1);
   --tp-button-background-color-active: hsla(0, 0%, 100%, 1);
@@ -25,7 +25,7 @@ html {
   --tp-input-foreground-color: hsla(0, 0%, 100%, 0.5);
   --tp-label-foreground-color: hsla(0, 0%, 100%, 0.5);
   --tp-monitor-background-color: hsla(0, 0%, 0%, 0.3);
-  --tp-monitor-foreground-color: hsla(0, 100%, 50%, 1);
+  --tp-monitor-foreground-color: hsl(0, 100%, 50%);
 }
 
 .tp-dfwv {

@@ -11,7 +11,7 @@ export default class Stars {
       size: 0.75,
       color: "#ffffff",
       amplitude: 100,
-      min: 10,
+      min: 1,
     };
 
     this.setMesh();
@@ -59,17 +59,16 @@ export default class Stars {
         title: "Star System",
         expanded: false,
       });
-    }
-
-    // Adds all params to debug UI
-    Object.keys(this.params).forEach((key, index) => {
-      this[key] = this.debugFolder.addInput(this.params, key);
-      this[key].on("change", (e) => {
-        this.params[key] = e.value;
-        this.removeMesh();
-        this.setMesh();
-        console.log(`Set ${key} to:`, this.params[key]);
+      // Adds all params to debug UI
+      Object.keys(this.params).forEach((key, index) => {
+        this[key] = this.debugFolder.addInput(this.params, key);
+        this[key].on("change", (e) => {
+          this.params[key] = e.value;
+          this.removeMesh();
+          this.setMesh();
+          console.log(`Set ${key} to:`, this.params[key]);
+        });
       });
-    });
+    }
   }
 }

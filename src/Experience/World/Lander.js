@@ -1,20 +1,20 @@
 import * as THREE from "three";
 import Experience from "@Experience/Experience.js";
 import * as CANNON from "cannon-es";
-// import * as World from "@Experience/World/World.js";
-// import CannonDebugRenderer from "../Utils/Cannon.ts";
 
 export default class Lander {
   constructor() {
     this.experience = new Experience();
     this.scene = this.experience.scene;
+    this.camera = this.experience.camera;
     this.world = this.experience.world;
+    this.physics = this.world.physics;
     this.resources = this.experience.resources;
     this.resource = this.resources.items.landerModel;
     this.time = this.experience.time;
     this.debug = this.experience.debug;
     this.params = {
-      postion: new CANNON.Vec3(0, 2, 0),
+      postion: new CANNON.Vec3(0, 0, 0),
       velocity: new CANNON.Vec3(0, -5, 0),
       angularFactor: new CANNON.Vec3(1, 0, 1),
       angularDamping: 0.75,
@@ -34,6 +34,7 @@ export default class Lander {
 
   setModel() {
     this.model = this.resource.scene;
+    this.model.name = "Lander";
     this.scene.add(this.model);
     this.model.traverse((child) => {
       if (child instanceof THREE.Mesh) {
@@ -76,7 +77,7 @@ export default class Lander {
 
   setPhysics() {
     this.physicsBody = new CANNON.Body({
-      mass: this.params.landerMass, // kg
+      mass: this.params.mass, // kg
       material: this.world.landerMaterial,
       velocity: this.params.velocity,
       angularFactor: this.params.angularFactor,
@@ -86,7 +87,7 @@ export default class Lander {
       sleepSpeedLimit: this.params.sleepSpeedLimit,
     });
 
-    // Lander parts (Top, Middle, Feet)
+    // Lander parts (Top, Feet)
     this.physicsBody.addShape(
       new CANNON.Sphere(0.9),
       new CANNON.Vec3(0, 2.25, 0)
@@ -110,7 +111,7 @@ export default class Lander {
 
     this.physicsBody.id = "lander";
     this.physicsBody.position = this.params.postion;
-    this.world.physics.addBody(this.physicsBody);
+    this.physics.world.addBody(this.physicsBody);
   }
 
   setDebug() {
@@ -131,51 +132,18 @@ export default class Lander {
           )
         );
       });
-
-      // const animations = {
-      //   playIdle: () => {
-      //     this.animation.play("idle", 1);
-      //   },
-      //   playWalking: () => {
-      //     this.animation.play("walking", 1);
-      //   },
-      //   playRunning: () => {
-      //     this.animation.play("running", 1);
-      //   },
-      // };
-      // const params = {
-      //   animation: "idle",
-      // };
-      // const clips = ["idle", "walk", "run"];
-      // this.debug.pane
-      //   .addInput(params, "animation", {
-      //     view: "radiogrid",
-      //     groupName: "clips",
-      //     size: [3, 1],
-      //     cells: (x, y) => ({
-      //       title: `${clips[y * 3 + x]}`,
-      //       value: clips[y * 3 + x],
-      //     }),
-      //     label: "animations",
-      //   })
-      //   .on("change", (e) => {
-      //     if (e.value === "idle") {
-      //       animations.playIdle();
-      //     }
-      //     if (e.value === "walk") {
-      //       animations.playWalking();
-      //     }
-      //     if (e.value === "run") {
-      //       animations.playRunning();
-      //     }
-      //   });
     }
   }
 
   update() {
     this.model.position.copy(this.physicsBody.position);
-    // this.animation.mixer.update(this.time.delta / 1000);
-    // this.model.position.copy(this.physicsBody.position);
-    // this.mesh.scene.quaternion.copy(landerBodyPhysics.quaternion);
+    this.camera.rig.position.lerp(
+      new THREE.Vector3(
+        this.model.position.x,
+        this.model.position.y + 2,
+        this.model.position.z
+      ),
+      this.camera.params.followCoefficient - Math.pow(0.001, this.time.elapsed)
+    );
   }
 }

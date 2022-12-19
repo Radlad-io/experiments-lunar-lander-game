@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import Experience from "@Experience/Experience.js";
-import * as State from "@Utils/State.js";
 
 // Postprocessing
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";

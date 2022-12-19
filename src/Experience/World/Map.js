@@ -1,8 +1,7 @@
 import * as THREE from "three";
 import Experience from "@Experience/Experience.js";
 import * as CANNON from "cannon-es";
-import CannonUtils from "../Utils/CannonUtils";
-import CannonDebugRenderer from "../Utils/CannonDebugRenderer.ts";
+import { CannonUtils } from "../Utils/CannonUtils";
 
 export default class Map {
   constructor(level) {
@@ -10,11 +9,12 @@ export default class Map {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.world = this.experience.world;
+    this.physics = this.world.physics;
+    this.debug = this.experience.debug;
     this.resources = this.experience.resources;
     this.resource = this.resources.items.map01Model;
     this.params = {
-      position: new THREE.Vector3(0, -5, 0),
-      scale: new THREE.Vector3(0.5, 0.5, 0.5),
+      position: new THREE.Vector3(0, -20, 0),
     };
 
     this.setModel();
@@ -24,7 +24,7 @@ export default class Map {
   setModel() {
     this.model = this.resource.scene;
     this.model.position.set(...this.params.position);
-    // this.model.scale.set(...this.params.scale);
+    this.model.name = "Map";
     this.scene.add(this.model);
     this.model.traverse((child) => {
       if (child instanceof THREE.Mesh) {
@@ -41,6 +41,27 @@ export default class Map {
     this.physicsBody.position.set(...this.params.position);
     this.physicsBody.id = "ground";
     this.physicsBody.addShape(this.physicsBodyGeometry);
-    this.world.physics.addBody(this.physicsBody);
+    this.physics.world.addBody(this.physicsBody);
+  }
+
+  setDebug() {
+    if (this.debug.active) {
+      this.debugFolder = this.debug.pane.addFolder({
+        title: "Lander",
+        expanded: false,
+      });
+
+      // Adds all params to debug UI
+      Object.keys(this.params).forEach((key, index) => {
+        this[key] = this.debugFolder.addInput(this.params, key);
+        this[key].on(
+          "change",
+          (e) => (
+            (this.params[key] = e.value),
+            console.log(`Set ${key} to:`, this.params[key])
+          )
+        );
+      });
+    }
   }
 }

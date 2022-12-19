@@ -2,6 +2,7 @@ import * as THREE from "three";
 
 import Sizes from "@Utils/Sizes.js";
 import Time from "@Utils/Time.js";
+import Inputs from "@Utils/Inputs.js";
 import Camera from "@Experience/Camera.js";
 import Renderer from "@Experience/Renderer";
 import World from "@World/World.js";
@@ -9,6 +10,7 @@ import Resources from "@Utils/Resources.js";
 import Debug from "@Utils/Debug.js";
 
 import Sources from "@Experience/sources.js";
+import State from "./World/State";
 
 //  Instancing is for singletons
 let instance = null;
@@ -28,6 +30,8 @@ export default class Experience {
 
     // Setup
     this.debug = new Debug();
+    this.state = new State();
+    this.inputs = new Inputs();
     this.sizes = new Sizes();
     this.time = new Time();
     this.scene = new THREE.Scene();
@@ -35,7 +39,6 @@ export default class Experience {
     this.camera = new Camera();
     this.renderer = new Renderer();
     this.world = new World();
-    // this.vr = new VR();
 
     this.sizes.on("resize", () => {
       // Arrow function maintains context
