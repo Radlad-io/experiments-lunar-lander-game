@@ -76,6 +76,63 @@ export default [
     ],
   },
   {
+    name: "Map04",
+    type: "gltfModel",
+    path: "models/Map04.gltf",
+    pads: [
+      {
+        multiplier: 2,
+        position: [-30, 0, 25],
+      },
+      {
+        multiplier: 4,
+        position: [40, 0, 0],
+      },
+      {
+        multiplier: 6,
+        position: [16, 0, -43],
+      },
+    ],
+  },
+  {
+    name: "Map05",
+    type: "gltfModel",
+    path: "models/Map05.gltf",
+    pads: [
+      {
+        multiplier: 2,
+        position: [-30, 0, 25],
+      },
+      {
+        multiplier: 4,
+        position: [40, 0, 0],
+      },
+      {
+        multiplier: 6,
+        position: [16, 0, -43],
+      },
+    ],
+  },
+  {
+    name: "Map06",
+    type: "gltfModel",
+    path: "models/Map06.gltf",
+    pads: [
+      {
+        multiplier: 2,
+        position: [-30, 0, 25],
+      },
+      {
+        multiplier: 4,
+        position: [40, 0, 0],
+      },
+      {
+        multiplier: 6,
+        position: [16, 0, -43],
+      },
+    ],
+  },
+  {
     name: "ambientSound",
     type: "audio",
     path: "sounds/ambient.mp3",

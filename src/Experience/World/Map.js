@@ -165,12 +165,16 @@ export default class Map {
           { text: "Map 01", value: "Map01" },
           { text: "Map 02", value: "Map02" },
           { text: "Map 03", value: "Map03" },
+          { text: "Map 04", value: "Map04" },
+          { text: "Map 05", value: "Map05" },
+          { text: "Map 06", value: "Map06" },
         ],
         value: "Map01",
       });
 
       this.mapList.on("change", (e) => {
         this.destroy();
+        console.log(this.resources.items[e.value]);
         this.setModel(this.resources.items[e.value]);
       });
 
