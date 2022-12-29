@@ -14,8 +14,10 @@
 
 import "./src/style.css";
 import Experience from "@Experience/Experience.js";
+import gsap from "gsap";
 // import ServiceWorker from "@Experience/Utils/RegisterServiceWorker.js";
 
+gsap.registerPlugin(CustomEase);
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 const experience = new Experience(canvas);

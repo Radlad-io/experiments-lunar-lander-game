@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Experience from "@Experience/Experience.js";
+import State from "@World/State";
 import gsap from "gsap";
 
 export default class Camera {
@@ -11,31 +12,25 @@ export default class Camera {
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
     this.debug = this.experience.debug;
+    this.state = new State();
     this.params = {
+      visualizeRig: false,
+      inTransit: false,
       position: "front",
       front: new THREE.Vector3(0, 5, 16),
       orbit: false,
-      fov: 85,
+      fov: 125,
       near: 1,
-      far: 150,
+      far: 650,
       moveDuration: 1,
       rotationSpeed: 0.001,
-      visualizeRig: false,
-      inTransit: false,
-      followCoefficient: 0.035,
+      followCoefficient: 0.055,
     };
 
     this.setInstace();
+    this._setAudioListener();
     this.setOrbitControls();
     this.setDebug();
-  }
-
-  getInTransit() {
-    return this.params.inTransit;
-  }
-
-  setInTransit() {
-    this.params.inTransit = !this.params.inTransit;
   }
 
   setInstace() {
@@ -70,12 +65,20 @@ export default class Camera {
     this.scene.add(this.rig);
   }
 
+  _setAudioListener() {
+    this.audioListener = new THREE.AudioListener();
+    this.instance.add(this.audioListener);
+  }
+
   rotateRig() {
     // TODO: intransit needs to ne in a global state component
     if (this.params.inTransit) {
       return;
     }
+    this.sound = this.experience.sound;
+    this.sound.playSound("rotateSound");
     this.params.inTransit = true;
+    this.state.view.set();
     gsap
       .to(this.rig.rotation, {
         duration: this.params.moveDuration,
@@ -104,16 +107,13 @@ export default class Camera {
     this.controls.enabled = false;
   }
 
-  rotateCamera() {
-    this.state.inTransit.set(true);
-  }
-
   setNear(value) {
     this.instance.near = value;
     this.params.near = value;
     this.instance.updateProjectionMatrix();
   }
 
+  // FIXME: Break the entire scene
   setFar(value) {
     this.instance.far = value;
     this.params.far = value;

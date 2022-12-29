@@ -2,19 +2,17 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import EventEmitter from "@Utils/EventEmitter.js";
 
-import Debug from "@Utils/Debug.js";
 import Experience from "@Experience/Experience.js";
+import Sound from "@World/Sound";
 
 export default class Resources extends EventEmitter {
   constructor(sources) {
     super();
 
     this.experience = new Experience();
+    this.sound = new Sound();
     this.debug = this.experience.debug;
-
-    // Options
     this.sources = sources;
-    // Setup
     this.items = {};
     this.toLoad = this.sources.length;
     this.loaded = 0;
@@ -30,6 +28,7 @@ export default class Resources extends EventEmitter {
     this.loaders.gltfLoader = new GLTFLoader(this.manager);
     this.loaders.textureLoader = new THREE.TextureLoader(this.manager);
     this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader(this.manager);
+    this.loaders.audioLoader = new THREE.AudioLoader(this.manager);
   }
 
   setManager() {
@@ -69,12 +68,11 @@ export default class Resources extends EventEmitter {
         this.loaders.cubeTextureLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-      } else if (source.type === "video") {
-        this.video = document.createElement("video");
-        this.video.src = source.path;
-        this.video.muted = true;
-        this.video.load();
-        this.video.play();
+      } else if (source.type === "audio") {
+        this.loaders.audioLoader.load(source.path, (audioBuffer) => {
+          this.sourceLoaded(source, audioBuffer);
+          this.sound[source.name].setBuffer(audioBuffer);
+        });
       }
     }
   }

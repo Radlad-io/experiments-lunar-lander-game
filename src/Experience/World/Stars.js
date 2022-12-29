@@ -8,10 +8,10 @@ export default class Stars {
     this.debug = this.experience.debug;
     this.params = {
       count: 1000,
-      size: 0.75,
+      size: 0.25,
       color: "#ffffff",
       amplitude: 100,
-      min: 1,
+      min: 15,
     };
 
     this.setMesh();
@@ -30,7 +30,10 @@ export default class Stars {
     this.posArray = new Float32Array(this.params.count * 3);
 
     for (let i = 0; i < this.params.count * 3; i++) {
-      this.posArray[i] = (Math.random() - 0.5) * this.params.amplitude;
+      this.pos = (Math.random() - 0.5) * this.params.amplitude;
+
+      this.posArray[i] =
+        this.pos < this.params.min ? this.pos * this.params.min : this.pos;
     }
 
     this.geometry.setAttribute(

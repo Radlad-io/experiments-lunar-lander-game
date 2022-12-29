@@ -9,8 +9,8 @@ export default class Environment {
     this.debug = this.experience.debug;
     this.params = {
       sunIntensity: 4,
-      sunPositionX: 3,
-      sunPositionY: 3,
+      sunPositionX: 0,
+      sunPositionY: 5,
       envIntensity: 0.4,
     };
 
@@ -24,7 +24,7 @@ export default class Environment {
     this.sunLight.castShadow = true;
     this.sunLight.intensity = this.params.sunIntensity;
     this.sunLight.shadow.camera.far = 15;
-    this.sunLight.shadow.mapSize.set(1024, 1024);
+    this.sunLight.shadow.mapSize.set(2048, 2048);
     this.sunLight.shadow.normalBias = 0.05;
     this.sunLight.position.set(
       this.params.sunPositionX,

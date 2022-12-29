@@ -14,6 +14,7 @@ export default class World {
     this.experience = new Experience();
     this.physics = new Physics();
     this.scene = this.experience.scene;
+    this.sound = this.experience.sound;
     this.time = this.experience.time;
     this.resources = this.experience.resources;
     this.debug = this.experience.debug;

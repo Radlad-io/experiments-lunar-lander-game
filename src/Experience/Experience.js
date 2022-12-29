@@ -10,7 +10,9 @@ import Resources from "@Utils/Resources.js";
 import Debug from "@Utils/Debug.js";
 
 import Sources from "@Experience/sources.js";
-import State from "./World/State";
+import State from "@World/State";
+import Store from "@Utils/Store";
+import Sound from "@World/Sound.js";
 
 //  Instancing is for singletons
 let instance = null;
@@ -31,14 +33,17 @@ export default class Experience {
     // Setup
     this.debug = new Debug();
     this.state = new State();
-    this.inputs = new Inputs();
     this.sizes = new Sizes();
     this.time = new Time();
     this.scene = new THREE.Scene();
-    this.resources = new Resources(Sources);
     this.camera = new Camera();
+    this.sound = new Sound();
+    this.resources = new Resources(Sources);
     this.renderer = new Renderer();
     this.world = new World();
+
+    this.inputs = new Inputs();
+    this.store = new Store();
 
     this.sizes.on("resize", () => {
       // Arrow function maintains context
@@ -79,9 +84,5 @@ export default class Experience {
 
     this.camera.controls.dispose();
     this.renderer.instance.dispose();
-
-    if (this.debug.active) {
-      this.debug.ui.destroy();
-    }
   }
 }

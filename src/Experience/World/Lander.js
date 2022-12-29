@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import Experience from "@Experience/Experience.js";
 import * as CANNON from "cannon-es";
+import State from "@World/State";
+import gsap from "gsap";
 
 export default class Lander {
   constructor() {
@@ -9,31 +11,42 @@ export default class Lander {
     this.camera = this.experience.camera;
     this.world = this.experience.world;
     this.physics = this.world.physics;
+    this.sound = this.experience.sound;
     this.resources = this.experience.resources;
     this.resource = this.resources.items.landerModel;
     this.time = this.experience.time;
+    this.inputs = this.experience.inputs;
     this.debug = this.experience.debug;
+    this.state = new State();
     this.params = {
-      postion: new CANNON.Vec3(0, 0, 0),
-      velocity: new CANNON.Vec3(0, -5, 0),
+      position: new CANNON.Vec3(0, 20, 0),
+      velocity: new CANNON.Vec3(0, 0, 0),
       angularFactor: new CANNON.Vec3(1, 0, 1),
+      fuelConsumptionRate: 0.2,
       angularDamping: 0.75,
       linearDamping: 0.015,
       allowSleep: true,
       sleepSpeedLimit: 2.0,
-      thrust: 3.5,
-      mass: 50,
-      rotationFactor: 4,
+      thrust: 250,
+      mass: 2445, // Actual lander mass 2445kg
+      steeringFactor: 15,
+      fuel: 2376, // Actual lander mass 2376 kg of propellant
     };
 
+    this.setInitialState();
     this.setModel();
     // this.setAnimation();
     this.setPhysics();
     this.setDebug();
   }
 
+  setInitialState() {
+    this.state.fuel.set(this.params.fuel);
+  }
+
   setModel() {
     this.model = this.resource.scene;
+    this.model.position.set(this.params.position);
     this.model.name = "Lander";
     this.scene.add(this.model);
     this.model.traverse((child) => {
@@ -110,8 +123,90 @@ export default class Lander {
     );
 
     this.physicsBody.id = "lander";
-    this.physicsBody.position = this.params.postion;
+    this.physicsBody.position = this.params.position;
     this.physics.world.addBody(this.physicsBody);
+  }
+
+  resetPosition() {
+    this.physicsBody.position = new CANNON.Vec3(0, 20, 0);
+    this.resetForces({ duration: 0 });
+  }
+
+  resetForces(duration) {
+    gsap.to(this.physicsBody.quaternion, {
+      duration: duration,
+      ease: "none",
+      x: 0,
+      y: 0,
+      z: 0,
+    });
+    gsap.to(this.physicsBody.angularVelocity, {
+      duration: duration,
+      ease: "none",
+      x: 0,
+      y: 0,
+      z: 0,
+    });
+    gsap.to(this.physicsBody.velocity, {
+      duration: duration,
+      ease: "none",
+      x: this.physicsBody.velocity.x / 2,
+      z: this.physicsBody.velocity.x / 2,
+    });
+  }
+
+  _applyThrust() {
+    this.physicsBody.applyLocalImpulse(
+      new CANNON.Vec3(0, this.params.thrust, 0)
+    );
+  }
+
+  _rotateFoward() {
+    this.physicsBody.applyLocalImpulse(
+      new CANNON.Vec3(0, 0, 1 * this.params.steeringFactor),
+      new CANNON.Vec3(0, -5, 0)
+    );
+    this.physicsBody.applyLocalImpulse(
+      new CANNON.Vec3(0, 0, -1 * this.params.steeringFactor),
+      new CANNON.Vec3(0, 5, 0)
+    );
+    return;
+  }
+
+  _rotateBackward() {
+    this.physicsBody.applyLocalImpulse(
+      new CANNON.Vec3(0, 0, -1 * this.params.steeringFactor),
+      new CANNON.Vec3(0, -5, 0)
+    );
+    this.physicsBody.applyLocalImpulse(
+      new CANNON.Vec3(0, 0, 1 * this.params.steeringFactor),
+      new CANNON.Vec3(0, 5, 0)
+    );
+    return;
+  }
+
+  _rotateRight() {
+    this.physicsBody.applyLocalImpulse(
+      new CANNON.Vec3(-1 * this.params.steeringFactor, 0, 0),
+      new CANNON.Vec3(0, -5, 0)
+    );
+    this.physicsBody.applyLocalImpulse(
+      new CANNON.Vec3(1 * this.params.steeringFactor, 0, 0),
+      new CANNON.Vec3(0, 5, 0)
+    );
+    return;
+  }
+
+  _rotateLeft() {
+    this.physicsBody.applyLocalImpulse(
+      new CANNON.Vec3(1 * this.params.steeringFactor, 0, 0),
+      new CANNON.Vec3(0, -5, 0)
+    );
+    this.physicsBody.applyLocalImpulse(
+      new CANNON.Vec3(-1 * this.params.steeringFactor, 0, 0),
+      new CANNON.Vec3(0, 5, 0)
+    );
+    return;
   }
 
   setDebug() {
@@ -132,11 +227,27 @@ export default class Lander {
           )
         );
       });
+
+      this.resetPositionBtn = this.debugFolder.addButton({
+        title: "Reset Lander Position",
+      });
+      this.resetPositionBtn.on("click", () => {
+        this.resetPosition();
+      });
+
+      this.thrustBtn = this.debugFolder.addButton({
+        title: "Thrust",
+      });
+      this.thrustBtn.on("click", () => {
+        this.applyThrust();
+      });
     }
   }
 
   update() {
     this.model.position.copy(this.physicsBody.position);
+    this.model.quaternion.copy(this.physicsBody.quaternion);
+
     this.camera.rig.position.lerp(
       new THREE.Vector3(
         this.model.position.x,
@@ -145,5 +256,37 @@ export default class Lander {
       ),
       this.camera.params.followCoefficient - Math.pow(0.001, this.time.elapsed)
     );
+
+    if (this.physics.params.physicsEnabled) {
+      if (this.inputs.pressed.ArrowUp === true) {
+        this._applyThrust();
+        this.sound.playSound("thrustSound");
+      } else this.sound.pauseSound("thrustSound");
+
+      if (
+        this.inputs.pressed.ArrowRight === true &&
+        this.state.view.value === "front"
+      ) {
+        this._rotateRight();
+      }
+      if (
+        this.inputs.pressed.ArrowLeft === true &&
+        this.state.view.value === "front"
+      ) {
+        this._rotateLeft();
+      }
+      if (
+        this.inputs.pressed.ArrowRight === true &&
+        this.state.view.value === "side"
+      ) {
+        this._rotateBackward();
+      }
+      if (
+        this.inputs.pressed.ArrowLeft === true &&
+        this.state.view.value === "side"
+      ) {
+        this._rotateFoward();
+      }
+    }
   }
 }

@@ -1,6 +1,7 @@
 import * as CANNON from "cannon-es";
 import { CannonDebugRenderer } from "@Utils/CannonUtils.js";
 import Experience from "@Experience/Experience.js";
+import State from "@World/State";
 
 export default class Physics {
   constructor() {
@@ -8,16 +9,23 @@ export default class Physics {
     this.scene = this.experience.scene;
     this.time = this.experience.time;
     this.debug = this.experience.debug;
+    this.state = new State();
     this.params = {
-      enablePhysics: true,
+      physicsEnabled: false,
+      visualizeBodies: false,
       gravity: new CANNON.Vec3(0, -1.62, 0), // Earth -9.82 m/s² & Moon -1.62 m/s²
       friction: 0.1,
       restitution: 0.9,
-      visualizeBodies: true,
+      maxSubSteps: 2,
     };
 
+    this.setState();
     this.setWorldPhysics();
     this.setDebug();
+  }
+
+  setState() {
+    // this.state.physicsEnabled.set(this.params.enablePhysics);
   }
 
   setWorldPhysics() {
@@ -41,7 +49,7 @@ export default class Physics {
     }
   }
 
-  togglePhysicsVis() {
+  updatePhysicsVis() {
     this.scene.children.forEach((child) => {
       if (child.material?.name === "Debug Material") {
         this.params.visualizeBodies
@@ -52,8 +60,19 @@ export default class Physics {
     this.params.visualizeBodies = !this.params.visualizeBodies;
   }
 
-  setPhysicsGravity(value) {
-    this.world.gravity = value;
+  updateGravity(gravity) {
+    this.world.gravity = gravity;
+  }
+  updateContactfriction(friction) {
+    this.world.contactmaterials[0].friction = friction;
+  }
+  updateContactRestitution(restitution) {
+    this.world.contactmaterials[0].restitution = restitution;
+  }
+  stepPhysics() {
+    // Direction: Enum 1 / -1
+    this.world.step(1 / 60, this.time.delta, this.params.maxSubSteps);
+    // FIXME: This seems to break after contact
   }
 
   setDebug() {
@@ -61,26 +80,41 @@ export default class Physics {
     if (this.debug.active) {
       this.debugFolder = this.debug.pane.addFolder({
         title: "Physics",
-        expanded: true,
+        expanded: false,
       });
       // Adds all params to debug UI
       Object.keys(this.params).forEach((key, index) => {
+        if (key === "enablePhysics") {
+          return;
+        }
         this[key] = this.debugFolder.addInput(this.params, key);
         this[key].on("change", (e) => {
-          key === "visualizeBodies" ? this.togglePhysicsVis() : null;
+          key === "visualizeBodies" ? this.updatePhysicsVis() : null;
+          key === "gravity" ? this.updateGravity(e.value) : null;
+          key === "friction" ? this.updateContactfriction(e.value) : null;
+          key === "restitution" ? this.updateContactRestitution(e.value) : null;
           this.params[key] = e.value;
           console.log(`Set ${key} to:`, this.params[key]);
         });
+      });
+
+      // Buttons
+      this.fowardPhysicsBtn = this.debugFolder.addButton({
+        title: "Step Foward",
+      });
+
+      this.fowardPhysicsBtn.on("click", () => {
+        this.stepPhysics();
       });
     }
   }
 
   update() {
-    if (this.params.enablePhysics) {
-      if (this.params.visualizeBodies) {
-        this.visualize.update();
-      }
-      this.world.step(1 / 60, this.time.delta, 2);
+    if (this.params.visualizeBodies && this.debug.active) {
+      this.visualize.update();
+    }
+    if (this.params.physicsEnabled) {
+      this.world.step(1 / 60, this.time.delta, this.params.maxSubSteps);
     }
   }
 }
