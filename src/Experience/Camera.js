@@ -19,7 +19,7 @@ export default class Camera {
       position: "front",
       front: new THREE.Vector3(0, 5, 16),
       orbit: false,
-      fov: 125,
+      fov: 65,
       near: 1,
       far: 650,
       moveDuration: 1,
@@ -40,10 +40,10 @@ export default class Camera {
       this.params.near,
       this.params.far
     );
-    this.instance.position.set(0, 5, 16);
+    this.instance.position.set(0, 5, 26);
     this.rig = new THREE.Group();
     this.rigMat = new THREE.MeshBasicMaterial({
-      color: 0xff0000,
+      color: 0xffffff,
       wireframe: true,
       visible: this.params.visualizeRig,
     });

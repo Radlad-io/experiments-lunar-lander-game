@@ -174,7 +174,6 @@ export default class Map {
 
       this.mapList.on("change", (e) => {
         this.destroy();
-        console.log(this.resources.items[e.value]);
         this.setModel(this.resources.items[e.value]);
       });
 

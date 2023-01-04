@@ -22,6 +22,15 @@ export default class State {
   }
 
   setState() {
+    this.loaded = {
+      value: false,
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.value = value;
+      },
+    };
     this.level = {
       value: 1,
       get() {

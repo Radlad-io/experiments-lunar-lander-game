@@ -13,6 +13,7 @@ import Sources from "@Experience/sources.js";
 import State from "@World/State";
 import Store from "@Utils/Store";
 import Sound from "@World/Sound.js";
+import Interface from "@Experience/Interface.js";
 
 //  Instancing is for singletons
 let instance = null;
@@ -41,6 +42,7 @@ export default class Experience {
     this.resources = new Resources(Sources);
     this.renderer = new Renderer();
     this.world = new World();
+    this.interface = new Interface();
 
     this.inputs = new Inputs();
     this.store = new Store();

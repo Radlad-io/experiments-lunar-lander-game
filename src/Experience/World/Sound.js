@@ -95,11 +95,11 @@ export default class Sound {
             : null;
 
           key === "rotateVolume"
-            ? this._setVolume(this.rotateVolume, e.value)
+            ? this._setVolume(this.rotateSound, e.value)
             : null;
 
           key === "lowFuelVolume"
-            ? this._setVolume(this.lowFuelVolume, e.value)
+            ? this._setVolume(this.lowFuelSound, e.value)
             : null;
 
           console.log(`Set ${key} to:`, this.params[key]);

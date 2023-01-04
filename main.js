@@ -18,8 +18,21 @@ import gsap from "gsap";
 // import ServiceWorker from "@Experience/Utils/RegisterServiceWorker.js";
 
 gsap.registerPlugin(CustomEase);
+
+//Capture keys right away
+window.focus();
+
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 const experience = new Experience(canvas);
 
 // new ServiceWorker();
+
+// Google Analytics
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+  dataLayer.push(arguments);
+}
+gtag("js", new Date());
+
+gtag("config", "G-R9CR6EWLMC");

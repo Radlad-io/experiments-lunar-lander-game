@@ -19,7 +19,7 @@ export default class Lander {
     this.debug = this.experience.debug;
     this.state = new State();
     this.params = {
-      position: new CANNON.Vec3(0, 20, 0),
+      position: new CANNON.Vec3(0, 60, 0),
       velocity: new CANNON.Vec3(0, 0, 0),
       angularFactor: new CANNON.Vec3(1, 0, 1),
       fuelConsumptionRate: 0.2,
@@ -128,7 +128,7 @@ export default class Lander {
   }
 
   resetPosition() {
-    this.physicsBody.position = new CANNON.Vec3(0, 20, 0);
+    this.physicsBody.position = new CANNON.Vec3(0, 80, 0);
     this.resetForces({ duration: 0 });
   }
 

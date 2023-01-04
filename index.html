@@ -40,16 +40,6 @@
       src="https://www.googletagmanager.com/gtag/js?id=G-R9CR6EWLMC"
     ></script>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-R9CR6EWLMC");
-    </script>
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
       rel="stylesheet"
@@ -73,20 +63,20 @@
       <div class="hud">
         <div>
           <p class="hud-highScore">High Score: <span>0000</span></p>
-          <p class="hud-score">Score: <span>0000</span></p>
-          <p class="hud-time">Time: <span>01:07</span></p>
-          <p class="hud-fuel">Fuel: <span>0692</span></p>
+          <p class="hud-score">Score: <span>XXXX</span></p>
+          <p class="hud-time">Time: <span>XX:XX</span></p>
+          <p class="hud-fuel">Fuel: <span>XXXXX</span></p>
         </div>
         <div>
-          <p class="hud-altitude">Altitude: <span>139</span></p>
-          <p class="hud-horizontal">Horizontal Speed: <span>5 ←</span></p>
-          <p class="hud-vertical">Vertical Speed: <span>83 ↑</span></p>
+          <p class="hud-altitude">Altitude: <span>XXXX</span></p>
+          <p class="hud-horizontal">Horizontal Speed: <span>X ←</span></p>
+          <p class="hud-vertical">Vertical Speed: <span>X ↑</span></p>
           <p class="hud-view">View: <span>Front</span></p>
         </div>
       </div>
     </div>
     <canvas class="webgl"></canvas>
-    <!-- <div class="container">
+    <div class="container">
       <div class="bottom-bar">
         <div>
           <button>
@@ -94,7 +84,7 @@
               <span class="material-icons-outlined ui-button">
                 music_note
               </span>
-              <span class="tooltiptext">toggle music</span>
+              <span class="tooltiptext" id="tooltipRightTop">toggle music</span>
             </div>
           </button>
           <button class="sound-toggle">
@@ -120,36 +110,80 @@
               <span class="material-icons-outlined ui-button info-btn">
                 info
               </span>
-              <span class="tooltiptext" id="tooltipLeft">info</span>
+              <span class="tooltiptext" id="tooltipLeftTop">info</span>
             </button>
           </div>
         </div>
       </div>
-    </div> -->
-    <!-- <div class="intro-modal">
-      <h1>Lunar Lander</h1>
-      <p>A three dimensional ode to<br />Atari's 1979 Lunar Lander</p>
-    </div> -->
+    </div>
+
+    <div class="container">
+      <div class="intro">
+        <div class="loader">
+          <p>Loading Terrain... Please Wait</p>
+          <div class="loader-bar">
+            <div class="loader-status"></div>
+          </div>
+        </div>
+
+        <div class="title">
+          <h1>Lunar Lander</h1>
+          <p>A three dimensional ode to<br />Atari's 1979 Lunar Lander</p>
+        </div>
+
+        <div class="cards">
+          <div class="card active">
+            <video src="videos/control.mp4" loop muted></video>
+            <p>
+              <b>Mission Brief:</b> Safely guide the Lander to a designated
+              landing pad. Increase your score by guiding the lander to pads
+              that are harder to reach. Complete as many landings as possible
+              without running out of fuel or crashing the lander.
+            </p>
+          </div>
+          
+          <div class="card">
+            <video src="videos/control.mp4" autoplay loop muted></video>
+            <p>
+              <b>Instructions:</b> Control the lander's thrust by hitting <div class="key-display">Spacebar</div>.  
+            </p>
+          </div>
+        </div>
+
+        <div class="instruction-ctrls">
+          <div>
+            <button class="skip-btn">
+              skip intro
+              <div class="underline"></div>
+            </button>
+          </div>
+          <div class="ctrls-right">
+            <div class="instruction-indicators">
+              <span id="active"></span><span></span><span></span><span></span>
+            </div>
+            <button class="backward-btn">←</button>
+            <button class="forward-btn">next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- <div class="instruction-modal">
-      <div class="video-grid">
+      <div class="container">
+        <div class="card">
+          <video src="videos/control.mp4" autoplay loop muted></video>
+          <div class="key-display">Ctrl</div>
+          <p>Hit <b>control</b> to switch to a top view. <b>COMING SOON</b></p>
+        </div>
+        <div class="card">
+          <video src="videos/control.mp4" autoplay loop muted></video>
+          <div class="key-display">↑</div>
+          <p>Hit the <b>up arrow</b> to thrust.</p>
+        </div>
         <div class="card">
           <video src="videos/shift.mp4" autoplay loop muted></video>
           <div class="key-display">Shift</div>
           <p>Hit <b>shift</b> to rotate around the lander.</p>
-        </div>
-        <div class="card">
-          <video src="videos/control.mp4" autoplay loop muted></video>
-
-          <div class="key-display">Ctrl</div>
-
-          <p>Hit <b>control</b> to switch to a top view. <b>COMING SOON</b></p>
-        </div>
-        <div class="card">
-          <video src="videos/control.mp4" muted></video>
-
-          <div class="key-display">↑</div>
-
-          <p>Hit the <b>up arrow</b> to thrust.</p>
         </div>
         <div class="card">
           <video src="videos/control.mp4" muted></video>
@@ -162,8 +196,8 @@
             which side you are viewing the lander from.
           </p>
         </div>
+
       </div>
-      <button class="start-btn">Copy that. Go for landing!</button>
     </div> -->
     <!-- <div class="fuel-wrapper">
       <div>
