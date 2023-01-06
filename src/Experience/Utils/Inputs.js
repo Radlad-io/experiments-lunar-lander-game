@@ -38,6 +38,7 @@ export default class Inputs {
       case "p":
         this.world.physics.params.physicsEnabled =
           !this.world.physics.params.physicsEnabled;
+          this.sound.musicSound.play()
         if (this.debug.active) {
           this.debug.pane.refresh();
         }

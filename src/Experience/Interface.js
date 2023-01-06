@@ -1,5 +1,7 @@
 import Experience from "@Experience/Experience.js";
 import gsap from "gsap";
+import { CustomEase } from "gsap/CustomEase";
+
 
 export default class Interface {
   constructor() {
@@ -39,7 +41,7 @@ export default class Interface {
           })
           .then(() => {
             this.loader.el.style.display = "none";
-            this.title.show();
+            this.cards.show()
           });
       },
       update: (percent) => {
@@ -47,112 +49,44 @@ export default class Interface {
       },
     };
 
-    this.title = {
-      el: document.querySelector(".title"),
-      show: () => {
-        this.title.el.style.display = "block";
+    this.intro ={
+      el: document.querySelector(".intro"),
+      wrapper: document.querySelector(".wrapper"),
+      remove: () => {
         gsap
-          .to(this.title.el, {
-            delay: 0.25,
-            duration: 1.25,
-            ease: "none",
-            opacity: 1,
-          })
-          .then(() => {
-            this.cards.show();
-          });
-      },
-    };
-
-    this.dedication = {
-      el: document.querySelector(".title p"),
-      hide: () => {
-        gsap
-          .to(this.dedication.el, {
-            duration: 1.25,
+        .to(this.intro.wrapper, {
+          duration: .75,
+          ease: "none",
+          opacity: 0,
+        })
+        .then(() => {
+          gsap
+          .to(this.intro.el, {
+            duration: .25,
             ease: "none",
             opacity: 0,
           })
-          .then(() => {
-            this.dedication.remove();
-          });
+        })
+        .then(() => {
+          this.cards.el.remove()
+        });
       },
-      remove: () => {
-        this.dedication.el.style.display = "none";
-      },
-    };
+    }
 
     this.cards = {
-      position: 1,
-      count: document.querySelectorAll(".card").length,
       el: document.querySelector(".cards"),
-      one: document.querySelector(".card:nth-child(1)"),
-      two: document.querySelector(".card:nth-child(2)"),
-      three: document.querySelector(".card:nth-child(3)"),
       show: () => {
+        this.cards.el.style.display = "flex";
         gsap
-          .to(this.cards.el, {
-            duration: 0.85,
-            ease: this.params.ease,
-            height: "50%",
-            opacity: 1,
-          })
-          .then(() => {
-            this.cards.one.children[0].play();
-            this.instructionControls.show();
-          });
-      },
-      hide: () => {
-        gsap
-          .to(this.cards.el, {
-            duration: 1.25,
-            ease: "none",
-            opacity: 0,
-          })
-          .then(() => {
-            this.cards.remove();
-          });
-      },
-      changeCard: (direction) => {
-        if (direction === "foward") {
-        }
-        if (direction === "backward") {
-        }
+        .to(this.cards.el, {
+          delay: .25,
+          duration: 1.25,
+          ease: "none",
+          opacity: 1,
+        })
       },
       remove: () => {
         this.cards.el.style.display = "none";
-      },
-    };
-
-    this.instructionControls = {
-      el: document.querySelector(".instruction-ctrls"),
-      backward: document.querySelector(".backward-btn"),
-      forward: document.querySelector(".forward-btn"),
-      show: () => {
-        this.instructionControls.el.style.display = "flex";
-        gsap
-          .to(this.instructionControls.el, {
-            duration: 1.25,
-            ease: "none",
-            opacity: 1,
-          })
-          .then(() => {
-            this.instructionControls.el.style.opacity = 1;
-          });
-      },
-      hide: () => {
-        gsap
-          .to(this.instructionControls.el, {
-            duration: 1.25,
-            ease: "none",
-            opacity: 0,
-          })
-          .then(() => {
-            this.instructionControls.remove();
-          });
-      },
-      remove: () => {
-        this.instructionControls.el.style.display = "none";
       },
     };
 
@@ -166,7 +100,6 @@ export default class Interface {
     }
 
     if (this.debug.active) {
-      console.log("firing");
       document.querySelector(".intro").style.display = "none";
     } else {
       // Listeners
@@ -181,13 +114,6 @@ export default class Interface {
       this.resources.on("loaded", () => {
         this.state.loaded.set(true);
         this.loader.remove();
-      });
-
-      this.instructionControls.forward.addEventListener("click", () => {
-        console.log("firing");
-      });
-      this.instructionControls.backward.addEventListener("click", () => {
-        console.log("firing");
       });
     }
   }

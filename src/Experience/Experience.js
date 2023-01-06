@@ -68,6 +68,11 @@ export default class Experience {
     this.world.update();
   }
 
+  start(){
+    console.log('start')
+    this.interface.intro.remove()
+  }
+
   destroy() {
     this.sizes.off("resize");
     this.time.off("tick");

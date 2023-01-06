@@ -3,6 +3,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Experience from "@Experience/Experience.js";
 import State from "@World/State";
 import gsap from "gsap";
+import { CustomEase } from "gsap/CustomEase";
 
 export default class Camera {
   constructor() {

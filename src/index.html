@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./favicons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./favicons/favicon-16x16.png"
+    />
+    <!-- <link rel="manifest" href="./favicons/site.webmanifest" /> -->
+    <link
+      rel="mask-icon"
+      href="./favicons/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <meta name="msapplication-TileColor" content="#ffc40d" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   
+    <title>Lunar Lander Test</title>
+  </head>
+  <body>
+    <div class="banner">
+      <p>
+        <b>
+          WARNING: Lunar Lander is currently in development. More information
+          can be found
+          <a
+            href="https://bubble-cardinal-65d.notion.site/Lunar-Lander-Game-259d5c2e192449239549158dc749caf1"
+            >here</a
+          >.
+        </b>
+      </p>
+    </div>
+    <div class="container">
+      <div class="hud">
+        <div>
+          <p class="hud-highScore">High Score: <span>0000</span></p>
+          <p class="hud-score">Score: <span>0000</span></p>
+          <p class="hud-time">Time: <span>01:07</span></p>
+          <p class="hud-fuel">Fuel: <span>0692</span></p>
+        </div>
+        <div>
+          <p class="hud-altitude">Altitude: <span>139</span></p>
+          <p class="hud-horizontal">Horizontal Speed: <span>5 ←</span></p>
+          <p class="hud-vertical">Vertical Speed: <span>83 ↑</span></p>
+          <p class="hud-view">View: <span>Front</span></p>
+        </div>
+      </div>
+    </div>
+    <canvas class="webgl"></canvas>
+    <div class="container">
+      <div class="bottom-bar">
+        <div>
+          <!-- <button>
+            <div class="tooltip">
+              <span class="material-icons-outlined ui-button">
+                music_note
+              </span>
+              <span class="tooltiptext">toggle music</span>
+            </div>
+          </button> -->
+          <button class="sound-toggle">
+            <div class="tooltip">
+              <span class="material-icons-outlined ui-button mute">
+                volume_down
+              </span>
+              <span class="tooltiptext">mute / unmute</span>
+            </div>
+          </button>
+        </div>
+        <div class="right-side">
+          <div class="tooltip">
+            <button class="graphics-toggle">
+              <span class="material-icons-outlined ui-button">
+                brightness_6
+              </span>
+            </button>
+            <span class="tooltiptext" id="tooltipLeft">toggle graphics</span>
+          </div>
+          <div class="tooltip">
+            <button class="info-toggle">
+              <span class="material-icons-outlined ui-button info-btn">
+                info
+              </span>
+              <span class="tooltiptext" id="tooltipLeft">info</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="intro-modal">
+      <h1>Lunar Lander</h1>
+      <p>A three dimensional ode to<br />Atari's 1979 Lunar Lander</p>
+    </div>
+    <div class="instruction-modal">
+      <div class="card active">
+        <video src="../public/videos/shift.mp4" autoplay loop muted></video>
+        <!-- <div class="key-display">Shift</div> -->
+        <p>Hit <b>shift</b> to rotate around the lander.</p>
+      </div>
+      
+      <div class="card">
+        <video src="../public/videos/control.mp4" autoplay loop muted></video>
+        <!-- <div class="key-display">Ctrl</div> -->
+        <p>Hit <b>control</b> to switch to a top view. <b>COMING SOON</b></p>
+      </div>
+
+      <div class="card">
+        <video src="../public/videos/control.mp4" muted></video>
+        <!-- <div class="key-display">↑</div> -->
+        <p>Hit the <b>up arrow</b> to thrust.</p>
+      </div>
+      
+      <div class="card">
+        <video src="../public/videos/control.mp4" muted></video>
+        <!-- <div class="key-display small">←</div>
+        <span>&</span>
+        <div class="key-display small">→</div> -->
+        <p>
+          Hit the <b>left arrow</b> or the <b>right arrow</b> to rotate the
+          lander. Keep in mind that your rotation direction will depend on
+          which side you are viewing the lander from.
+        </p>
+      </div>
+
+      <button class="start-btn">Copy that. Go for landing!</button>
+    </div>
+    
+    <div class="fuel-wrapper">
+      <div>
+        <div class="low-fuel-indicator-bg">
+          <p class="low-fuel-indicator">Low On Fuel</p>
+        </div>
+      </div>
+    </div>
+    <div class="info-modal">
+      <div class="info-wapper">
+        <h1>Lunar Lander</h1>
+        <br />
+        <p>Created by: Kevin Merinsky</p>
+        <br />
+        <p>
+          The intention of this project was to recreate Atari’s 1979 Lunar
+          Lander game in three dimensions. I conceived of this project as a way
+          to explore the WebGL library Three.js and the physics library
+          Cannon.js.
+        </p>
+      </div>
+    </div>
+    <div class="mobile-reject-wrapper">
+      <div class="">
+        <p>
+          Sorry about this but this version of lunar lander was developed for
+          desktop and relies on a keyboard. Maybe one day we'll be able to land
+          on the moon using our phones, but not here, not now.
+        </p>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

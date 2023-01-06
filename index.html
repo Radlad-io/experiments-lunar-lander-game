@@ -28,22 +28,22 @@
     <meta name="msapplication-TileColor" content="#ffc40d" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" /> -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
+    <!-- <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;500;600;700&display=swap"
       rel="stylesheet"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/CustomEase.min.js"></script>
-    <script
+    /> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/CustomEase.min.js"></script> -->
+    <!-- <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-R9CR6EWLMC"
-    ></script>
+    ></script> -->
 
-    <link
+    <!-- <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
       rel="stylesheet"
-    />
+    /> -->
     <title>Lunar Lander</title>
   </head>
   <body>
@@ -119,86 +119,92 @@
 
     <div class="container">
       <div class="intro">
-        <div class="loader">
-          <p>Loading Terrain... Please Wait</p>
-          <div class="loader-bar">
-            <div class="loader-status"></div>
-          </div>
-        </div>
-
-        <div class="title">
-          <h1>Lunar Lander</h1>
-          <p>A three dimensional ode to<br />Atari's 1979 Lunar Lander</p>
-        </div>
-
-        <div class="cards">
-          <div class="card active">
-            <video src="videos/control.mp4" loop muted></video>
-            <p>
-              <b>Mission Brief:</b> Safely guide the Lander to a designated
-              landing pad. Increase your score by guiding the lander to pads
-              that are harder to reach. Complete as many landings as possible
-              without running out of fuel or crashing the lander.
-            </p>
-          </div>
-          
-          <div class="card">
-            <video src="videos/control.mp4" autoplay loop muted></video>
-            <p>
-              <b>Instructions:</b> Control the lander's thrust by hitting <div class="key-display">Spacebar</div>.  
-            </p>
-          </div>
-        </div>
-
-        <div class="instruction-ctrls">
-          <div>
-            <button class="skip-btn">
-              skip intro
-              <div class="underline"></div>
-            </button>
-          </div>
-          <div class="ctrls-right">
-            <div class="instruction-indicators">
-              <span id="active"></span><span></span><span></span><span></span>
+        <div class="wrapper">
+          <div class="loader">
+            <p>Loading Terrain... Please Wait</p>
+            <div class="loader-bar">
+              <div class="loader-status"></div>
             </div>
-            <button class="backward-btn">←</button>
-            <button class="forward-btn">next →</button>
+          </div>
+  
+          
+          <div class="cards" x-data="{ 
+            position: 1,
+            length: 4,
+            text: 'next →',
+            increase(){
+              if(this.position < 4) {
+                this.position = this.position+1,
+                this.position === this.length ? this.text = 'Play!' : null
+              }else{
+                window.experience.start()
+              }
+            },
+            decrease(){
+              this.position === 1 ? this.position = this.position : this.position = this.position-1,
+              this.position !== this.length ? this.text = 'next →' : null
+            } 
+          }">
+            <div class="title">
+              <h1>Lunar Lander</h1>
+              <p>A three dimensional ode to<br />Atari's 1979 Lunar Lander</p>
+            </div>
+  
+            <div x-show="position === 1" class="card">
+              <video src="videos/control.mp4" autoplay loop muted></video>
+              <p class="instruction">
+                <b>Mission Brief:</b> Safely guide the Lander to a designated
+                landing pad. Increase your score by guiding the lander to pads
+                that are harder to reach. Complete as many landings as possible
+                without running out of fuel or crashing the lander.
+              </p>
+            </div>
+            
+            <div x-show="position === 2"  class="card">
+              <video src="videos/control.mp4" autoplay loop muted></video>
+              <div class="instruction">           
+                  <b>Instructions:</b> <p>Land you spacecraft on one of the landing pads using your thruster</p> <div class="key-display">Spacebar</div> <p>to keep fram crashing.</p>
+              </div>
+            </div>
+  
+            <div x-show="position === 3"  class="card">
+              <video src="videos/control.mp4" autoplay loop muted></video>
+              <div class="instruction">           
+                <b>Instructions:</b> <p>Use the arrow keys</p> <div class="key-display">→</div> <div class="key-display">→</div> <p>to rotate your spacecraft. Rotating and thrusing will move the spacecraft left and right.</p>
+              </div>
+            </div>
+            
+            <div x-show="position === 4"  class="card">
+              <video src="videos/shift.mp4" autoplay loop muted></video>
+              <div class="instruction">           
+                <b>Instructions:</b> <p>Rotate to the side of the spacecraft</p> <div class="key-display">Shift</div> <p>to steer forwards and backwards on the map.</p>
+              </div>
+            </div>
+  
+  
+            <div class="instruction-ctrls">
+              <div>
+                <button class="skip-btn">
+                  skip intro
+                  <div class="underline"></div>
+                </button>
+              </div>
+              <div class="ctrls-right">
+                <div class="instruction-indicators">
+                  <span :class="{'active': position === 1}"></span>
+                  <span :class="{'active': position === 2}"></span>
+                  <span :class="{'active': position === 3}"></span>
+                  <span :class="{'active': position === 4}"></span>
+                </div>
+                <button @click="decrease()" class="backward-btn">←</button>
+                <button @click="increase()" class="forward-btn"  x-text="text"></button>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
-
-    <!-- <div class="instruction-modal">
-      <div class="container">
-        <div class="card">
-          <video src="videos/control.mp4" autoplay loop muted></video>
-          <div class="key-display">Ctrl</div>
-          <p>Hit <b>control</b> to switch to a top view. <b>COMING SOON</b></p>
-        </div>
-        <div class="card">
-          <video src="videos/control.mp4" autoplay loop muted></video>
-          <div class="key-display">↑</div>
-          <p>Hit the <b>up arrow</b> to thrust.</p>
-        </div>
-        <div class="card">
-          <video src="videos/shift.mp4" autoplay loop muted></video>
-          <div class="key-display">Shift</div>
-          <p>Hit <b>shift</b> to rotate around the lander.</p>
-        </div>
-        <div class="card">
-          <video src="videos/control.mp4" muted></video>
-          <div class="key-display small">←</div>
-          <span>&</span>
-          <div class="key-display small">→</div>
-          <p>
-            Hit the <b>left arrow</b> or the <b>right arrow</b> to rotate the
-            lander. Keep in mind that your rotation direction will depend on
-            which side you are viewing the lander from.
-          </p>
-        </div>
-
-      </div>
-    </div> -->
     <!-- <div class="fuel-wrapper">
       <div>
         <div class="low-fuel-indicator-bg">

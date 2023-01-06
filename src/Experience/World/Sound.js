@@ -18,6 +18,7 @@ export default class Sound {
     this.debug = this.experience.debug;
     this.params = {
       ambientVolume: 1,
+      musicVolume: 1,
       thrustVolume: 1,
       rotateVolume: 1,
       lowFuelVolume: 1,
@@ -33,6 +34,12 @@ export default class Sound {
     this.ambientSound.name = "ambient";
     this.ambientSound.loop = true;
     this.sounds.push(this.ambientSound);
+
+    this.musicSound = new THREE.Audio(this.camera.audioListener);
+    this.musicSound.setVolume(this.params.musicVolume);
+    this.musicSound.name = "ambient";
+    this.musicSound.loop = true;
+    this.sounds.push(this.musicSound);
 
     this.thrustSound = new THREE.Audio(this.camera.audioListener);
     this.ambientSound.setVolume(this.params.thrustVolume);

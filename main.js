@@ -15,12 +15,17 @@
 import "./src/style.css";
 import Experience from "@Experience/Experience.js";
 import gsap from "gsap";
+import { CustomEase } from "gsap/CustomEase";
 // import ServiceWorker from "@Experience/Utils/RegisterServiceWorker.js";
+import Alpine from 'alpinejs'
 
 gsap.registerPlugin(CustomEase);
 
 //Capture keys right away
 window.focus();
+window.Alpine = Alpine
+
+Alpine.start()
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");

@@ -143,6 +143,11 @@ export default [
     path: "sounds/thrust.mp3",
   },
   {
+    name: "musicSound",
+    type: "audio",
+    path: "sounds/music.mp3",
+  },
+  {
     name: "rotateSound",
     type: "audio",
     path: "sounds/rotate.mp3",

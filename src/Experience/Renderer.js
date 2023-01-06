@@ -17,7 +17,7 @@ export default class Renderer {
     this.camera = this.experience.camera;
     this.debug = this.experience.debug;
     this.params = {
-      sobel: true,
+      sobel: false,
       AA: false,
     };
     this.setInstance();
@@ -34,7 +34,7 @@ export default class Renderer {
     this.instance.toneMappingExposure = 1.75;
     this.instance.shadowMap.enabled = true;
     this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
-    this.instance.setClearColor("#211d20");
+    this.instance.setClearColor("#000000");
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
     this.composer = new EffectComposer(this.instance);
