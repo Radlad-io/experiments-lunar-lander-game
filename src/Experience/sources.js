@@ -1,4 +1,5 @@
 // import FOX from 'models/Fox/glTF/Fox.gltf'
+import * as THREE from "three";
 
 export default [
   {
@@ -25,15 +26,15 @@ export default [
     pads: [
       {
         multiplier: 2,
-        position: [0, 2, 0],
+        position: new THREE.Vector3(35, -3, 0),
       },
       {
         multiplier: 4,
-        position: [0, 2, 0],
+        position: new THREE.Vector3(-35, -3, 0),
       },
       {
         multiplier: 6,
-        position: [0, 2, 0],
+        position: new THREE.Vector3(0, -3, 35),
       },
     ],
   },

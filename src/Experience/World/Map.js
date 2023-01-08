@@ -14,7 +14,7 @@ export default class Map {
     this.debug = this.experience.debug;
     this.resources = this.experience.resources;
     this.maps = [];
-    this.landingPads = [];
+    this.pads = [];
     this.params = {
       level: 1,
       position: new THREE.Vector3(0, 0, 0),
@@ -25,6 +25,7 @@ export default class Map {
     };
 
     this.setModel();
+    this.setLandingPads();
     this.setDebug();
   }
 
@@ -36,6 +37,9 @@ export default class Map {
     this.model.name = "Map";
     this.scene.add(this.model);
     this.setPhysics();
+
+    // TODO: Try to create a edge material instead of sobel
+    // https://madebyevan.com/shaders/grid/
 
     // TODO: Shadow's not working
     this.model.traverse((child) => {
@@ -50,15 +54,6 @@ export default class Map {
         this.maps.push(source);
       }
     });
-
-    // this.maps[0].pads.map((pad) => {
-    //   console.log("Firing");
-    //   new Pad({
-    //     multiplier: pad.multiplier,
-    //     position: pad.position,
-    //     params: this.params,
-    //   });
-    // });
   }
 
   setPhysics() {
@@ -72,44 +67,19 @@ export default class Map {
     this.physics.world.addBody(this.physicsBody);
   }
 
-  setLandingPad(multiplier, position) {
-    // Create Pad
-    this.landingPad = new THREE.Group();
-    this.landingPadMaterial = new THREE.MeshLambertMaterial({
-      color: 0xffffff,
-      emissive: 0xffffff,
-      emissiveIntensity: 0.2,
+  setLandingPads() {
+    this.maps[0].pads.map((pad) => {
+      this.pads.push(pad)
     });
-    this.radius =
-      multiplier === 2
-        ? this.params.x2PadRadius
-        : multiplier === 4
-        ? this.params.x4PadRadius
-        : this.params.x6PadRadius;
 
-    this.landingPadGeo = new THREE.CylinderGeometry(
-      this.radius,
-      this.radius,
-      10,
-      20
-    );
-    this.mesh = new THREE.Mesh(this.landingPadGeo, this.landingPadMaterial);
-    // this.mesh.receiveShadow = true;
-    // this.mesh.position.set(position);
-    // this.landingPad.name = `Landing Pad ${multiplier}`;
-    // this.landingPad.add(this.mesh);
-    this.scene.add(this.mesh);
-
-    // Adds Physics body to pad
-    // this.landingPadPhysicsBody = new CANNON.Body({
-    //   mass: 0,
-    //   material: new CANNON.Material(),
-    //   shape: new CANNON.Cylinder(this.radius, this.radius, 10, 20),
-    // });
-    // this.landingPadPhysicsBody.position.set(position);
-    // this.landingPadPhysicsBody.id = multiplier;
-    // this.physics.world.addBody(this.landingPadPhysicsBody);
+    this.pads.map((pad) => {
+      new Pad(
+        pad.multiplier,
+        pad.position,
+      );
+    })
   }
+
 
   destroy() {
     this.needsRemoval = [];

@@ -18,7 +18,7 @@ export default class Sound {
     this.debug = this.experience.debug;
     this.params = {
       ambientVolume: 1,
-      musicVolume: 1,
+      musicVolume: .75,
       thrustVolume: 1,
       rotateVolume: 1,
       lowFuelVolume: 1,

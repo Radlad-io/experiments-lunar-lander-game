@@ -1,7 +1,7 @@
 import Experience from "@Experience/Experience.js";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
-
+import State from '@World/State.js'
 
 export default class Interface {
   constructor() {
@@ -9,17 +9,11 @@ export default class Interface {
     this.resources = this.experience.resources;
     this.state = this.experience.state;
     this.debug = this.experience.debug;
+    this.state = new State()
     this.params = {
       dev: import.meta.env.DEV,
       ease: CustomEase.create("custom", "M0,0 C0.4,0.1 0.6,0.898 1,1 "),
     };
-
-    this.hud = document.querySelector(".hud");
-    this.bottomBar = document.querySelector(".bottom-bar");
-    this.instructions = document.querySelector(".instruction-modal");
-    this.startBtn = document.querySelector(".start-btn");
-    this.lowFuelIndicatorBG = document.querySelector(".low-fuel-indicator-bg");
-    this.lowFuelIndicator = document.querySelector(".low-fuel-indicator");
 
     this.banner = {
       el: document.querySelector(".banner"),
@@ -89,6 +83,55 @@ export default class Interface {
         this.cards.el.style.display = "none";
       },
     };
+
+    this.hud = {
+      el: document.querySelector(".hud"),
+      score: document.querySelector(".hud-score span"),
+      highscore: document.querySelector(".hud-highscore span"),
+      time: document.querySelector(".hud-time span"),
+      fuel: document.querySelector(".hud-fuel span"),
+      altitude: document.querySelector(".hud-altitude span"),
+      horizontal: document.querySelector(".hud-horizontal span"),
+      vertical: document.querySelector(".hud-vertical span"),
+      view: document.querySelector(".hud-view span"),
+      updateScore(){
+        this.score.innerHTML = this.state.score.get()
+      },
+      updateHighscore(value){
+        this.highscore.innerHTML = `${value}`
+      },
+      updateTime(){
+        this.score.innerHTML = `${score}`
+      },
+      updateFuel(fuel){
+        this.fuel.innerHTML = `${fuel}`
+      },
+      updateAltitude(altitude){
+        this.altitude.innerHTML = `${altitude}`
+      },
+      updateHorizontal(horizontal){
+        this.horizontal.innerHTML = `${horizontal}`
+      },
+      updateVertical(vertical){
+        this.vertical.innerHTML = `${vertical}`
+      },
+      updateView(view){
+        this.vertical.innerHTML = `${view}`
+      },
+    }
+
+    this.fuel = {
+      el:  document.querySelector(".hud-fuel span"),
+      set(fuel){
+        this.fuel.innerHTML = `${fuel}`
+      }
+    }
+    
+  
+    this.bottomBar = document.querySelector(".bottom-bar");
+    this.instructions = document.querySelector(".instruction-modal");
+    this.lowFuelIndicatorBG = document.querySelector(".low-fuel-indicator-bg");
+    this.lowFuelIndicator = document.querySelector(".low-fuel-indicator");
 
     this._init();
   }

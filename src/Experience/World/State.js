@@ -3,7 +3,7 @@ import Experience from "@Experience/Experience.js";
 let instance = null;
 export default class State {
   constructor() {
-    // Create experience as singleton
+    // Create state as singleton
     if (instance) {
       return instance;
     }
@@ -12,11 +12,11 @@ export default class State {
     this.debug = this.experience.debug;
     this.params = {
       dev: import.meta.env.DEV || false,
-      highscore: 0, // TODO: Init from local store
       playing: false,
       cameraInTransit: true,
       contactThreshold: 1,
     };
+
     this.setState();
     this.setDebug();
   }
@@ -38,6 +38,16 @@ export default class State {
       },
       set(value) {
         this.value = value;
+        return;
+      },
+    };
+    this.highscore = {
+      value: 0,
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.value = this.value + value;
         return;
       },
     };
@@ -68,6 +78,7 @@ export default class State {
       },
       set(value) {
         this.value = value;
+        // this.interface.fuel.set(this.value)
         return;
       },
     };

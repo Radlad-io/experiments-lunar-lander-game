@@ -7,13 +7,15 @@ import { Text } from "troika-three-text";
 export default class Pad {
   constructor(multiplier, position, params) {
     this.experience = new Experience();
+    this.world = this.experience.world;
+    this.physics = this.world.physics;
     this.scene = this.experience.scene;
     this.multiplier = multiplier;
     this.position = position;
     this.params = {
       x2PadRadius: 8,
-      x4PadRadius: 7,
-      x6PadRadius: 6,
+      x4PadRadius: 6.5,
+      x6PadRadius: 5,
     };
 
     this._setPad();
@@ -23,9 +25,9 @@ export default class Pad {
   _setPad() {
     this.landingPad = new THREE.Group();
     this.landingPadMaterial = new THREE.MeshLambertMaterial({
-      color: 0xff0000,
+      color: 0xffffff,
       emissive: 0xffffff,
-      emissiveIntensity: 0.2,
+      emissiveIntensity: 1,
     });
     this.radius =
       this.multiplier === 2
@@ -37,28 +39,28 @@ export default class Pad {
     this.landingPadGeo = new THREE.CylinderGeometry(
       this.radius,
       this.radius,
-      10,
+      5,
       20
     );
-    this.mesh = new THREE.Mesh(this.landingPadGeo, this.landingPadMaterial);
-    this.mesh.position.set(this.position);
-    this.scene.add(this.mesh);
 
-    // this.mesh.receiveShadow = true;
-    // this.landingPad.name = `Landing Pad ${multiplier}`;
-    // this.landingPad.add(this.mesh);
-    // this.scene.add(this.mesh);
+    this.mesh = new THREE.Mesh(this.landingPadGeo, this.landingPadMaterial);
+    this.mesh.position.set(...this.position);
+    this.mesh.receiveShadow = true;
+    this.landingPad.name = `Landing Pad ${this.multiplier}`;
+    this.landingPad.add(this.mesh);
+    this.scene.add(this.mesh);
   }
 
   _setPhysics() {
     // Adds Physics body to pad
-    // this.landingPadPhysicsBody = new CANNON.Body({
-    //   mass: 0,
-    //   material: new CANNON.Material(),
-    //   shape: new CANNON.Cylinder(this.radius, this.radius, 10, 20),
-    // });
-    // this.landingPadPhysicsBody.position.set(position);
-    // this.landingPadPhysicsBody.id = multiplier;
-    // this.physics.world.addBody(this.landingPadPhysicsBody);
+    this.physicsBody = new CANNON.Body({
+      mass: 0,
+      material: new CANNON.Material(),
+      shape: new CANNON.Cylinder(this.radius, this.radius, 5, 20),
+    });
+    this.physicsBody.position.set(...this.position);
+    this.physicsBody.id = this.multiplier;
+    this.physics.world.addBody(this.physicsBody);
   }
+
 }

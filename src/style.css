@@ -3,6 +3,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   box-sizing: border-box;
+  /* background-color: black; */
 }
 
 :root {
@@ -108,7 +109,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  opacity: 0;
+  /* opacity: 0; */
   pointer-events: none;
 }
 
@@ -136,7 +137,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  opacity: 0;
+  /* opacity: 0; */
   user-select: none;
   z-index: 100;
 }

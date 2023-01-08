@@ -10,8 +10,8 @@ import Resources from "@Utils/Resources.js";
 import Debug from "@Utils/Debug.js";
 
 import Sources from "@Experience/sources.js";
-import State from "@World/State";
-import Store from "@Utils/Store";
+import State from "@World/State.js";
+import Store from "@Utils/Store.js";
 import Sound from "@World/Sound.js";
 import Interface from "@Experience/Interface.js";
 
@@ -33,7 +33,6 @@ export default class Experience {
 
     // Setup
     this.debug = new Debug();
-    this.state = new State();
     this.sizes = new Sizes();
     this.time = new Time();
     this.scene = new THREE.Scene();
@@ -43,9 +42,10 @@ export default class Experience {
     this.renderer = new Renderer();
     this.world = new World();
     this.interface = new Interface();
-
     this.inputs = new Inputs();
     this.store = new Store();
+    this.state = new State();
+    this.state.setState()
 
     this.sizes.on("resize", () => {
       // Arrow function maintains context
@@ -69,7 +69,6 @@ export default class Experience {
   }
 
   start(){
-    console.log('start')
     this.interface.intro.remove()
   }
 

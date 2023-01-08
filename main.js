@@ -13,11 +13,13 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import "./src/style.css";
+import 'material-icons/iconfont/material-icons.css';
 import Experience from "@Experience/Experience.js";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 // import ServiceWorker from "@Experience/Utils/RegisterServiceWorker.js";
 import Alpine from 'alpinejs'
+
 
 gsap.registerPlugin(CustomEase);
 

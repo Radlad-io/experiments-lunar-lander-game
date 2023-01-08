@@ -23,7 +23,7 @@ export default class Camera {
       fov: 65,
       near: 1,
       far: 650,
-      moveDuration: 1,
+      moveDuration: .75,
       rotationSpeed: 0.001,
       followCoefficient: 0.055,
     };
