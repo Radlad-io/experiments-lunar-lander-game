@@ -17,7 +17,7 @@ export default class Renderer {
     this.camera = this.experience.camera;
     this.debug = this.experience.debug;
     this.params = {
-      sobel: false,
+      sobel: true,
       AA: false,
     };
     this.setInstance();

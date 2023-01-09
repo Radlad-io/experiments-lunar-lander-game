@@ -26,15 +26,15 @@ export default [
     pads: [
       {
         multiplier: 2,
-        position: new THREE.Vector3(35, -3, 0),
+        position: new THREE.Vector3(-30, -4, 23),
       },
       {
         multiplier: 4,
-        position: new THREE.Vector3(-35, -3, 0),
+        position: new THREE.Vector3(35, -4, 30),
       },
       {
         multiplier: 6,
-        position: new THREE.Vector3(0, -3, 35),
+        position: new THREE.Vector3(2, -2, -23),
       },
     ],
   },

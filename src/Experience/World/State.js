@@ -31,6 +31,15 @@ export default class State {
         this.value = value;
       },
     };
+    this.muted = {
+      value: false,
+      get() {
+        return this.value;
+      },
+      set() {
+        this.value = !this.value;
+      },
+    };
     this.level = {
       value: 1,
       get() {

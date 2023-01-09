@@ -23,7 +23,7 @@ export default class Camera {
       fov: 65,
       near: 1,
       far: 650,
-      moveDuration: .75,
+      moveDuration: 0.75,
       rotationSpeed: 0.001,
       followCoefficient: 0.055,
     };
@@ -63,6 +63,7 @@ export default class Camera {
     this.rig.add(this.jibLine);
     this.rig.add(this.instance);
     this.rig.position.set(0, 2.5, 0);
+
     this.scene.add(this.rig);
   }
 

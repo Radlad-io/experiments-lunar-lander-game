@@ -20,14 +20,13 @@ export default class Pad {
 
     this._setPad();
     this._setPhysics();
+    this._setText();
   }
 
   _setPad() {
     this.landingPad = new THREE.Group();
     this.landingPadMaterial = new THREE.MeshLambertMaterial({
-      color: 0xffffff,
-      emissive: 0xffffff,
-      emissiveIntensity: 1,
+      color: 0x000000,
     });
     this.radius =
       this.multiplier === 2
@@ -63,4 +62,17 @@ export default class Pad {
     this.physics.world.addBody(this.physicsBody);
   }
 
+  _setText() {
+    this.text = new Text();
+    this.mesh.add(this.text);
+    this.text.text = `${this.multiplier}X`;
+    this.text.font = "/fonts/Sncrypt-Black.ttf";
+    this.text.fontSize = 3;
+    this.text.position.set(0, 3.5, 0);
+    this.text.color = 0xaaaaaa;
+    this.text.anchorX = "50%";
+    this.text.anchorY = "50%";
+    this.text.anchorZ = "50%";
+    this.text.rotation.x = -Math.PI / 2;
+  }
 }

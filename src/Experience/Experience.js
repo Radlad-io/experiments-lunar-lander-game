@@ -33,6 +33,7 @@ export default class Experience {
 
     // Setup
     this.debug = new Debug();
+    this.state = new State();
     this.sizes = new Sizes();
     this.time = new Time();
     this.scene = new THREE.Scene();
@@ -44,8 +45,6 @@ export default class Experience {
     this.interface = new Interface();
     this.inputs = new Inputs();
     this.store = new Store();
-    this.state = new State();
-    this.state.setState()
 
     this.sizes.on("resize", () => {
       // Arrow function maintains context
@@ -55,6 +54,13 @@ export default class Experience {
     this.time.on("tick", () => {
       this.update();
     });
+
+    // Fires start in lue of intro UI
+    if (this.debug.active) {
+      this.resources.on("loaded", () => {
+        this.start();
+      });
+    }
   }
 
   resize() {
@@ -68,8 +74,17 @@ export default class Experience {
     this.world.update();
   }
 
-  start(){
-    this.interface.intro.remove()
+  start() {
+    this.sound.playSound("ambientSound");
+    this.sound.playSound("musicSound");
+    this.interface.intro.remove();
+
+    // TODO: Store mute pref in localStorage
+    // Update HUD
+    this.highscore = this.store.getFromLocalStorage("highscore");
+    this.state.highscore.set(this.highscore);
+    this.interface.hud.update.highscore(this.highscore);
+    this.interface.hud.update.fuel(this.state.fuel.get());
   }
 
   destroy() {

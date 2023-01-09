@@ -1,7 +1,6 @@
 import Experience from "@Experience/Experience.js";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
-import State from '@World/State.js'
 
 export default class Interface {
   constructor() {
@@ -9,7 +8,6 @@ export default class Interface {
     this.resources = this.experience.resources;
     this.state = this.experience.state;
     this.debug = this.experience.debug;
-    this.state = new State()
     this.params = {
       dev: import.meta.env.DEV,
       ease: CustomEase.create("custom", "M0,0 C0.4,0.1 0.6,0.898 1,1 "),
@@ -35,7 +33,7 @@ export default class Interface {
           })
           .then(() => {
             this.loader.el.style.display = "none";
-            this.cards.show()
+            this.cards.show();
           });
       },
       update: (percent) => {
@@ -43,41 +41,40 @@ export default class Interface {
       },
     };
 
-    this.intro ={
+    this.intro = {
       el: document.querySelector(".intro"),
       wrapper: document.querySelector(".wrapper"),
       remove: () => {
         gsap
-        .to(this.intro.wrapper, {
-          duration: .75,
-          ease: "none",
-          opacity: 0,
-        })
-        .then(() => {
-          gsap
-          .to(this.intro.el, {
-            duration: .25,
+          .to(this.intro.wrapper, {
+            duration: 1.25,
             ease: "none",
             opacity: 0,
           })
-        })
-        .then(() => {
-          this.cards.el.remove()
-        });
+          .then(() => {
+            gsap
+              .to(this.intro.el, {
+                duration: 1.25,
+                ease: "none",
+                opacity: 0,
+              })
+              .then(() => {
+                this.intro.el.remove();
+              });
+          });
       },
-    }
+    };
 
     this.cards = {
       el: document.querySelector(".cards"),
       show: () => {
         this.cards.el.style.display = "flex";
-        gsap
-        .to(this.cards.el, {
-          delay: .25,
+        gsap.to(this.cards.el, {
+          delay: 0.25,
           duration: 1.25,
           ease: "none",
           opacity: 1,
-        })
+        });
       },
       remove: () => {
         this.cards.el.style.display = "none";
@@ -94,40 +91,37 @@ export default class Interface {
       horizontal: document.querySelector(".hud-horizontal span"),
       vertical: document.querySelector(".hud-vertical span"),
       view: document.querySelector(".hud-view span"),
-      updateScore(){
-        this.score.innerHTML = this.state.score.get()
+      updateScore() {
+        this.score.innerHTML = this.state.score.get();
       },
-      updateHighscore(value){
-        this.highscore.innerHTML = `${value}`
+      updateTime() {
+        this.score.innerHTML = `${score}`;
       },
-      updateTime(){
-        this.score.innerHTML = `${score}`
+      updateAltitude(altitude) {
+        this.altitude.innerHTML = `${altitude}`;
       },
-      updateFuel(fuel){
-        this.fuel.innerHTML = `${fuel}`
+      updateHorizontal(horizontal) {
+        this.horizontal.innerHTML = `${horizontal}`;
       },
-      updateAltitude(altitude){
-        this.altitude.innerHTML = `${altitude}`
+      updateVertical(vertical) {
+        this.vertical.innerHTML = `${vertical}`;
       },
-      updateHorizontal(horizontal){
-        this.horizontal.innerHTML = `${horizontal}`
+      updateView(view) {
+        this.vertical.innerHTML = `${view}`;
       },
-      updateVertical(vertical){
-        this.vertical.innerHTML = `${vertical}`
+      update: {
+        highscore: (score) => {
+          this.hud.highscore.innerHTML = `${score}`;
+        },
+        fuel: (fuel) => {
+          this.hud.fuel.innerHTML = `${fuel}`;
+        },
+        view: (view) => {
+          this.hud.fuel.innerHTML = `${view}`;
+        },
       },
-      updateView(view){
-        this.vertical.innerHTML = `${view}`
-      },
-    }
+    };
 
-    this.fuel = {
-      el:  document.querySelector(".hud-fuel span"),
-      set(fuel){
-        this.fuel.innerHTML = `${fuel}`
-      }
-    }
-    
-  
     this.bottomBar = document.querySelector(".bottom-bar");
     this.instructions = document.querySelector(".instruction-modal");
     this.lowFuelIndicatorBG = document.querySelector(".low-fuel-indicator-bg");

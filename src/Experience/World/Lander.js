@@ -33,6 +33,18 @@ export default class Lander {
       fuel: 2376, // Actual lander mass 2376 kg of propellant
     };
 
+    this.sobelMaterial = new THREE.MeshLambertMaterial({
+      color: 0xffffff,
+      emissive: 0xffffff,
+      emissiveIntensity: 1,
+    });
+
+    this.sobelThrustMaterial = new THREE.MeshLambertMaterial({
+      color: 0xff0000,
+      emissive: 0xff0000,
+      emissiveIntensity: 5,
+    });
+
     this.setInitialState();
     this.setModel();
     // this.setAnimation();
@@ -48,12 +60,32 @@ export default class Lander {
     this.model = this.resource.scene;
     this.model.position.set(this.params.position);
     this.model.name = "Lander";
+    this.model.material = new THREE.MeshLambertMaterial({
+      color: 0xffffff,
+      emissive: 0xffffff,
+      emissiveIntensity: 0.2,
+    });
     this.scene.add(this.model);
     this.model.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         child.castShadow = true;
       }
     });
+    this.setMaterial();
+  }
+
+  setMaterial() {
+    if (this.experience.renderer.params.sobel) {
+      this.model.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          if (child.name === "ThrustNew") {
+            child.material = this.sobelThrustMaterial;
+          } else {
+            child.material = this.sobelMaterial;
+          }
+        }
+      });
+    }
   }
 
   setAnimation() {

@@ -6,7 +6,8 @@ export default class Inputs {
   constructor() {
     this.experience = new Experience();
     this.world = this.experience.world;
-    this.sound = new Sound();
+    this.state = new State();
+    this.sound = this.experience.sound;
     this.debug = this.experience.debug;
     this.pressed = {};
     this.releaseTime = {};
@@ -14,8 +15,6 @@ export default class Inputs {
       max_key_delay: 50,
       logKeyPress: false,
     };
-
-    this.state = new State();
 
     document.addEventListener("keydown", (e) => this.onKeyDown(e));
     document.addEventListener("keyup", (e) => this.onKeyUp(e));
@@ -38,7 +37,6 @@ export default class Inputs {
       case "p":
         this.world.physics.params.physicsEnabled =
           !this.world.physics.params.physicsEnabled;
-          this.sound.musicSound.play()
         if (this.debug.active) {
           this.debug.pane.refresh();
         }

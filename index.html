@@ -87,7 +87,10 @@
               <span class="tooltiptext" id="tooltipRightTop">toggle music</span>
             </div>
           </button>
-          <button class="sound-toggle">
+          <button
+            class="sound-toggle"
+            onClick="window.experience.sound.toggleMute()"
+          >
             <div class="tooltip">
               <span class="material-icons-outlined ui-button mute">
                 volume_down
@@ -126,9 +129,10 @@
               <div class="loader-status"></div>
             </div>
           </div>
-  
-          
-          <div class="cards" x-data="{ 
+
+          <div
+            class="cards"
+            x-data="{ 
             position: 1,
             length: 4,
             text: 'next →',
@@ -144,12 +148,13 @@
               this.position === 1 ? this.position = this.position : this.position = this.position-1,
               this.position !== this.length ? this.text = 'next →' : null
             } 
-          }">
+          }"
+          >
             <div class="title">
               <h1>Lunar Lander</h1>
               <p>A three dimensional ode to<br />Atari's 1979 Lunar Lander</p>
             </div>
-  
+
             <div x-show="position === 1" class="card">
               <video src="videos/control.mp4" autoplay loop muted></video>
               <p class="instruction">
@@ -159,32 +164,47 @@
                 without running out of fuel or crashing the lander.
               </p>
             </div>
-            
-            <div x-show="position === 2"  class="card">
+
+            <div x-show="position === 2" class="card">
               <video src="videos/control.mp4" autoplay loop muted></video>
-              <div class="instruction">           
-                  <b>Instructions:</b> <p>Land you spacecraft on one of the landing pads using your thruster</p> <div class="key-display">Spacebar</div> <p>to keep fram crashing.</p>
+              <div class="instruction">
+                <b>Instructions:</b>
+                <p>
+                  Land you spacecraft on one of the landing pads using your
+                  thruster
+                </p>
+                <div class="key-display">↑</div>
+                <p>to keep fram crashing.</p>
               </div>
             </div>
-  
-            <div x-show="position === 3"  class="card">
+
+            <div x-show="position === 3" class="card">
               <video src="videos/control.mp4" autoplay loop muted></video>
-              <div class="instruction">           
-                <b>Instructions:</b> <p>Use the arrow keys</p> <div class="key-display">→</div> <div class="key-display">→</div> <p>to rotate your spacecraft. Rotating and thrusing will move the spacecraft left and right.</p>
+              <div class="instruction">
+                <b>Instructions:</b>
+                <p>Use the arrow keys</p>
+                <div class="key-display">→</div>
+                <div class="key-display">→</div>
+                <p>
+                  to rotate your spacecraft. Rotating and thrusing will move the
+                  spacecraft left and right.
+                </p>
               </div>
             </div>
-            
-            <div x-show="position === 4"  class="card">
+
+            <div x-show="position === 4" class="card">
               <video src="videos/shift.mp4" autoplay loop muted></video>
-              <div class="instruction">           
-                <b>Instructions:</b> <p>Rotate to the side of the spacecraft</p> <div class="key-display">Shift</div> <p>to steer forwards and backwards on the map.</p>
+              <div class="instruction">
+                <b>Instructions:</b>
+                <p>Change your view to the side of the lander</p>
+                <div class="key-display">Shift</div>
+                <p>to steer forwards and backwards on the map.</p>
               </div>
             </div>
-  
-  
+
             <div class="instruction-ctrls">
               <div>
-                <button class="skip-btn">
+                <button @click="window.experience.start()" class="skip-btn">
                   skip intro
                   <div class="underline"></div>
                 </button>
@@ -197,12 +217,15 @@
                   <span :class="{'active': position === 4}"></span>
                 </div>
                 <button @click="decrease()" class="backward-btn">←</button>
-                <button @click="increase()" class="forward-btn"  x-text="text"></button>
+                <button
+                  @click="increase()"
+                  class="forward-btn"
+                  x-text="text"
+                ></button>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
     <!-- <div class="fuel-wrapper">
