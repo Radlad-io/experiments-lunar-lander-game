@@ -11,6 +11,7 @@ export default class Resources extends EventEmitter {
 
     this.experience = new Experience();
     this.sound = new Sound();
+    this.interface = this.experience.interface;
     this.debug = this.experience.debug;
     this.sources = sources;
     this.items = {};
@@ -40,7 +41,8 @@ export default class Resources extends EventEmitter {
       }
     };
 
-    this.manager.onProgress = function (url, itemsLoaded, itemsTotal) {
+    this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+      this.interface.loader.update((itemsLoaded / itemsTotal) * 100);
       if (debug) {
         console.log(`Items loaded: ${itemsLoaded}/${itemsTotal}`);
       }
@@ -81,6 +83,7 @@ export default class Resources extends EventEmitter {
     this.items[source.name] = file;
     this.loaded++;
     if (this.loaded === this.toLoad) {
+      this.interface.init();
       this.trigger("loaded");
     }
   }

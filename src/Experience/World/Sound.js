@@ -17,6 +17,7 @@ export default class Sound {
     this.sounds = [];
     this.debug = this.experience.debug;
     this.params = {
+      muted: true,
       volume: {
         ambient: 1,
         music: 0.75,
@@ -62,7 +63,7 @@ export default class Sound {
   }
 
   playSound(sound) {
-    if (this[sound].isPlaying) {
+    if (this[sound].isPlaying || this.params.muted) {
       return;
     }
     this[sound].play();

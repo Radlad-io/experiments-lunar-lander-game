@@ -33,6 +33,7 @@ export default class Experience {
 
     // Setup
     this.debug = new Debug();
+    this.interface = new Interface();
     this.state = new State();
     this.sizes = new Sizes();
     this.time = new Time();
@@ -42,7 +43,6 @@ export default class Experience {
     this.resources = new Resources(Sources);
     this.renderer = new Renderer();
     this.world = new World();
-    this.interface = new Interface();
     this.inputs = new Inputs();
     this.store = new Store();
 

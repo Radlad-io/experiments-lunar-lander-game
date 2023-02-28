@@ -6,7 +6,6 @@ export default class Interface {
   constructor() {
     this.experience = new Experience();
     this.resources = this.experience.resources;
-    this.state = this.experience.state;
     this.debug = this.experience.debug;
     this.params = {
       dev: import.meta.env.DEV,
@@ -19,6 +18,11 @@ export default class Interface {
         this.banner.el.style.display = "none";
       },
     };
+
+    // Removes banner in dev
+    if (this.params.dev) {
+      this.banner.remove();
+    }
 
     this.loader = {
       el: document.querySelector(".loader"),
@@ -91,24 +95,6 @@ export default class Interface {
       horizontal: document.querySelector(".hud-horizontal span"),
       vertical: document.querySelector(".hud-vertical span"),
       view: document.querySelector(".hud-view span"),
-      updateScore() {
-        this.score.innerHTML = this.state.score.get();
-      },
-      updateTime() {
-        this.score.innerHTML = `${score}`;
-      },
-      updateAltitude(altitude) {
-        this.altitude.innerHTML = `${altitude}`;
-      },
-      updateHorizontal(horizontal) {
-        this.horizontal.innerHTML = `${horizontal}`;
-      },
-      updateVertical(vertical) {
-        this.vertical.innerHTML = `${vertical}`;
-      },
-      updateView(view) {
-        this.vertical.innerHTML = `${view}`;
-      },
       update: {
         highscore: (score) => {
           this.hud.highscore.innerHTML = `${score}`;
@@ -126,32 +112,13 @@ export default class Interface {
     this.instructions = document.querySelector(".instruction-modal");
     this.lowFuelIndicatorBG = document.querySelector(".low-fuel-indicator-bg");
     this.lowFuelIndicator = document.querySelector(".low-fuel-indicator");
-
-    this._init();
   }
 
-  _init() {
-    // Removes banner in dev
-    if (this.params.dev) {
-      this.banner.remove();
-    }
-
+  init() {
     if (this.debug.active) {
       document.querySelector(".intro").style.display = "none";
     } else {
-      // Listeners
-      this.experience.resources.manager.onProgress = (
-        url,
-        itemsLoaded,
-        itemsTotal
-      ) => {
-        this.loader.update((itemsLoaded / itemsTotal) * 100);
-      };
-
-      this.resources.on("loaded", () => {
-        this.state.loaded.set(true);
-        this.loader.remove();
-      });
+      this.loader.remove();
     }
   }
 }

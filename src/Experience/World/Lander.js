@@ -22,7 +22,7 @@ export default class Lander {
       position: new CANNON.Vec3(0, 60, 0),
       velocity: new CANNON.Vec3(0, 0, 0),
       angularFactor: new CANNON.Vec3(1, 0, 1),
-      fuelConsumptionRate: 0.2,
+      fuelConsumptionRate: 0.5,
       angularDamping: 0.75,
       linearDamping: 0.015,
       allowSleep: true,
@@ -160,8 +160,8 @@ export default class Lander {
   }
 
   resetPosition() {
-    this.physicsBody.position = new CANNON.Vec3(0, 80, 0);
-    this.resetForces({ duration: 0 });
+    this.physicsBody.position = new CANNON.Vec3(0, 60, 0);
+    this.resetForces(0.1);
   }
 
   resetForces(duration) {
@@ -185,12 +185,23 @@ export default class Lander {
       x: this.physicsBody.velocity.x / 2,
       z: this.physicsBody.velocity.x / 2,
     });
+    gsap.to(this.physicsBody.force, {
+      duration: duration,
+      ease: "none",
+      x: 0,
+      z: 0,
+      z: 0,
+    });
   }
 
   _applyThrust() {
     this.physicsBody.applyLocalImpulse(
       new CANNON.Vec3(0, this.params.thrust, 0)
     );
+    this.state.fuel.set(
+      this.state.fuel.get() - this.params.fuelConsumptionRate
+    );
+    this.experience.interface.hud.update.fuel(this.state.fuel.get().toFixed(0));
   }
 
   _rotateFoward() {

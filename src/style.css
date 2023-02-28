@@ -1,4 +1,4 @@
-  html {
+html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -86,7 +86,7 @@ body {
   background-color: hsla(0, 100%, 50%, 1);
   top: 0px;
   left: 0;
-  z-index: 800;
+  z-index: 10000;
   width: 100vw;
   padding: 5px;
 }
@@ -313,7 +313,6 @@ body {
 .instruction {
   display: block;
   min-height: 110px;
-  
 }
 
 .card b {
@@ -349,7 +348,7 @@ body {
 }
 
 .active {
-  background-color: white !important; 
+  background-color: white !important;
 }
 
 .instruction-ctrls button {
@@ -375,8 +374,6 @@ body {
   color: white;
   font-size: 1.125rem;
 }
-
-
 
 .underline {
   width: 0;
