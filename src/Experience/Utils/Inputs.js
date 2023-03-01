@@ -1,4 +1,3 @@
-import State from "@World/State.js";
 import Experience from "../Experience";
 import Sound from "@World/Sound";
 
@@ -6,7 +5,7 @@ export default class Inputs {
   constructor() {
     this.experience = new Experience();
     this.world = this.experience.world;
-    this.state = new State();
+    this.state = this.experience.state;
     this.sound = this.experience.sound;
     this.debug = this.experience.debug;
     this.pressed = {};

@@ -4,23 +4,17 @@ let instance = null;
 export default class State {
   constructor() {
     // Create state as singleton
-    if (instance) {
-      return instance;
-    }
-    instance = this;
+    // if (instance) {
+    //   return instance;
+    // }
+    // instance = this;
 
     this.experience = new Experience();
     this.interface = this.experience.interface;
     this.debug = this.experience.debug;
     this.params = {
       dev: import.meta.env.DEV || false,
-      playing: false,
-      cameraInTransit: true,
-      contactThreshold: 1,
     };
-
-    this.fuel;
-
     this.setState();
     this.setDebug();
   }
@@ -28,58 +22,58 @@ export default class State {
   setState() {
     this.loaded = {
       value: false,
-      get: () => {
+      get() {
         return this.value;
       },
-      set: (value) => {
+      set(value) {
         this.value = value;
       },
     };
     this.muted = {
       value: false,
-      get: () => {
+      get() {
         return this.value;
       },
-      set: () => {
+      set() {
         this.value = !this.value;
       },
     };
     this.level = {
       value: 1,
-      get: () => {
+      get() {
         return this.value;
       },
-      set: (value) => {
+      set(value) {
         this.value = value;
         return;
       },
     };
     this.highscore = {
       value: 0,
-      get: () => {
+      get() {
         return this.value;
       },
-      set: (value) => {
+      set(value) {
         this.value = this.value + value;
         return;
       },
     };
     this.score = {
       value: 0,
-      get: () => {
+      get() {
         return this.value;
       },
-      set: (value) => {
+      set(value) {
         this.value = this.value + value;
         return;
       },
     };
     this.time = {
       value: 12000, // 2 Mins I think...
-      get: () => {
+      get() {
         return this.value;
       },
-      set: (value) => {
+      set(value) {
         this.value = this.value - value;
         return;
       },
@@ -87,52 +81,62 @@ export default class State {
 
     this.fuel = {
       value: 0,
-      get: () => {
+      get() {
         return this.value;
       },
-      set: (value) => {
+      set(value) {
         this.value = value;
-        this.interface.hud.update.fuel(this.value);
+        // this.interface.hud.update.fuel(this.value);
       },
     };
 
     this.altitude = {
       value: 0,
-      get: () => {
+      get() {
         return this.value;
       },
-      set: (value) => {
+      set(value) {
         this.value = value;
         return;
       },
     };
     this.horizontalSpeed = {
       value: 0,
-      get: () => {
+      get() {
         return this.value;
       },
-      set: (value) => {
+      set(value) {
         this.value = value;
         return;
       },
     };
     this.verticalSpeed = {
       value: 0,
-      get: () => {
+      get() {
         return this.value;
       },
-      set: (value) => {
+      set(value) {
         this.value = value;
         return;
       },
     };
     this.view = {
       value: "front",
-      get: () => {
+      get() {
         return this.value;
       },
-      set: () => {
+      set() {
         this.value = this.value === "front" ? "side" : "front";
+        return;
+      },
+    };
+    this.cameraInTransit = {
+      value: false,
+      get() {
+        return this.value;
+      },
+      set() {
+        this.value = !this.value;
         return;
       },
     };

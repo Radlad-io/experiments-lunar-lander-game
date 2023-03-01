@@ -17,7 +17,8 @@ export default class Sound {
     this.sounds = [];
     this.debug = this.experience.debug;
     this.params = {
-      muted: true,
+      muted: false,
+      // muted: import.meta.env.DEV,
       volume: {
         ambient: 1,
         music: 0.75,
@@ -78,7 +79,6 @@ export default class Sound {
 
   muteAll() {
     this.sounds.map((sound) => {
-      console.log("firing");
       sound.setVolume(0);
     });
   }

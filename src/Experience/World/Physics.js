@@ -1,7 +1,6 @@
 import * as CANNON from "cannon-es";
 import { CannonDebugRenderer } from "@Utils/CannonUtils.js";
 import Experience from "@Experience/Experience.js";
-import State from "@World/State";
 
 export default class Physics {
   constructor() {
@@ -9,7 +8,7 @@ export default class Physics {
     this.scene = this.experience.scene;
     this.time = this.experience.time;
     this.debug = this.experience.debug;
-    this.state = new State();
+    this.state = this.experience.state;
     this.params = {
       physicsEnabled: false,
       visualizeBodies: false,

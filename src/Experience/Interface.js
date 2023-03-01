@@ -100,10 +100,10 @@ export default class Interface {
           this.hud.highscore.innerHTML = `${score}`;
         },
         fuel: (fuel) => {
-          this.hud.fuel.innerHTML = `${fuel}`;
+          this.hud.fuel.innerHTML = `${fuel.toFixed(0)}`;
         },
         view: (view) => {
-          this.hud.fuel.innerHTML = `${view}`;
+          this.hud.view.innerHTML = `${view}`;
         },
       },
     };

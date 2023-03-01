@@ -13,10 +13,10 @@ export default class Camera {
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
     this.debug = this.experience.debug;
-    this.state = new State();
+    this.state = this.experience.state;
+    this.interface = this.experience.interface;
     this.params = {
       visualizeRig: false,
-      inTransit: false,
       position: "front",
       front: new THREE.Vector3(0, 5, 16),
       orbit: false,
@@ -74,13 +74,14 @@ export default class Camera {
 
   rotateRig() {
     // TODO: intransit needs to ne in a global state component
-    if (this.params.inTransit) {
+    if (this.state.cameraInTransit.get()) {
       return;
     }
     this.sound = this.experience.sound;
     this.sound.playSound("rotateSound");
-    this.params.inTransit = true;
     this.state.view.set();
+    this.state.cameraInTransit.set();
+    this.interface.hud.update.view(this.state.view.get());
     gsap
       .to(this.rig.rotation, {
         duration: this.params.moveDuration,
@@ -91,7 +92,7 @@ export default class Camera {
         this.params.position === "front"
           ? (this.params.position = "side")
           : (this.params.position = "front");
-        this.params.inTransit = false;
+        this.state.cameraInTransit.set();
       });
   }
 
