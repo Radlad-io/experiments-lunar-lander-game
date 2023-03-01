@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import Experience from "@Experience/Experience.js";
 import * as CANNON from "cannon-es";
-import State from "@World/State";
 import gsap from "gsap";
 
 export default class Lander {
@@ -17,12 +16,13 @@ export default class Lander {
     this.time = this.experience.time;
     this.inputs = this.experience.inputs;
     this.debug = this.experience.debug;
-    this.state = new State();
+    this.state = this.experience.state;
+    this.interface = this.experience.interface;
     this.params = {
       position: new CANNON.Vec3(0, 60, 0),
       velocity: new CANNON.Vec3(0, 0, 0),
       angularFactor: new CANNON.Vec3(1, 0, 1),
-      fuelConsumptionRate: 0.5,
+      fuelConsumptionRate: 0.75,
       angularDamping: 0.75,
       linearDamping: 0.015,
       allowSleep: true,
@@ -157,6 +157,34 @@ export default class Lander {
     this.physicsBody.id = "lander";
     this.physicsBody.position = this.params.position;
     this.physics.world.addBody(this.physicsBody);
+
+    this.intersects;
+    this.altitudeRayCaster = new THREE.Raycaster();
+    this.rayTo = new THREE.Vector3(0, -1, 0);
+
+    setInterval(() => {
+      this.state.verticalSpeed.set(this.physicsBody.velocity.y);
+      this.interface.hud.update.vertical(this.state.verticalSpeed.get());
+      if (this.state.view.get() === "front") {
+        this.state.horizontalSpeed.set(this.physicsBody.velocity.x);
+        this.interface.hud.update.horizontal(this.state.horizontalSpeed.get());
+      } else {
+        this.state.horizontalSpeed.set(this.physicsBody.velocity.z);
+        this.interface.hud.update.horizontal(this.state.horizontalSpeed.get());
+      }
+      this._updateAlititude();
+    }, 100);
+  }
+
+  _updateAlititude() {
+    this.altitudeRayCaster.set(this.physicsBody.position, this.rayTo);
+    this.intersects = this.altitudeRayCaster.intersectObjects(
+      this.scene.children
+    );
+    if (this.intersects.length > 0) {
+      this.state.altitude.set(this.intersects[0].distance);
+      this.interface.hud.update.altitude(this.state.altitude.get());
+    }
   }
 
   resetPosition() {
@@ -195,13 +223,15 @@ export default class Lander {
   }
 
   _applyThrust() {
-    this.physicsBody.applyLocalImpulse(
-      new CANNON.Vec3(0, this.params.thrust, 0)
-    );
-    this.state.fuel.set(
-      this.state.fuel.get() - this.params.fuelConsumptionRate
-    );
-    this.experience.interface.hud.update.fuel(this.state.fuel.get().toFixed(0));
+    if (this.state.fuel.get() > 0) {
+      this.physicsBody.applyLocalImpulse(
+        new CANNON.Vec3(0, this.params.thrust, 0)
+      );
+      this.state.fuel.set(
+        this.state.fuel.get() - this.params.fuelConsumptionRate
+      );
+      this.interface.hud.update.fuel(this.state.fuel.get());
+    }
   }
 
   _rotateFoward() {

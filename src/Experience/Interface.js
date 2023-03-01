@@ -105,6 +105,19 @@ export default class Interface {
         view: (view) => {
           this.hud.view.innerHTML = `${view}`;
         },
+        altitude: (altitude) => {
+          this.hud.altitude.innerHTML = `${altitude.toFixed(0)}`;
+        },
+        horizontal: (horizontal) => {
+          this.hud.horizontal.innerHTML = `${Math.abs(horizontal.toFixed(0))} ${
+            horizontal > 0 ? "→" : "←"
+          }`;
+        },
+        vertical: (vertical) => {
+          this.hud.vertical.innerHTML = `${Math.abs(vertical.toFixed(0))} ${
+            vertical > 0 ? "↑" : "↓"
+          }`;
+        },
       },
     };
 
