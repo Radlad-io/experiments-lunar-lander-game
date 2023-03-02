@@ -41,20 +41,20 @@ html {
   font-family: "Sncrypt";
   font-style: normal;
   font-weight: 100;
-  src: local("Sncrypt-Light"), url(./fonts/Sncrypt-Light.ttf) format("truetype");
+  src: local("Sncrypt-Light"), url(/fonts/Sncrypt-Light.ttf) format("truetype");
 }
 @font-face {
   font-family: "Sncrypt";
   font-style: normal;
   font-weight: 400;
   src: local("Sncrypt-Regular"),
-    url(./fonts/Sncrypt-Regular.ttf) format("truetype");
+    url(/fonts/Sncrypt-Regular.ttf) format("truetype");
 }
 @font-face {
   font-family: "Sncrypt";
   font-style: normal;
   font-weight: 900;
-  src: local("Sncrypt-Black"), url(./fonts/Sncrypt-Black.ttf) format("truetype");
+  src: local("Sncrypt-Black"), url(/fonts/Sncrypt-Black.ttf) format("truetype");
 }
 
 * {
