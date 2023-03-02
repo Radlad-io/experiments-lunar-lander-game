@@ -85,6 +85,7 @@ export default class Experience {
     this.state.highscore.set(this.highscore);
     this.interface.hud.update.highscore(this.highscore);
     this.interface.hud.update.fuel(this.state.fuel.get());
+    this.interface.hud.update.time(this.state.time.getFormattedTime());
   }
 
   destroy() {

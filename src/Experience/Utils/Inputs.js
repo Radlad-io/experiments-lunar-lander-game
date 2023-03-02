@@ -4,6 +4,7 @@ import Sound from "@World/Sound";
 export default class Inputs {
   constructor() {
     this.experience = new Experience();
+    this.interface = this.experience.interface;
     this.world = this.experience.world;
     this.state = this.experience.state;
     this.sound = this.experience.sound;
@@ -34,8 +35,15 @@ export default class Inputs {
 
     switch (e.key) {
       case "p":
-        this.world.physics.params.physicsEnabled =
-          !this.world.physics.params.physicsEnabled;
+        this.state.playing.set();
+        this.world.physics.params.physicsEnabled = this.state.playing.get();
+
+        if (this.state.playing.get()) {
+          this.updatePlayTimeInterval = setInterval(() => {
+            this.interface.hud.update.time(this.state.time.getFormattedTime());
+          }, 1000);
+        }
+
         if (this.debug.active) {
           this.debug.pane.refresh();
         }

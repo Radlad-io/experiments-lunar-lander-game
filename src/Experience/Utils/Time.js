@@ -14,6 +14,8 @@ export default class Time extends EventEmitter {
 
     // Stats
     this.experience = new Experience();
+    this.state = this.experience.state;
+    this.interface = this.experience.interface;
     this.debug = this.experience.debug;
     this.initDebug();
 
@@ -40,6 +42,10 @@ export default class Time extends EventEmitter {
     this.elapsed = this.current - this.start;
 
     this.trigger("tick");
+
+    if (this.state.playing.get()) {
+      this.state.time.set(this.delta);
+    }
 
     window.requestAnimationFrame(() => {
       if (this.debug.active) {

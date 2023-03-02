@@ -27,7 +27,7 @@ export default class Lander {
       linearDamping: 0.015,
       allowSleep: true,
       sleepSpeedLimit: 2.0,
-      thrust: 250,
+      thrust: 150,
       mass: 2445, // Actual lander mass 2445kg
       steeringFactor: 15,
       fuel: 2376, // Actual lander mass 2376 kg of propellant
@@ -173,7 +173,7 @@ export default class Lander {
         this.interface.hud.update.horizontal(this.state.horizontalSpeed.get());
       }
       this._updateAlititude();
-    }, 100);
+    }, 200);
   }
 
   _updateAlititude() {

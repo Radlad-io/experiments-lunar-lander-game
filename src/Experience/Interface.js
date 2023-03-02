@@ -99,6 +99,9 @@ export default class Interface {
         highscore: (score) => {
           this.hud.highscore.innerHTML = `${score}`;
         },
+        time: (time) => {
+          this.hud.time.innerHTML = `${time}`;
+        },
         fuel: (fuel) => {
           this.hud.fuel.innerHTML = `${fuel.toFixed(0)}`;
         },

@@ -29,6 +29,15 @@ export default class State {
         this.value = value;
       },
     };
+    this.playing = {
+      value: false,
+      get() {
+        return this.value;
+      },
+      set() {
+        this.value = !this.value;
+      },
+    };
     this.muted = {
       value: false,
       get() {
@@ -69,9 +78,24 @@ export default class State {
       },
     };
     this.time = {
-      value: 12000, // 2 Mins I think...
+      value: 120000, // 2 Mins I think...
       get() {
         return this.value;
+      },
+      getFormattedTime() {
+        function pad(n, z) {
+          z = z || 2;
+          return ("00" + n).slice(-z);
+        }
+
+        this.s = this.value;
+        this.ms = this.s % 1000;
+        this.s = (this.s - this.ms) / 1000;
+        this.secs = this.s % 60;
+        this.s = (this.s - this.secs) / 60;
+        this.mins = this.s % 60;
+
+        return pad(this.mins) + ":" + pad(this.secs);
       },
       set(value) {
         this.value = this.value - value;
@@ -86,7 +110,6 @@ export default class State {
       },
       set(value) {
         this.value = value;
-        // this.interface.hud.update.fuel(this.value);
       },
     };
 
