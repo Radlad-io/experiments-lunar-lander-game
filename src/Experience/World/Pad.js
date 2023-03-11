@@ -45,7 +45,7 @@ export default class Pad {
     this.mesh = new THREE.Mesh(this.landingPadGeo, this.landingPadMaterial);
     this.mesh.position.set(...this.position);
     this.mesh.receiveShadow = true;
-    this.landingPad.name = `Landing Pad ${this.multiplier}`;
+    this.mesh.name = `Landing Pad ${this.multiplier}`;
     this.landingPad.add(this.mesh);
     this.scene.add(this.mesh);
   }
@@ -64,6 +64,7 @@ export default class Pad {
 
   _setText() {
     this.text = new Text();
+    this.text.name = `${this.multiplier}x Label`;
     this.mesh.add(this.text);
     this.text.text = `${this.multiplier}X`;
     this.text.font = "/fonts/Sncrypt-Black.ttf";

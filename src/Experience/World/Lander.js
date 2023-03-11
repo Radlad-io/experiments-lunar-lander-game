@@ -177,14 +177,29 @@ export default class Lander {
   }
 
   _updateAlititude() {
-    this.altitudeRayCaster.set(this.physicsBody.position, this.rayTo);
+    this.altitudeRayCaster.set(
+      new THREE.Vector3(
+        this.physicsBody.position.x,
+        this.physicsBody.position.y + 0.75,
+        this.physicsBody.position.z
+      ),
+      this.rayTo
+    );
     this.intersects = this.altitudeRayCaster.intersectObjects(
       this.scene.children
     );
-    if (this.intersects.length > 0) {
-      this.state.altitude.set(this.intersects[0].distance);
-      this.interface.hud.update.altitude(this.state.altitude.get());
-    }
+    this.distances = [];
+    this.intersects.map((intersect) => {
+      if (
+        intersect.object.name.includes("Lander") ||
+        intersect.object.name.includes("Label")
+      ) {
+        return;
+      }
+      this.distances.push(intersect.distance);
+    });
+    this.state.altitude.set(Math.min(...this.distances));
+    this.interface.hud.update.altitude(this.state.altitude.get());
   }
 
   resetPosition() {
