@@ -35,6 +35,7 @@ export default class Inputs {
 
     switch (e.key) {
       case "p":
+        this.experience.camera.flyIn();
         this.state.playing.set();
         this.world.physics.params.physicsEnabled = this.state.playing.get();
 

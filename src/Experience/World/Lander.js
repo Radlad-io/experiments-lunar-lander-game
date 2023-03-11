@@ -19,7 +19,7 @@ export default class Lander {
     this.state = this.experience.state;
     this.interface = this.experience.interface;
     this.params = {
-      position: new CANNON.Vec3(0, 60, 0),
+      position: new CANNON.Vec3(0, 70, 0),
       velocity: new CANNON.Vec3(0, 0, 0),
       angularFactor: new CANNON.Vec3(1, 0, 1),
       fuelConsumptionRate: 0.75,

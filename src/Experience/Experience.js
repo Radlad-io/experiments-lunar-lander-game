@@ -86,6 +86,9 @@ export default class Experience {
     this.interface.hud.update.highscore(this.highscore);
     this.interface.hud.update.fuel(this.state.fuel.get());
     this.interface.hud.update.time(this.state.time.getFormattedTime());
+    this.camera.flyIn();
+    this.state.playing.set();
+    this.world.physics.params.physicsEnabled = this.state.playing.get();
   }
 
   destroy() {

@@ -163,6 +163,16 @@ export default class State {
         return;
       },
     };
+    this.updateCameraProjection = {
+      value: false,
+      get() {
+        return this.value;
+      },
+      set() {
+        this.value = !this.value;
+        return;
+      },
+    };
   }
 
   setDebug() {

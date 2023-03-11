@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Experience from "@Experience/Experience.js";
-import State from "@World/State";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 
@@ -20,12 +19,15 @@ export default class Camera {
       position: "front",
       front: new THREE.Vector3(0, 5, 16),
       orbit: false,
-      fov: 65,
+      fov: 85,
       near: 1,
       far: 650,
       moveDuration: 0.75,
       rotationSpeed: 0.001,
       followCoefficient: 0.055,
+      flyInFov: 110,
+      flyInRotation: -Math.PI / 2.5,
+      flyInDelay: 3,
     };
 
     this.setInstace();
@@ -36,7 +38,7 @@ export default class Camera {
 
   setInstace() {
     this.instance = new THREE.PerspectiveCamera(
-      this.params.fov,
+      this.params.flyInFov,
       this.sizes.width / this.sizes.height,
       this.params.near,
       this.params.far
@@ -63,6 +65,7 @@ export default class Camera {
     this.rig.add(this.jibLine);
     this.rig.add(this.instance);
     this.rig.position.set(0, 2.5, 0);
+    this.rig.rotation.x = this.params.flyInRotation;
 
     this.scene.add(this.rig);
   }
@@ -93,6 +96,38 @@ export default class Camera {
           ? (this.params.position = "side")
           : (this.params.position = "front");
         this.state.cameraInTransit.set();
+      });
+  }
+
+  flyIn() {
+    this.state.updateCameraProjection.set();
+    gsap.fromTo(
+      this.rig.rotation,
+      {
+        x: this.params.flyInRotation,
+      },
+      {
+        delay: this.params.flyInDelay,
+        duration: 3,
+        ease: CustomEase.create("custom", "M0,0 C0.104,0.204 0.03,1 1,1 "),
+        x: 0,
+      }
+    );
+    gsap
+      .fromTo(
+        this.instance,
+        {
+          fov: this.params.flyInFov,
+        },
+        {
+          delay: this.params.flyInDelay,
+          duration: 3,
+          ease: "easeIn",
+          fov: this.params.fov,
+        }
+      )
+      .then(() => {
+        this.state.updateCameraProjection.set();
       });
   }
 
@@ -196,6 +231,9 @@ export default class Camera {
   update() {
     if (this.params.orbit) {
       this.controls.update();
+    }
+    if (this.state.updateCameraProjection.get()) {
+      this.instance.updateProjectionMatrix();
     }
   }
 }
