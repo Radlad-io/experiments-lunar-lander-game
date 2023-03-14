@@ -28,6 +28,7 @@ export default class Camera {
       flyInFov: 110,
       flyInRotation: -Math.PI / 2.5,
       flyInDelay: 3,
+      snapFov: 50,
     };
 
     this.setInstace();
@@ -124,6 +125,26 @@ export default class Camera {
           duration: 3,
           ease: "easeIn",
           fov: this.params.fov,
+        }
+      )
+      .then(() => {
+        this.state.updateCameraProjection.set();
+      });
+  }
+
+  snapZoom() {
+    this.state.updateCameraProjection.set();
+    gsap
+      .fromTo(
+        this.instance,
+        {
+          fov: this.params.fov,
+        },
+        {
+          delay: this.params.flyInDelay,
+          duration: 3,
+          ease: "easeIn",
+          fov: this.params.snapFov,
         }
       )
       .then(() => {

@@ -2,6 +2,7 @@
 import * as THREE from "three";
 
 export default [
+  // ENV
   {
     name: "environmentMapTexture",
     type: "cubeTexture",
@@ -14,11 +15,13 @@ export default [
       "textures/environmentMap/nz.jpg",
     ],
   },
+  // LANDER
   {
     name: "landerModel",
     type: "gltfModel",
     path: "models/lander.gltf",
   },
+  //  MAPS
   {
     name: "Map01",
     type: "gltfModel",
@@ -26,15 +29,18 @@ export default [
     pads: [
       {
         multiplier: 2,
-        position: new THREE.Vector3(-30, -4, 23),
+        // position: new THREE.Vector3(30, 7, 42),
+        position: [30, 7, 42],
       },
       {
         multiplier: 4,
-        position: new THREE.Vector3(35, -4, 30),
+        // position: new THREE.Vector3(-36, 8, 20),
+        position: [-36, 8, 20],
       },
       {
         multiplier: 6,
-        position: new THREE.Vector3(2, -2, -23),
+        // position: new THREE.Vector3(38, 7.5, -43),
+        position: [38, 7.5, -43],
       },
     ],
   },
@@ -45,15 +51,15 @@ export default [
     pads: [
       {
         multiplier: 2,
-        position: [-30, 0, 25],
+        position: [38, 5.5, 30],
       },
       {
         multiplier: 4,
-        position: [40, 0, 0],
+        position: [-40, 4, 30],
       },
       {
         multiplier: 6,
-        position: [16, 0, -43],
+        position: [-33, 25, -42],
       },
     ],
   },
@@ -64,15 +70,15 @@ export default [
     pads: [
       {
         multiplier: 2,
-        position: [-30, 0, 25],
+        position: [-18, 6, 45],
       },
       {
         multiplier: 4,
-        position: [40, 0, 0],
+        position: [12, 9, -12],
       },
       {
         multiplier: 6,
-        position: [16, 0, -43],
+        position: [-45, 13, -30],
       },
     ],
   },
@@ -83,15 +89,15 @@ export default [
     pads: [
       {
         multiplier: 2,
-        position: [-30, 0, 25],
+        position: [-40, 8, 45],
       },
       {
         multiplier: 4,
-        position: [40, 0, 0],
+        position: [10, 7, -22],
       },
       {
         multiplier: 6,
-        position: [16, 0, -43],
+        position: [38, 18, 60],
       },
     ],
   },
@@ -102,37 +108,19 @@ export default [
     pads: [
       {
         multiplier: 2,
-        position: [-30, 0, 25],
+        position: [-50, 10, 50],
       },
       {
         multiplier: 4,
-        position: [40, 0, 0],
+        position: [34, 25, 17],
       },
       {
         multiplier: 6,
-        position: [16, 0, -43],
+        position: [20, 22, -60],
       },
     ],
   },
-  {
-    name: "Map06",
-    type: "gltfModel",
-    path: "models/Map06.gltf",
-    pads: [
-      {
-        multiplier: 2,
-        position: [-30, 0, 25],
-      },
-      {
-        multiplier: 4,
-        position: [40, 0, 0],
-      },
-      {
-        multiplier: 6,
-        position: [16, 0, -43],
-      },
-    ],
-  },
+  // SOUNDS
   {
     name: "ambientSound",
     type: "audio",

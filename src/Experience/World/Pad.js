@@ -58,7 +58,7 @@ export default class Pad {
       shape: new CANNON.Cylinder(this.radius, this.radius, 5, 20),
     });
     this.physicsBody.position.set(...this.position);
-    this.physicsBody.id = this.multiplier;
+    this.physicsBody.id = `${this.multiplier}x Pad`;
     this.physics.world.addBody(this.physicsBody);
   }
 

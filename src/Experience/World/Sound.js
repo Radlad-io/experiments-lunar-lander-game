@@ -17,7 +17,7 @@ export default class Sound {
     this.sounds = [];
     this.debug = this.experience.debug;
     this.params = {
-      muted: false,
+      muted: true,
       // muted: import.meta.env.DEV,
       volume: {
         ambient: 1,

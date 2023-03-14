@@ -22,7 +22,7 @@ export default class Lander {
       position: new CANNON.Vec3(0, 70, 0),
       velocity: new CANNON.Vec3(0, 0, 0),
       angularFactor: new CANNON.Vec3(1, 0, 1),
-      fuelConsumptionRate: 0.75,
+      fuelConsumptionRate: 0.25,
       angularDamping: 0.75,
       linearDamping: 0.015,
       allowSleep: true,
@@ -72,9 +72,11 @@ export default class Lander {
       }
     });
     this.setMaterial();
+    console.log(this.model);
   }
 
   setMaterial() {
+    // TODO: Sobel should be state
     if (this.experience.renderer.params.sobel) {
       this.model.traverse((child) => {
         if (child instanceof THREE.Mesh) {

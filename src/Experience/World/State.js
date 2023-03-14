@@ -48,7 +48,7 @@ export default class State {
       },
     };
     this.level = {
-      value: 1,
+      value: 4,
       get() {
         return this.value;
       },
